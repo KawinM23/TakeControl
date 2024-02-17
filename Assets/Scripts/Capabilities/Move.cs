@@ -6,7 +6,7 @@ namespace Assets.Scripts.Capabilities
     [RequireComponent(typeof(Controller))]
     public class Move : MonoBehaviour
     {
-        [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4f;
+        [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
         private Controller _controller;
         private Vector2 _direction, _desiredVelocity, _velocity;

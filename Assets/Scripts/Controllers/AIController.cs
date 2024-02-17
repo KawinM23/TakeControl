@@ -18,4 +18,8 @@ public class AIController : InputController
     {
         return false;
     }
+    public override bool RetrieveAttackInput()
+    {
+        return true;
+    }
 }
