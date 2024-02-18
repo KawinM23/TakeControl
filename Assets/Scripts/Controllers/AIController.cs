@@ -22,4 +22,9 @@ public class AIController : InputController
     {
         return true;
     }
+  
+    public override bool RetrieveDashInput()
+    {
+        return false;
+    }
 }
