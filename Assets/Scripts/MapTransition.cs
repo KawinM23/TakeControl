@@ -6,23 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class MapTransition : MonoBehaviour
 {
-
     private Collider2D _collider;
 
     [SerializeField] private Object _toScene;
     private Scene _fromScene;
 
-
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _fromScene = gameObject.scene;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,7 +30,6 @@ public class MapTransition : MonoBehaviour
         MapTransition[] mta = FindObjectsByType<MapTransition>(FindObjectsSortMode.None);
         foreach (MapTransition mt in mta)
         {
-            Debug.Log("Door " + mt.gameObject.name +" "+(mt._fromScene.name.Equals(toScene) && mt._toScene.name.Equals(fromScene)));
             if (mt._fromScene.name.Equals(toScene)&& mt._toScene.name.Equals(fromScene))
             {
                 return mt.transform.GetChild(0).position;
@@ -46,5 +37,4 @@ public class MapTransition : MonoBehaviour
         }
         return Vector2.zero;
     }
-  
 }

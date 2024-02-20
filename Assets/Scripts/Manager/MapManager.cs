@@ -12,8 +12,6 @@ public class MapManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-
-
     private void Start()
     {
         player = Player.FindActivePlayer();
