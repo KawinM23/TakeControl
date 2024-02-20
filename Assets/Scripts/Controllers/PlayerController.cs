@@ -15,6 +15,7 @@ public class PlayerController : InputController
         return Input.GetButtonDown("Jump");
     }
 
+
     public override bool RetrieveJumpHoldInput()
     {
         return Input.GetButton("Jump");
@@ -34,5 +35,9 @@ public class PlayerController : InputController
     {
         Debug.Log("SwapWeapon Button Pressed");
         return Input.GetKeyDown(KeyCode.Q); //TODO: confirm control with team
+    }
+    public override Vector2? RetrieveHackInput()
+    {
+        return Input.GetMouseButtonDown(1) ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : null;
     }
 }

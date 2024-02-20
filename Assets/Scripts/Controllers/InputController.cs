@@ -10,4 +10,5 @@ public abstract class InputController : ScriptableObject
     public abstract bool RetrieveAttackInput();
     public abstract bool RetrieveDashInput();
     public abstract bool RetrieveSwapWeaponInput();
+    public abstract Vector2? RetrieveHackInput();
 }

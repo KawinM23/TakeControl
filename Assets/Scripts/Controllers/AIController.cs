@@ -31,4 +31,9 @@ public class AIController : InputController
     {
         throw new System.NotImplementedException();
     }
+
+    public override Vector2? RetrieveHackInput()
+    {
+        return null;
+    }
 }
