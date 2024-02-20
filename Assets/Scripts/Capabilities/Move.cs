@@ -31,7 +31,7 @@ namespace Assets.Scripts.Capabilities
             _body = GetComponent<Rigidbody2D>();
             _ground = GetComponent<Ground>();
             _controller = GetComponent<Controller>();
-            _spriteRenderer = transform.Find("PlayerSprite").GetComponent<SpriteRenderer>();
+            _spriteRenderer = transform.Find("PlayerSprite")?.GetComponent<SpriteRenderer>();
             followMovement = true;
 
         }
