@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Assets.Scripts.Combat;
+using Assets.Scripts.Effect;
 using UnityEngine;
 
 #nullable enable
@@ -44,6 +45,13 @@ namespace Assets.Scripts.Capabilities
             // Override the target's input with the hacker's input
             var targetCtrl = target.GetComponent<Controller>();
             targetCtrl.input = _controller.input;
+
+            // Remoove hack effect
+            var effect = target.GetComponentInChildren<Effect.Hack>();
+            if (effect != null)
+            {
+                effect.gameObject.SetActive(false);
+            }
 
             // Remove the hacker
             _controller.input = null;

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Combat
 {
     public class Health : MonoBehaviour
     {
+        public UnityEvent OnHackable;
 
         [SerializeField] private int _maxHealth = 100;
         [SerializeField] private int _currentHealth;
@@ -38,11 +40,6 @@ namespace Assets.Scripts.Combat
         // Update is called once per frame
         private void Update()
         {
-            if (Hackable() && _spriteRenderer != null && flashCoroutine == null)
-            {
-                _spriteRenderer.color = Color.green;
-            }
-
             if (_currentHealth <= 0)
             {
                 Die();
@@ -55,6 +52,11 @@ namespace Assets.Scripts.Combat
             flashCoroutine = StartCoroutine(Flash(Color.yellow));
 
             _currentHealth -= damage;
+
+            if (Hackable())
+            {
+                OnHackable?.Invoke();
+            }
         }
 
         private void Die()
