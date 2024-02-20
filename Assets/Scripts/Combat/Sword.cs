@@ -43,10 +43,5 @@ namespace Assets.Scripts.Combat
                 collider.GetComponent<Health>().TakeDamage(_swordDamage);
             }
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawCube(_swordCollider.transform.position, _swordCollider.transform.lossyScale);
-        }
     }
 }

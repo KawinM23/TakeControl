@@ -7,27 +7,37 @@ public class MapManager : MonoBehaviour
 {
     private GameObject player;
 
+    [SerializeField] private float mapChangeCooldown;
+    public static bool changingScene;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
+    public IEnumerator ChangeScene(string fromScene, string toScene)
     {
-        player = Player.FindActivePlayer();
-        Debug.Log(player);
-        DontDestroyOnLoad(player);
-    }
+        if (changingScene)
+        {
+            yield break;
+        }
+        changingScene = true;
 
-    public IEnumerator ChangeScene(string fromScene,string toScene)
-    {
+        player = Player.FindActivePlayer();
+        DontDestroyOnLoad(player);
+
         yield return SceneManager.LoadSceneAsync(toScene, LoadSceneMode.Additive);
+
         SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toScene));
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toScene));
         player.transform.position = MapTransition.FindDestinationPosition(fromScene, toScene);
-        player.GetComponent<TrailRenderer>().Clear();
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(fromScene));
+        if (player.TryGetComponent(out TrailRenderer tr))
+        {
+            tr.Clear();
+        }
 
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(fromScene));
+        changingScene = false;
         yield return null;
     }
 }

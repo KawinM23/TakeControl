@@ -176,3 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
+  collideLayer:
+    serializedVersion: 2
+    m_Bits: 128

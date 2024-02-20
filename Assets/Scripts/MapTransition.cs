@@ -19,18 +19,20 @@ public class MapTransition : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && _toScene.GetType().Equals(typeof(SceneAsset)))
+        collision.gameObject.TryGetComponent(out Controller controller);
+        if (controller && controller.input is PlayerController && _toScene.GetType().Equals(typeof(SceneAsset)))
         {
             Debug.Log("From " + _fromScene.name + " to " + _toScene.name);
             StartCoroutine(FindAnyObjectByType<MapManager>().ChangeScene(_fromScene.name, _toScene.name));
         }
     }
 
-    public static Vector2 FindDestinationPosition(string fromScene, string toScene) {
+    public static Vector2 FindDestinationPosition(string fromScene, string toScene)
+    {
         MapTransition[] mta = FindObjectsByType<MapTransition>(FindObjectsSortMode.None);
         foreach (MapTransition mt in mta)
         {
-            if (mt._fromScene.name.Equals(toScene)&& mt._toScene.name.Equals(fromScene))
+            if (mt._fromScene.name.Equals(toScene) && mt._toScene.name.Equals(fromScene))
             {
                 return mt.transform.GetChild(0).position;
             }

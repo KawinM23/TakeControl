@@ -31,6 +31,7 @@ namespace Assets.Scripts.Capabilities
 
         private void HackAction(Vector2 hackPoint)
         {
+            Debug.Log("Hack");
             // Find on hack point the enemy which is hackable 
             Collider2D? target = Physics2D.OverlapPoint(hackPoint, _hackableLayer);
             if (target == null)
@@ -39,6 +40,7 @@ namespace Assets.Scripts.Capabilities
             }
             if (!(target.TryGetComponent<Health>(out var health) && health.Hackable()))
             {
+                Debug.Log(target);
                 return;
             }
 
@@ -55,6 +57,7 @@ namespace Assets.Scripts.Capabilities
 
             // Remove the hacker
             _controller.input = null;
+            target.gameObject.layer = LayerMask.NameToLayer("Player");
             Destroy(gameObject);
         }
     }

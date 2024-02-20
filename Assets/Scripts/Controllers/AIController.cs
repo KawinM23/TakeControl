@@ -8,11 +8,11 @@ public class AIController : InputController
 
     public override float RetrieveMoveInput()
     {
-        return 1f;
+        return 0f;
     }
     public override bool RetrieveJumpInput()
     {
-        return true;
+        return false;
     }
     public override bool RetrieveJumpHoldInput()
     {
@@ -20,7 +20,7 @@ public class AIController : InputController
     }
     public override bool RetrieveAttackInput()
     {
-        return true;
+        return false;
     }
 
     public override bool RetrieveDashInput()
@@ -29,7 +29,7 @@ public class AIController : InputController
     }
     public override bool RetrieveSwapWeaponInput()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     public override Vector2? RetrieveHackInput()

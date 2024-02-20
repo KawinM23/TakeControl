@@ -11,6 +11,7 @@ namespace Assets.Scripts.Combat
         private Rigidbody2D rb;
         private Collider2D cl;
         [SerializeField] private int damage = 15;
+        [SerializeField] private LayerMask collideLayer;
 
         private void Awake()
         {
@@ -19,7 +20,6 @@ namespace Assets.Scripts.Combat
 
         public void Fire(Vector2 velocity)
         {
-            Debug.Log("Bullet Velocity: " + velocity);
             rb.velocity = velocity;
         }
 
@@ -30,6 +30,10 @@ namespace Assets.Scripts.Combat
             if (controller && controller.input is AIController)
             {
                 collider.gameObject.GetComponent<Health>().TakeDamage(damage);
+                Destroy(gameObject);
+            }
+            else if ((collideLayer.value & (1 << collider.transform.gameObject.layer)) > 0)
+            {
                 Destroy(gameObject);
             }
         }

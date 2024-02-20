@@ -33,7 +33,6 @@ public class PlayerController : InputController
     }
     public override bool RetrieveSwapWeaponInput()
     {
-        Debug.Log("SwapWeapon Button Pressed");
         return Input.GetKeyDown(KeyCode.Q); //TODO: confirm control with team
     }
     public override Vector2? RetrieveHackInput()

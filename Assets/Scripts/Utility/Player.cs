@@ -6,7 +6,7 @@ public class Player: MonoBehaviour
 {
     public static GameObject FindActivePlayer()
     {
-        Controller[] controllers = FindObjectsByType<Controller>(FindObjectsSortMode.None);
+        Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include,FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
             if (c.input is PlayerController)
