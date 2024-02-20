@@ -10,13 +10,11 @@ public class PlayerController : InputController
         return Input.GetAxisRaw("Horizontal");
     }
 
-
     public override bool RetrieveJumpInput()
     {
         return Input.GetButtonDown("Jump");
     }
 
-    
     public override bool RetrieveJumpHoldInput()
     {
         return Input.GetButton("Jump");
@@ -31,5 +29,10 @@ public class PlayerController : InputController
     public override bool RetrieveDashInput()
     {
         return Input.GetKeyDown(KeyCode.LeftShift);
+    }
+    public override bool RetrieveSwapWeaponInput()
+    {
+        Debug.Log("SwapWeapon Button Pressed");
+        return Input.GetKeyDown(KeyCode.Q); //TODO: confirm control with team
     }
 }
