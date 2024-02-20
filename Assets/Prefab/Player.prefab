@@ -337,9 +337,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 4.2
-  dashingPower: 20
+  dashingPower: 14
   dashingCooldown: 1
-  dashingTime: 0.2
+  dashingTime: 0.18
+  isFacingRight: 0
 --- !u!114 &5256826179897057529
 MonoBehaviour:
   m_ObjectHideFlags: 0
