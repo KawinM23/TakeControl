@@ -22,6 +22,7 @@ namespace Assets.Scripts.Combat
             GetComponent<SpriteRenderer>().color = targetColor;
             yield return new WaitForSeconds(0.1f);
             GetComponent<SpriteRenderer>().color = originalColor;
+            yield return new WaitForSeconds(0.1f);
             flashCoroutine = null;
         }
 
