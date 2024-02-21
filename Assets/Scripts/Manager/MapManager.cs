@@ -10,34 +10,62 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float mapChangeCooldown;
     public static bool changingScene;
 
+    public static string fromScene;
+    public static string toScene;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public IEnumerator ChangeScene(string fromScene, string toScene)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (changingScene)
+        {
+            player = Player.FindActivePlayer();
+            player.SetActive(true);
+            Debug.Log(fromScene + toScene);
+            player.transform.position = MapTransition.FindDestinationPosition(fromScene, toScene);
+
+            if (player.TryGetComponent(out TrailRenderer tr))
+            {
+                tr.Clear();
+            }
+            changingScene = false;
+        }
+    }
+
+    public IEnumerator ChangeScene(string fromSceneName, string toSceneName)
     {
         if (changingScene)
         {
             yield break;
         }
         changingScene = true;
+        fromScene = fromSceneName;
+        toScene = toSceneName;
 
         player = Player.FindActivePlayer();
         DontDestroyOnLoad(player);
+        player.SetActive(false);
 
-        yield return SceneManager.LoadSceneAsync(toScene, LoadSceneMode.Additive);
+        SceneManager.LoadScene(toSceneName);
 
-        SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toScene));
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(toScene));
-        player.transform.position = MapTransition.FindDestinationPosition(fromScene, toScene);
+        /*SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toSceneName));*//*
+        player.SetActive(true);
+        player.transform.position = MapTransition.FindDestinationPosition(fromSceneName, toSceneName);
+        *//*SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));*//*
+
         if (player.TryGetComponent(out TrailRenderer tr))
         {
             tr.Clear();
         }
 
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(fromScene));
+
+        *//*SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(fromSceneName));*//*
         changingScene = false;
-        yield return null;
+        yield return null;*/
     }
+
 }
