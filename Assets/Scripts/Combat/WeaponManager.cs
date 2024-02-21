@@ -17,12 +17,12 @@ public class WeaponManager : MonoBehaviour
         // Ensure only one weapon is active at start
         if (gun)
         {
-            gun.enabled = false;
+            gun.enabled = true;
         }
 
         if (sword)
         {
-            sword.enabled = true;
+            sword.enabled = false;
         }
     }
 
