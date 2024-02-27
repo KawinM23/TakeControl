@@ -38,7 +38,7 @@ namespace Assets.Scripts.Capabilities
         // Update is called once per frame
         void Update()
         {
-            _desiredJump |= _controller.input.RetrieveJumpInput();
+            _desiredJump |= _controller.input.RetrieveJumpInput() && _controller.input.RetrieveVerticalInput() >= 0f;
         }
 
         private void FixedUpdate()

@@ -9,12 +9,14 @@ public class PlayerController : InputController
     {
         return Input.GetAxisRaw("Horizontal");
     }
-
+    public override float RetrieveVerticalInput()
+    {
+        return Input.GetAxisRaw("Vertical");
+    }
     public override bool RetrieveJumpInput()
     {
         return Input.GetButtonDown("Jump");
     }
-
 
     public override bool RetrieveJumpHoldInput()
     {

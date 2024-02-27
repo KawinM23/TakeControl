@@ -10,6 +10,10 @@ public class AIController : InputController
     {
         return 0f;
     }
+    public override float RetrieveVerticalInput()
+    {
+        return 0f;
+    }
     public override bool RetrieveJumpInput()
     {
         return false;

@@ -24,7 +24,7 @@ namespace Assets.Scripts.Capabilities
         public bool isFacingRight;
         private bool followMovement; //facing follow the movement
 
-
+        private GameObject platform;
 
         private void Awake()
         {
@@ -49,6 +49,10 @@ namespace Assets.Scripts.Capabilities
             if (_controller.input.RetrieveDashInput() && canDash)
             {
                 StartCoroutine(Dash(_direction.x, isFacingRight));
+            }
+            if (platform && _controller.input.RetrieveVerticalInput()<0f && _controller.input.RetrieveJumpInput())
+            {
+                platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }
 
         }
@@ -99,6 +103,22 @@ namespace Assets.Scripts.Capabilities
         public void SetFollowMovement(bool followMovement)
         {
             this.followMovement = followMovement;
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Platform")))
+            {
+                platform = collision.gameObject;
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Platform")))
+            {
+                platform = null;
+            }
         }
 
 
