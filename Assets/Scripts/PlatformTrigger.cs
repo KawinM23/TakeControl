@@ -26,7 +26,8 @@ public class PlatformTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")){
+        if (collision.gameObject.CompareTag("Player"))
+        {
             Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), platformCollider, false);
         }
     }

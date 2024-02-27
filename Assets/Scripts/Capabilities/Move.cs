@@ -50,7 +50,7 @@ namespace Assets.Scripts.Capabilities
             {
                 StartCoroutine(Dash(_direction.x, isFacingRight));
             }
-            if (platform && _controller.input.RetrieveVerticalInput()<0f && _controller.input.RetrieveJumpInput())
+            if (platform && _controller.input.RetrieveVerticalInput() < 0f && _controller.input.RetrieveJumpInput())
             {
                 platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }
