@@ -38,7 +38,7 @@ namespace Assets.Scripts.Capabilities
             {
                 return;
             }
-            if (!(target.TryGetComponent<Health>(out var health) && health.Hackable()))
+            if (!(target.CompareTag("Enemy") && target.TryGetComponent<Health>(out var health) && health.Hackable()))
             {
                 Debug.Log(target);
                 return;
@@ -57,7 +57,8 @@ namespace Assets.Scripts.Capabilities
 
             // Remove the hacker
             _controller.input = null;
-            target.gameObject.layer = LayerMask.NameToLayer("Player");
+            target.gameObject.tag = "Player";
+            PlayerManager.Instance.playerGameObject = target.gameObject;
             Destroy(gameObject);
         }
     }

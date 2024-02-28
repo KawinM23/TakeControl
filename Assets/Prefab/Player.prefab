@@ -456,7 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hackableLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 64
 --- !u!114 &4328385829411341047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,4 +534,4 @@ MonoBehaviour:
   _swordCollider: {fileID: 6952035682265396525}
   _attackableLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
