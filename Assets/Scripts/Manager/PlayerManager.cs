@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {
@@ -23,14 +23,45 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        GameObject activePlayer = FindActivePlayer();
         if (!playerGameObject)
         {
-            GameObject gameObject = Instantiate(playerPrefab);
-            gameObject.SetActive(true);
-            playerGameObject = gameObject;
+            if (activePlayer)
+            {
+                playerGameObject = activePlayer;
+            }
+            else if (playerPrefab)
+            {
+                GameObject gameObject = Instantiate(playerPrefab);
+                gameObject.SetActive(true);
+                playerGameObject = gameObject;
+            }
         }
     }
 
+    public static GameObject FindActivePlayer()
+    {
+        Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (Controller c in controllers)
+        {
+            if (c.input is PlayerController && c.gameObject.activeSelf)
+            {
+                return c.gameObject;
+            }
+        }
+        return null;
+    }
 
+    public static void DestroyOtherActivePlayers()
+    {
+        Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (Controller c in controllers)
+        {
+            if (c.input is PlayerController && !ReferenceEquals(c.gameObject ,Instance.playerGameObject))
+            {
+                Destroy(c.gameObject);
+            }
+        }
+    }
 
 }
