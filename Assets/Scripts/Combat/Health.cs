@@ -9,19 +9,23 @@ namespace Assets.Scripts.Combat
     {
         public UnityEvent OnHackable;
 
-        [SerializeField] private int _maxHealth = 100;
-        [SerializeField] private int _currentHealth;
-        [SerializeField] private int _HackableHealth = 20;
+        [SerializeField] private int maxHealth = 100;
+        [SerializeField] private int currentHealth;
+        [SerializeField] private int hackableHealth = 20;
 
-        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private bool iFrame = false;
+        [SerializeField] private float iFrameDuration;
+        private float iFrameCounter;
+
+        private SpriteRenderer spriteRenderer;
 
         private Coroutine flashCoroutine;
         IEnumerator Flash(Color targetColor)
         {
-            var originalColor = GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color = targetColor;
+            var originalColor = spriteRenderer.color;
+            spriteRenderer.color = targetColor;
             yield return new WaitForSeconds(0.1f);
-            GetComponent<SpriteRenderer>().color = originalColor;
+            spriteRenderer.color = originalColor;
             yield return new WaitForSeconds(0.1f);
             flashCoroutine = null;
         }
@@ -34,30 +38,49 @@ namespace Assets.Scripts.Combat
         // Use this for initialization
         private void Start()
         {
-            _currentHealth = _maxHealth;
-            _spriteRenderer = GetComponent<SpriteRenderer>();
+            currentHealth = maxHealth;
+            iFrame = false;
+            iFrameCounter = 0f;
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         // Update is called once per frame
         private void Update()
         {
-            if (_currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 Die();
             }
-        }
-        public void TakeDamage(int damage)
-        {
-            // TODO: for debug, remove of refactor
-            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-            flashCoroutine = StartCoroutine(Flash(Color.yellow));
-
-            _currentHealth -= damage;
-
             if (Hackable())
             {
                 OnHackable?.Invoke();
             }
+        }
+        private void FixedUpdate()
+        {
+            if (iFrame)
+            {
+                iFrameCounter -= Time.fixedDeltaTime;
+            }
+            if (iFrameCounter <= 0f)
+            {
+                iFrame = false;
+            }
+
+        }
+        public void TakeDamage(int damage)
+        {
+            if (iFrame)
+            {
+                return;
+            }
+            // TODO: for debug, remove of refactor
+            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+            flashCoroutine = StartCoroutine(Flash(Color.red));
+
+            currentHealth -= damage;
+            iFrame = true;
+            iFrameCounter = iFrameDuration;
         }
 
         private void Die()
@@ -68,6 +91,6 @@ namespace Assets.Scripts.Combat
         /// <summary>
         /// Does the health meet the requirements to be hacked
         /// </summary>
-        public bool Hackable() => _currentHealth <= _HackableHealth;
+        public bool Hackable() => currentHealth <= hackableHealth;
     }
 }
