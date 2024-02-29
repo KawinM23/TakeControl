@@ -13,7 +13,7 @@ public class Spike : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Damage Spkie");
+        Debug.Log("Damage Spike");
         collision.gameObject.TryGetComponent(out Health health);
         if (health)
         {

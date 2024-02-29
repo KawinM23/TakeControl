@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8765052046535671632}
   - component: {fileID: 6952035682265396525}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: SwordCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,6 +318,9 @@ MonoBehaviour:
   dashingPower: 14
   dashingCooldown: 1
   dashingTime: 0.18
+  dodgeableLayer:
+    serializedVersion: 2
+    m_Bits: 576
   isFacingRight: 1
 --- !u!114 &5256826179897057529
 MonoBehaviour:
@@ -372,6 +375,9 @@ MonoBehaviour:
   hackableHealth: 20
   iFrame: 0
   iFrameDuration: 0.5
+  iFramableLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &9017549952657372097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,4 +437,4 @@ MonoBehaviour:
   _swordCollider: {fileID: 6952035682265396525}
   _attackableLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64

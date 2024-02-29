@@ -13,11 +13,14 @@ namespace Assets.Scripts.Combat
         [SerializeField] private int currentHealth;
         [SerializeField] private int hackableHealth = 20;
 
+        [Header("iFrame")]
         [SerializeField] private bool iFrame = false;
         [SerializeField] private float iFrameDuration;
         private float iFrameCounter;
+        [SerializeField] private LayerMask iFramableLayer;
 
         private SpriteRenderer spriteRenderer;
+        private Collider2D collider;
 
         private Coroutine flashCoroutine;
         IEnumerator Flash(Color targetColor)

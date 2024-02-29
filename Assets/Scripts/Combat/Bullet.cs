@@ -10,7 +10,10 @@ namespace Assets.Scripts.Combat
     {
         private Rigidbody2D rb;
         private Collider2D cl;
+
+        public bool isEnemy;
         [SerializeField] private int damage = 15;
+        [SerializeField] private LayerMask checkLayer;
         [SerializeField] private LayerMask collideLayer;
 
         private void Awake()
@@ -25,21 +28,42 @@ namespace Assets.Scripts.Combat
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            Controller controller = collider.gameObject.GetComponent<Controller>();
-            // If it hits enemy
-            if (controller && controller.input is AIController)
+            if (collideLayer == (collideLayer | (1 << collider.transform.gameObject.layer)))
             {
-                collider.gameObject.GetComponent<Health>().TakeDamage(damage);
                 Destroy(gameObject);
             }
-            else if ((collideLayer.value & (1 << collider.transform.gameObject.layer)) > 0)
+            if (checkLayer == (checkLayer | (1 << collider.transform.gameObject.layer)))
             {
+                bool hitPlayer = collider.gameObject == PlayerManager.Instance.playerGameObject;
+                // Enemy Bullet
+                if (isEnemy)
+                {
+                    if (!hitPlayer)
+                    {
+                        return;
+                    }
+                    if (collider.gameObject.TryGetComponent(out Health health))
+                    {
+                        health.TakeDamage(damage);
+                    }
+                }
+                else// Our Bullet
+                {
+                    if (hitPlayer)
+                    {
+                        return;
+                    }
+                    if (collider.gameObject.TryGetComponent(out Health health))
+                    {
+                        health.TakeDamage(damage);
+                    }
+                }
                 Destroy(gameObject);
             }
         }
-
     }
-
-
-
 }
+
+
+
+

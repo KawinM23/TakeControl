@@ -37,6 +37,10 @@ namespace Assets.Scripts.Combat
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
             if (bullet)
             {
+                if(gameObject)
+                {
+                    bullet.isEnemy = false;
+                }
                 bullet.Fire(bulletDirection.normalized * bulletSpeed);
             }
         }

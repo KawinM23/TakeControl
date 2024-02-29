@@ -34,13 +34,16 @@ namespace Assets.Scripts.Combat
 
         private void AttackAction()
         {
-            Debug.Log("Attack");
+            Debug.Log("Sword Attack");
             _hitEnemies = Physics2D.OverlapBoxAll(_swordCollider.transform.position, _swordCollider.transform.lossyScale, 0, _attackableLayer);
 
             foreach (Collider2D collider in _hitEnemies)
             {
-                Debug.Log(collider);
-                collider.GetComponent<Health>().TakeDamage(_swordDamage);
+                if (collider.gameObject != gameObject && collider.TryGetComponent(out Health health))
+                {
+                    Debug.Log(collider);
+                    health.TakeDamage(_swordDamage);
+                }
             }
         }
     }

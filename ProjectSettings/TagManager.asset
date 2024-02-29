@@ -15,8 +15,8 @@ TagManager:
   - Robot
   - Ground
   - Platform
-  - 
-  - 
+  - Dodgeable
+  - Undodgeable
   - 
   - 
   - 
