@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    private Collider2D collider;
+    private Collider2D collider2d;
     private void Awake()
     {
-        collider = GetComponent<Collider2D>();
+        collider2d = GetComponent<Collider2D>();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
