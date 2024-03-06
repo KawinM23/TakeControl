@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AIController", menuName = "InputController/AIController")]
 public class AIController : InputController
 {
-
     public override float RetrieveMoveInput()
     {
         return 0f;
@@ -22,6 +21,7 @@ public class AIController : InputController
     {
         return false;
     }
+
     public override bool RetrieveAttackInput()
     {
         return false;

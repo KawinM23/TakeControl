@@ -4,12 +4,15 @@ using UnityEngine;
 
 public abstract class InputController : ScriptableObject
 {
+    //Movement
     public abstract float RetrieveMoveInput();
     public abstract float RetrieveVerticalInput();
     public abstract bool RetrieveJumpInput();
     public abstract bool RetrieveJumpHoldInput();
-    public abstract bool RetrieveAttackInput();
     public abstract bool RetrieveDashInput();
+
+    public abstract bool RetrieveAttackInput();
     public abstract bool RetrieveSwapWeaponInput();
+
     public abstract Vector2? RetrieveHackInput();
 }

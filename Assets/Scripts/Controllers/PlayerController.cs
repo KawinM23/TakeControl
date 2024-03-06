@@ -17,21 +17,18 @@ public class PlayerController : InputController
     {
         return Input.GetButtonDown("Jump");
     }
-
     public override bool RetrieveJumpHoldInput()
     {
         return Input.GetButton("Jump");
+    }
+    public override bool RetrieveDashInput()
+    {
+        return Input.GetKeyDown(KeyCode.LeftShift);
     }
 
     public override bool RetrieveAttackInput()
     {
         return Input.GetMouseButtonDown(0);
-    }
-
-
-    public override bool RetrieveDashInput()
-    {
-        return Input.GetKeyDown(KeyCode.LeftShift);
     }
     public override bool RetrieveSwapWeaponInput()
     {
