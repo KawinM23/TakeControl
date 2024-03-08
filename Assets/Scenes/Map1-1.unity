@@ -314,6 +314,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d05ee43f458876d4785aa6f48f89bc9a, type: 2}
     - target: {fileID: 4328385829411341047, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
+      propertyPath: hackableHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328385829411341047, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: _HackableHealth
       value: 100
       objectReference: {fileID: 0}
