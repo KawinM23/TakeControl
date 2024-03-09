@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3479602765337630755}
   - component: {fileID: 1142645401275603162}
   - component: {fileID: 6679083456790371968}
+  - component: {fileID: -3841997523053746019}
   m_Layer: 11
   m_Name: Button
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: -1, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3420289116607159332}
@@ -159,6 +160,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-3841997523053746019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519873160381224440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4598581fef36a334f815f3899deb7144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDoorOpenSwitch: 0
+  _isDoorCloseSwitch: 0
+  _clicked: 0
 --- !u!1 &9008623875896244115
 GameObject:
   m_ObjectHideFlags: 0

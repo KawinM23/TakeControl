@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
-    [SerializeField] DoorController _doorController;
+
     [SerializeField] bool _isDoorOpenSwitch;
     [SerializeField] bool _isDoorCloseSwitch;
+    public bool _clicked = false;
 
-
+     
+    bool _isPressingSwitch = false;
     float _switchSizeY;
     Vector3 _switchUpPos;
     Vector3 _switchDownPos;
     float _switchSpeed = 1f;
     float _switchDelay = 0.3f;
-    bool _isPressingSwitch = false;
+   
     // Start is called before the first frame update
     private void Awake()
     {
@@ -31,8 +33,9 @@ public class SwitchController : MonoBehaviour
     void Update()
     {
 
-        if (_isPressingSwitch)
+        if (_clicked)
         {
+         
             MoveSwitchDown();
         }
         else
@@ -63,15 +66,15 @@ public class SwitchController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             _isPressingSwitch = !_isPressingSwitch;
-            if(_isDoorOpenSwitch && !_doorController._isDoorOpen)
+            if(_isDoorOpenSwitch && !_clicked)
             {
-                _doorController._isDoorOpen = !_doorController._isDoorOpen;
+                _clicked = true;
             }
-            else if(_isDoorCloseSwitch && _doorController._isDoorOpen)
+            else if(_isDoorCloseSwitch && _clicked)
             {
-                Debug.Log("Closing");
-                _doorController._isDoorOpen = !_doorController._isDoorOpen;
+                _clicked = false;
             }
+           
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
