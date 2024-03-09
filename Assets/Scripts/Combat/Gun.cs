@@ -11,6 +11,8 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float bulletSpeed = 10f; //TODO: confirm design with team
         [SerializeField] private GameObject bulletPrefab;
         private Controller controller;
+        private double lastFireTime;
+        private readonly double shootingDelay = 0.25;
 
         private void Awake()
         {
@@ -19,9 +21,14 @@ namespace Assets.Scripts.Combat
 
         private void Update()
         {
+            controller.input.UpdateInputEventLoop();
             if (controller.input.RetrieveAttackInput())
             {
-                Shoot();
+                if (Time.fixedTimeAsDouble - lastFireTime >= shootingDelay)
+                {
+                    Shoot();
+                    lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                }
             }
         }
 
@@ -37,7 +44,7 @@ namespace Assets.Scripts.Combat
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
             if (bullet)
             {
-                if(gameObject)
+                if (gameObject)
                 {
                     bullet.isEnemy = false;
                 }

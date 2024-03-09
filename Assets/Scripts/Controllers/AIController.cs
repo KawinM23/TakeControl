@@ -40,4 +40,9 @@ public class AIController : InputController
     {
         return null;
     }
+
+    public override void UpdateInputEventLoop()
+    {
+        return;
+    }
 }

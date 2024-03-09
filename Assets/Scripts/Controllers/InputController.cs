@@ -15,4 +15,6 @@ public abstract class InputController : ScriptableObject
     public abstract bool RetrieveSwapWeaponInput();
 
     public abstract Vector2? RetrieveHackInput();
+
+    public abstract void UpdateInputEventLoop();
 }
