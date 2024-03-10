@@ -32,6 +32,10 @@ public class PlayerController : InputController
     {
         return isLeftMousePress;
     }
+    public override bool RetrieveReloadInput()
+    {
+        return Input.GetKeyDown(KeyCode.R);
+    }
     public override bool RetrieveSwapWeaponInput()
     {
         return Input.GetKeyDown(KeyCode.Q); //TODO: confirm control with team

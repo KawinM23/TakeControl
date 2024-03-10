@@ -11,8 +11,10 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float bulletSpeed = 10f; //TODO: confirm design with team
         [SerializeField] private GameObject bulletPrefab;
         private Controller controller;
-        private double lastFireTime;
-        private readonly double shootingDelay = 0.25;
+        private double lastFireTime, lastReloadTime = -1;
+        private readonly double shootingDelay = 0.25, reloadTime = 5;
+        private uint currentAmmo = 20;
+        private readonly uint maxAmmo = 20;
 
         private void Awake()
         {
@@ -22,13 +24,26 @@ namespace Assets.Scripts.Combat
         private void Update()
         {
             controller.input.UpdateInputEventLoop();
-            if (controller.input.RetrieveAttackInput())
+            if (lastReloadTime == -1)
             {
-                if (Time.fixedTimeAsDouble - lastFireTime >= shootingDelay)
+                if (controller.input.RetrieveAttackInput())
                 {
-                    Shoot();
-                    lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                    if (Time.fixedTimeAsDouble - lastFireTime >= shootingDelay && currentAmmo > 0)
+                    {
+                        Shoot();
+                        lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                        currentAmmo -= 1;
+                    }
                 }
+                if (controller.input.RetrieveReloadInput())
+                {
+                    lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                }
+            }
+            else if (Time.fixedTimeAsDouble - lastReloadTime >= reloadTime)
+            {
+                currentAmmo = maxAmmo;
+                lastReloadTime = -1;
             }
         }
 
