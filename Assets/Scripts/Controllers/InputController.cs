@@ -12,7 +12,10 @@ public abstract class InputController : ScriptableObject
     public abstract bool RetrieveDashInput();
 
     public abstract bool RetrieveAttackInput();
+    public abstract bool RetrieveReloadInput();
     public abstract bool RetrieveSwapWeaponInput();
 
     public abstract Vector2? RetrieveHackInput();
+
+    public abstract void UpdateInputEventLoop();
 }

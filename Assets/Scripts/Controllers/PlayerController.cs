@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerController", menuName = "InputController/PlayerController")]
 public class PlayerController : InputController
 {
+    private bool isLeftMousePress = false;
+
     public override float RetrieveMoveInput()
     {
         return Input.GetAxisRaw("Horizontal");
@@ -28,7 +30,11 @@ public class PlayerController : InputController
 
     public override bool RetrieveAttackInput()
     {
-        return Input.GetMouseButtonDown(0);
+        return isLeftMousePress;
+    }
+    public override bool RetrieveReloadInput()
+    {
+        return Input.GetKeyDown(KeyCode.R);
     }
     public override bool RetrieveSwapWeaponInput()
     {
@@ -37,5 +43,17 @@ public class PlayerController : InputController
     public override Vector2? RetrieveHackInput()
     {
         return Input.GetMouseButtonDown(1) ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : null;
+    }
+
+    public override void UpdateInputEventLoop()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isLeftMousePress = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isLeftMousePress = false;
+        }
     }
 }

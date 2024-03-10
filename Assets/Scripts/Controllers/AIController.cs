@@ -26,6 +26,10 @@ public class AIController : InputController
     {
         return false;
     }
+    public override bool RetrieveReloadInput()
+    {
+        return false;
+    }
 
     public override bool RetrieveDashInput()
     {
@@ -39,5 +43,10 @@ public class AIController : InputController
     public override Vector2? RetrieveHackInput()
     {
         return null;
+    }
+
+    public override void UpdateInputEventLoop()
+    {
+        return;
     }
 }
