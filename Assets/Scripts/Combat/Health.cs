@@ -86,6 +86,15 @@ namespace Assets.Scripts.Combat
             iFrameCounter = iFrameDuration;
         }
 
+        public void Heal(int healAmount)
+        {
+            currentHealth += healAmount;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+        }
+
         private void Die()
         {
             Destroy(gameObject);
