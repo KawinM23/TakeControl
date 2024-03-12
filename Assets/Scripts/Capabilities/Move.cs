@@ -9,6 +9,8 @@ namespace Assets.Scripts.Capabilities
     public class Move : MonoBehaviour
     {
         private Controller _controller;
+        private Transform _transform;
+
         private Vector2 _direction, _desiredVelocity, _velocity;
         private Collider2D _collider;
         private Rigidbody2D _body;
@@ -29,6 +31,13 @@ namespace Assets.Scripts.Capabilities
         public bool isFacingRight;
         private bool followMovement; //facing follow the movement
 
+        [Space(10)]
+        public bool isCrouching;
+        [SerializeField] private float crouchSpeedMultiplier = 0.5f;
+        [SerializeField] private float crouchHeightMultiplier = 0.5f;
+        private float defaultHeight;
+        private float crouchHeight;
+
         private GameObject platform;
 
         private void Awake()
@@ -37,8 +46,11 @@ namespace Assets.Scripts.Capabilities
             _body = GetComponent<Rigidbody2D>();
             _ground = GetComponent<Ground>();
             _controller = GetComponent<Controller>();
+            _transform = GetComponent<Transform>();
             _spriteRenderer = transform.Find("PlayerSprite")?.GetComponent<SpriteRenderer>();
             followMovement = true;
+            defaultHeight = _transform.localScale.y;
+            crouchHeight = _transform.localScale.y * crouchHeightMultiplier;
 
         }
 
@@ -65,6 +77,22 @@ namespace Assets.Scripts.Capabilities
 
         private void FixedUpdate()
         {
+            // Handle crouching and movement speed
+            if (_controller.input.RetrieveCrouchInput())
+            {
+                Debug.Log("Crouching!");
+                isCrouching = true;
+                // lower body height
+                _transform.localScale = new Vector2(_transform.localScale.x, crouchHeight);
+            }
+            else
+            {
+                isCrouching = false;
+                // reset body height
+                _transform.localScale = new Vector2(_transform.localScale.x, defaultHeight);
+            }
+
+            // Handle dashing
             if (isDashing)
             {
                 _body.gravityScale = 0f;
@@ -72,10 +100,10 @@ namespace Assets.Scripts.Capabilities
             else
             {
                 _velocity = _body.velocity;
-                _velocity.x = _desiredVelocity.x;
+                // slow down if crouching
+                _velocity.x = _desiredVelocity.x * (isCrouching ? crouchSpeedMultiplier : 1);
             }
             _body.velocity = _velocity;
-
         }
 
         private IEnumerator Dash(float x, bool isFacingRight)

@@ -56,4 +56,9 @@ public class PlayerController : InputController
             isLeftMousePress = false;
         }
     }
+
+    public override bool RetrieveCrouchInput()
+    {
+        return Input.GetKey(KeyCode.LeftControl);
+    }
 }

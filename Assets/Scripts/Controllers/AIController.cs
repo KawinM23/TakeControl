@@ -49,4 +49,9 @@ public class AIController : InputController
     {
         return;
     }
+
+    public override bool RetrieveCrouchInput()
+    {
+        return false;
+    }
 }
