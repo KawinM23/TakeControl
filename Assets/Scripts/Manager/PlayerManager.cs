@@ -18,10 +18,16 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Instance = this;
+            SetUp();
         }
     }
 
     private void Start()
+    {
+        SetUp();
+    }
+
+    private void SetUp()
     {
         GameObject activePlayer = FindActivePlayer();
         if (!playerGameObject)

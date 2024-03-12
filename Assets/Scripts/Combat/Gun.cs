@@ -23,14 +23,22 @@ namespace Assets.Scripts.Combat
 
         private void Update()
         {
-            controller.input.UpdateInputEventLoop();
             if (lastReloadTime == -1)
             {
-                if (controller.input.RetrieveAttackInput())
+                Vector2? pos = null;
+                if (controller.input.RetrieveAttackInput().HasValue)
+                {
+                    pos = controller.input.RetrieveAttackInput().Value;
+                }
+                else if (controller.input.RetrieveAttackHoldInput().HasValue)
+                {
+                    pos = controller.input.RetrieveAttackHoldInput().Value;
+                }
+                if (pos != null)
                 {
                     if (Time.fixedTimeAsDouble - lastFireTime >= shootingDelay && currentAmmo > 0)
                     {
-                        Shoot();
+                        Shoot((Vector2)pos);
                         lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
                         currentAmmo -= 1;
                     }
@@ -47,7 +55,7 @@ namespace Assets.Scripts.Combat
             }
         }
 
-        public void Shoot()
+        public void Shoot(Vector2 position)
         {
             Debug.Log("Shoot");
 

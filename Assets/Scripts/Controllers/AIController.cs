@@ -22,9 +22,13 @@ public class AIController : InputController
         return false;
     }
 
-    public override bool RetrieveAttackInput()
+    public override Vector2? RetrieveAttackInput()
     {
-        return false;
+        return null;
+    }
+    public override Vector2? RetrieveAttackHoldInput()
+    {
+        return null;
     }
     public override bool RetrieveReloadInput()
     {
@@ -43,10 +47,5 @@ public class AIController : InputController
     public override Vector2? RetrieveHackInput()
     {
         return null;
-    }
-
-    public override void UpdateInputEventLoop()
-    {
-        return;
     }
 }
