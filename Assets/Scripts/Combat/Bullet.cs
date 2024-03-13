@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,14 @@ namespace Assets.Scripts.Combat
         public void Fire(Vector2 velocity)
         {
             rb.velocity = velocity;
+            StartCoroutine(InitBullet());
+        }
+
+        private IEnumerator InitBullet()
+        {
+            yield return new WaitForSeconds(5);
+            Destroy(gameObject);
+            yield return null;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)

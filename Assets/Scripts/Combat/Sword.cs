@@ -33,16 +33,15 @@ namespace Assets.Scripts.Combat
         {
             if (_controller.input.RetrieveAttackInput().HasValue)
             {
-                AttackAction();
+                AttackAction(_controller.input.RetrieveAttackInput().Value);
                 OnAttack?.Invoke();
             }
         }
 
-        private void AttackAction()
+        private void AttackAction(Vector2 mousePosition)
         {
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePosition - (Vector2)parentTransform.position).normalized;
 
             _swordCollider.transform.localPosition = direction * 1.2f;
