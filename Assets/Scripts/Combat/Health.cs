@@ -91,6 +91,14 @@ namespace Assets.Scripts.Combat
             Destroy(gameObject);
         }
 
+        public int GetMaxHealth()
+        {
+            return this.maxHealth;
+        }
+        public int GetCurrentHealth()
+        {
+            return this.currentHealth;
+        }
         /// <summary>
         /// Does the health meet the requirements to be hacked
         /// </summary>
