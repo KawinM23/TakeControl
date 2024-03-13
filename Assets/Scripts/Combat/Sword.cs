@@ -64,7 +64,8 @@ namespace Assets.Scripts.Combat
             if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
                 Debug.Log(collision);
-                health.TakeDamage(_swordDamage);
+                Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
+                health.TakeDamage(_swordDamage, hitDirection);
             }
 
         }

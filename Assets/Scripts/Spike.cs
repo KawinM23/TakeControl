@@ -17,7 +17,7 @@ public class Spike : MonoBehaviour
         collision.gameObject.TryGetComponent(out Health health);
         if (health)
         {
-            health.TakeDamage(34);
+            health.TakeDamage(34, Vector2.zero); // TODO: decide knockback of spike;
         }
     }
 

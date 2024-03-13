@@ -44,7 +44,8 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
-                        health.TakeDamage(damage);
+                        Vector2 hitDirection = (collider.transform.position - transform.position).normalized;
+                        health.TakeDamage(damage, hitDirection);
                     }
                 }
                 else// Our Bullet
@@ -55,7 +56,8 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
-                        health.TakeDamage(damage);
+                        Vector2 hitDirection = rb.velocity.normalized;
+                        health.TakeDamage(damage, hitDirection);
                     }
                 }
                 Destroy(gameObject);

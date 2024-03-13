@@ -21,6 +21,7 @@ namespace Assets.Scripts.Combat
 
         private SpriteRenderer spriteRenderer;
         private Collider2D collider;
+        private Rigidbody2D rb;
 
         private Coroutine flashCoroutine;
         IEnumerator Flash(Color targetColor)
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Combat
 
         private void Awake()
         {
-
+            rb = GetComponent<Rigidbody2D>();
         }
 
         // Use this for initialization
@@ -71,7 +72,7 @@ namespace Assets.Scripts.Combat
             }
 
         }
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, Vector2 hitDirection)
         {
             if (iFrame)
             {
@@ -81,6 +82,7 @@ namespace Assets.Scripts.Combat
             if (flashCoroutine != null) StopCoroutine(flashCoroutine);
             flashCoroutine = StartCoroutine(Flash(Color.red));
 
+            ApplyKnockback(hitDirection, damage);
             currentHealth -= damage;
             iFrame = true;
             iFrameCounter = iFrameDuration;
@@ -95,5 +97,16 @@ namespace Assets.Scripts.Combat
         /// Does the health meet the requirements to be hacked
         /// </summary>
         public bool Hackable() => currentHealth <= hackableHealth;
+
+        public void ApplyKnockback(Vector2 hitDirection, float damage)
+        {
+            // The more damage, the more knockback force is applied
+            float knockbackForce = 500f * damage / maxHealth;
+
+            rb.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
+            rb.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
+        }
     }
+
+
 }
