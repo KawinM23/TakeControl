@@ -74,6 +74,7 @@ namespace Assets.Scripts.Capabilities
                 _velocity = _body.velocity;
                 _velocity.x = _desiredVelocity.x;
             }
+
             _body.velocity = _velocity;
 
         }

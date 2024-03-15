@@ -1189,6 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _toScene: Map1-2
+  _direction: 2
 --- !u!1 &1398961051
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static MapTransition;
 
 public class MapManager : MonoBehaviour
 {
@@ -10,10 +11,12 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance { get; private set; }
 
     [SerializeField] private float mapChangeCooldown;
-    public static bool changingScene;
+    public bool changingScene;
 
-    public static string fromScene;
-    public static string toScene;
+    public string fromScene;
+    public string toScene;
+    public float distanceFromSpawn;
+    public Direction direction;
 
     private void Awake()
     {
@@ -35,8 +38,19 @@ public class MapManager : MonoBehaviour
         if (changingScene)
         {
             player = PlayerManager.Instance.playerGameObject;
+            player.transform.position = FindDestinationPosition(fromScene, toScene, distanceFromSpawn);
             player.SetActive(true);
-            player.transform.position = MapTransition.FindDestinationPosition(fromScene, toScene);
+            if (player.TryGetComponent(out Rigidbody2D rb))
+            {
+                Debug.Log(PlayerPrefs.GetFloat("velocityX") + " " + PlayerPrefs.GetFloat("velocityY"));
+                rb.velocity = new Vector2(PlayerPrefs.GetFloat("velocityX"), PlayerPrefs.GetFloat("velocityY"));
+                if (direction == Direction.Up)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 2f);
+                }
+            }
+
+
             if (player.TryGetComponent(out TrailRenderer tr))
             {
                 tr.Clear();
@@ -46,7 +60,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ChangeScene(string fromSceneName, string toSceneName)
+    public IEnumerator ChangeScene(string fromSceneName, string toSceneName, Direction direction, float distanceFromSpawn)
     {
         if (changingScene)
         {
@@ -55,11 +69,18 @@ public class MapManager : MonoBehaviour
         changingScene = true;
         fromScene = fromSceneName;
         toScene = toSceneName;
+        this.distanceFromSpawn = distanceFromSpawn;
+        this.direction = direction;
 
         player = PlayerManager.Instance.playerGameObject;
+        if (player.TryGetComponent(out Rigidbody2D rb))
+        {
+            PlayerPrefs.SetFloat("velocityX", rb.velocity.x);
+            PlayerPrefs.SetFloat("velocityY", rb.velocity.y);
+        }
+
         DontDestroyOnLoad(player);
         player.SetActive(false);
-
         SceneManager.LoadScene(toSceneName);
 
         /*SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toSceneName));*//*

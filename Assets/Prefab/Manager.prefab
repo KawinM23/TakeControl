@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36aa751ebbe486a498221dc3d876435d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapChangeCooldown: 1.5
+  mapChangeCooldown: 1
 --- !u!114 &8389585372730492381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,3 +58,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27f16c92a989b428ee0d30c6cfc249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGameObject: {fileID: 0}
+  playerPrefab: {fileID: 0}
