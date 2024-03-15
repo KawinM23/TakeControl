@@ -5,8 +5,8 @@ using UnityEngine;
 public class SwitchController : MonoBehaviour
 {
 
-    [SerializeField] bool _isDoorOpenSwitch;
-    [SerializeField] bool _isDoorCloseSwitch;
+    [SerializeField] bool _activable;
+    [SerializeField] bool _deactivatable;
     public bool _clicked = false;
 
      
@@ -66,11 +66,11 @@ public class SwitchController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             _isPressingSwitch = !_isPressingSwitch;
-            if(_isDoorOpenSwitch && !_clicked)
+            if(_activable && !_clicked)
             {
                 _clicked = true;
             }
-            else if(_isDoorCloseSwitch && _clicked)
+            else if(_deactivatable && _clicked)
             {
                 _clicked = false;
             }
