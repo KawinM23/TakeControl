@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
-    [SerializeField] private CinemachineVirtualCamera _camera;
+    private CinemachineVirtualCamera _camera;
 
     void Awake()
     {
