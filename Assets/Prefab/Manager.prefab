@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3247765702560581394}
   - component: {fileID: 625499515650629018}
   - component: {fileID: 8389585372730492381}
+  - component: {fileID: 572526612175155861}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -46,6 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapChangeCooldown: 1
+  changingScene: 0
+  fromScene: 
+  toScene: 
+  distanceFromSpawn: 0
+  direction: 0
 --- !u!114 &8389585372730492381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,3 +65,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
+--- !u!114 &572526612175155861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376023059759919086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d4ba06d9f6079b68cf5ec047d461c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
