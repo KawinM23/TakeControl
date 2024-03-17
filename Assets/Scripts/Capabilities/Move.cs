@@ -18,12 +18,21 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
         [Header("Dash")]
+        [SerializeField, Range(0f, 100f)] private float _dashPower = 20f;
+        [SerializeField, Range(0f, 10f)] private float _dashCooldown = 1f;
+        [SerializeField, Range(0f, 1f)] private float _dashTime = 0.2f;
+        [SerializeField] private bool _canDash = true;
+        private float _dashDirection;
+        private bool _isDashing;
+        private float _dashTimer;
+        private float _dashCooldownTimer;
+        private float _previousGravity;
+        private LayerMask _previousLayerMask;
+        [SerializeField] private LayerMask _dodgeableLayer;
         [SerializeField, Range(0f, 100f)] private float _dashingPower = 20f;
         [SerializeField, Range(0f, 10f)] private float _dashingCooldown = 1f;
         [SerializeField, Range(0f, 1f)] private float _dashingTime = 0.2f;
-        private bool _canDash = true;
-        private bool _isDashing;
-        [SerializeField] private LayerMask _dodgeableLayer;
+
 
         [Space(10)]
         private bool _isFacingRight;
@@ -49,7 +58,27 @@ namespace Assets.Scripts.Capabilities
             _desiredVelocity = new Vector2(_direction.x, 0f) * Mathf.Max(_maxSpeed - _ground.Friction, 0f);
             if (_isFollowingMovement)
             {
-                _isFacingRight = _desiredVelocity.x > 0 || (_desiredVelocity.x >= 0 && _isFacingRight);
+                _isFacingRight = _desiredVelocity.x > 0 ? true : (_desiredVelocity.x < 0 ? false : _isFacingRight);
+            }
+            
+            if (_isDashing)
+            {
+                _dashTimer -= Time.deltaTime;
+                if (_dashTimer <= 0)
+                {
+                    _isDashing = false;
+                    _collider.excludeLayers = _previousLayerMask;
+                    _body.gravityScale = _previousGravity;
+                    _dashCooldownTimer = _dashCooldown;
+                }
+            }
+            else if (!_canDash && _dashCooldownTimer >= 0)
+            {
+                _dashCooldownTimer -= Time.deltaTime;
+                if (_dashCooldownTimer <= 0)
+                {
+                    _canDash = true;
+                }
             }
             if (_spriteRenderer) { _spriteRenderer.flipX = !_isFacingRight; }
 
@@ -67,7 +96,7 @@ namespace Assets.Scripts.Capabilities
         {
             if (_isDashing)
             {
-                _velocity = new Vector2(dashingPower * dashDirection, 0f);
+                _velocity = new Vector2(_dashPower * _dashDirection, 0f);
                 _body.gravityScale = 0f;
             }
             else
@@ -78,7 +107,7 @@ namespace Assets.Scripts.Capabilities
 
             _body.velocity = _velocity;
 
-            if (_spriteRenderer) { _spriteRenderer.flipX = !isFacingRight; }
+            if (_spriteRenderer) { _spriteRenderer.flipX = !_isFacingRight; }
         }
 
         /// <summary>
