@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     }
     private GameObject _player;
 
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject _playerPrefab;
 
     private void Awake()
     {
@@ -43,15 +44,18 @@ public class PlayerManager : MonoBehaviour
     {
         GameObject activePlayer = FindActivePlayer();
         if (!Player)
+        if (!Player)
         {
             if (activePlayer)
             {
                 Player = activePlayer;
+                Player = activePlayer;
             }
-            else if (playerPrefab)
+            else if (_playerPrefab)
             {
-                GameObject gameObject = Instantiate(playerPrefab);
+                GameObject gameObject = Instantiate(_playerPrefab);
                 gameObject.SetActive(true);
+                Player = gameObject;
                 Player = gameObject;
             }
         }
@@ -75,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
+            if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.Player))
             if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.Player))
             {
                 Destroy(c.gameObject);

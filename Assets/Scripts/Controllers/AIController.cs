@@ -5,46 +5,46 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AIController", menuName = "InputController/AIController")]
 public class AIController : InputController
 {
-    public override float RetrieveMoveInput()
+    public override float GetHorizontalMovement()
     {
         return 0f;
     }
-    public override float RetrieveVerticalInput()
+    public override float GetVerticalMovement()
     {
         return 0f;
     }
-    public override bool RetrieveJumpInput()
+    public override bool IsJumpPressed()
     {
         return false;
     }
-    public override bool RetrieveJumpHoldInput()
+    public override bool IsJumpHeld()
     {
         return false;
     }
 
-    public override Vector2? RetrieveAttackInput()
+    public override Vector2? GetAttackDirection()
     {
         return null;
     }
-    public override Vector2? RetrieveAttackHoldInput()
+    public override Vector2? GetContinuedAttackDirection()
     {
         return null;
     }
-    public override bool RetrieveReloadInput()
+    public override bool IsReloadPressed()
     {
         return false;
     }
 
-    public override bool RetrieveDashInput()
+    public override bool IsDashPressed()
     {
         return false;
     }
-    public override bool RetrieveSwapWeaponInput()
+    public override bool IsSwapWeaponPressed()
     {
         return false;
     }
 
-    public override Vector2? RetrieveHackInput()
+    public override Vector2? GetHackInput()
     {
         return null;
     }

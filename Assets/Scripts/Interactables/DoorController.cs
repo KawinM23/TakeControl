@@ -5,52 +5,49 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField]  List<SwitchController> _switchController;
+    [SerializeField] private List<SwitchController> _switchController;
 
-    public bool _isDoorOpen = false;
-
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool _isOpened = false;
 
     // Update is called once per frame
     void Update()
     {
-        bool abletoopen = true;
+        CheckSwitches();
+    }
+
+    void CheckSwitches()
+    {
+        bool isOpenable = true;
         foreach (var item in _switchController)
         {
-            if (!item._clicked)
+            if (!item.Clicked)
             {
-                abletoopen = false;
+                isOpenable = false;
+                break;
             }
         }
-        if (abletoopen)
+        if (isOpenable)
         {
-            
             OpenDoor();
         }
         else
         {
-
             CloseDoor();
         }
     }
     void OpenDoor()
     {
-        _isDoorOpen = true;
+        _isOpened = true;
         if (transform.localScale.x > 0)
         {
-            transform.localScale = new Vector3(0,0,0);
+            transform.localScale = new Vector3(0, 0, 0);
         }
     }
     void CloseDoor()
     {
-       
-        _isDoorOpen = false;
-            transform.localScale = new Vector3(0.2f, 2,1);
-        
+
+        _isOpened = false;
+        transform.localScale = new Vector3(0.2f, 2, 1);
+
     }
 }

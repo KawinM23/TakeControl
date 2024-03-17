@@ -4,38 +4,32 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
+    public bool Clicked = false;
+    [SerializeField] private bool _isActivable;
+    [SerializeField] private bool _isDeactivatable;
 
-    [SerializeField] bool _activable;
-    [SerializeField] bool _deactivatable;
-    public bool _clicked = false;
+    private bool _isBeingPressed = false;
+    private float _switchSizeY;
+    private Vector3 _switchUpPos;
+    private Vector3 _switchDownPos;
+    private readonly float _switchSpeed = 1f;
+    private readonly float _switchDelay = 0.3f;
 
-     
-    bool _isPressingSwitch = false;
-    float _switchSizeY;
-    Vector3 _switchUpPos;
-    Vector3 _switchDownPos;
-    float _switchSpeed = 1f;
-    float _switchDelay = 0.3f;
-   
     // Start is called before the first frame update
     private void Awake()
     {
-        _switchSizeY = transform.localScale.y/2;
+        _switchSizeY = transform.localScale.y / 2;
         _switchUpPos = transform.position;
-        _switchDownPos = new Vector3(transform.position.x,transform.position.y - _switchSizeY,transform.position.z);
-    }
-    void Start()
-    {
-        
+        _switchDownPos = new Vector3(transform.position.x, transform.position.y - _switchSizeY, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (_clicked)
+        if (Clicked)
         {
-         
+
             MoveSwitchDown();
         }
         else
@@ -47,9 +41,9 @@ public class SwitchController : MonoBehaviour
 
     void MoveSwitchDown()
     {
-        if(transform.position != _switchDownPos)
+        if (transform.position != _switchDownPos)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _switchDownPos, _switchSpeed*Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _switchDownPos, _switchSpeed * Time.deltaTime);
         }
     }
 
@@ -65,16 +59,16 @@ public class SwitchController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            _isPressingSwitch = !_isPressingSwitch;
-            if(_activable && !_clicked)
+            _isBeingPressed = !_isBeingPressed;
+            if (_isActivable && !Clicked)
             {
-                _clicked = true;
+                Clicked = true;
             }
-            else if(_deactivatable && _clicked)
+            else if (_isDeactivatable && Clicked)
             {
-                _clicked = false;
+                Clicked = false;
             }
-           
+
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -86,7 +80,7 @@ public class SwitchController : MonoBehaviour
     }
     IEnumerator SwitchUpDelay(float waitTime)
     {
-        yield return new   WaitForSeconds(waitTime);
-        _isPressingSwitch = false;
+        yield return new WaitForSeconds(waitTime);
+        _isBeingPressed = false;
     }
 }

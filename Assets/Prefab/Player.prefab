@@ -378,13 +378,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 4.2
-  dashingPower: 14
-  dashingCooldown: 1
-  dashingTime: 0.18
-  dodgeableLayer:
+  _dashingPower: 20
+  _dashingCooldown: 1
+  _dashingTime: 0.2
+  _dodgeableLayer:
     serializedVersion: 2
-    m_Bits: 576
-  isFacingRight: 1
+    m_Bits: 0
 --- !u!114 &5256826179897057529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 10
-  bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
+  _bulletSpeed: 10
+  _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
 --- !u!114 &8086383678846937365
 MonoBehaviour:
   m_ObjectHideFlags: 0

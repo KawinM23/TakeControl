@@ -11,6 +11,7 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0, 5)] private int _maxAirJumps = 0;
         [SerializeField, Range(0f, 5f)] private float _downwardMovementMultiplier = 3.3f;
         [SerializeField, Range(0f, 5f)] private float _upwardMovementMultiplier = 1.6f;
+
         [SerializeField, Range(0f, 0.3f)] private float _coyoteTime = 0.2f;
         [SerializeField, Range(0f, 0.3f)] private float _jumpBufferTime = 0.2f;
 
@@ -20,12 +21,14 @@ namespace Assets.Scripts.Capabilities
         private Vector2 _velocity;
 
         private int _jumpPhase;
+
+        // _coyoteCounter is the time the player can jump after leaving the ground
         private float _defaultGravityScale, _jumpSpeed, _coyoteCounter, _jumpBufferCounter;
 
         private bool _desiredJump, _onGround, _isJumping;
 
 
-        // Start is called before the first frame update
+        // Awake is called when the script instance is being loaded
         void Awake()
         {
             _body = GetComponent<Rigidbody2D>();
@@ -38,14 +41,16 @@ namespace Assets.Scripts.Capabilities
         // Update is called once per frame
         void Update()
         {
-            _desiredJump |= _controller.input.RetrieveJumpInput() && _controller.input.RetrieveVerticalInput() >= 0f;
+            _desiredJump |= _controller.input.IsJumpPressed() && _controller.input.GetVerticalMovement() >= 0f;
         }
 
+        // FixedUpdate is called every fixed framerate frame
         private void FixedUpdate()
         {
-            _onGround = _ground.OnGround;
+            _onGround = _ground.IsOnGround;
             _velocity = _body.velocity;
 
+            // If the player is on the ground, reset the jump phase and coyote counter
             if (_onGround && _body.velocity.y == 0)
             {
                 _jumpPhase = 0;
@@ -57,6 +62,7 @@ namespace Assets.Scripts.Capabilities
                 _coyoteCounter -= Time.deltaTime;
             }
 
+            // If the player has pressed the jump button, set the jump buffer counter
             if (_desiredJump)
             {
                 _desiredJump = false;
@@ -67,16 +73,18 @@ namespace Assets.Scripts.Capabilities
                 _jumpBufferCounter -= Time.deltaTime;
             }
 
+            // If the jump buffer counter is greater than 0, jump
             if (_jumpBufferCounter > 0)
             {
                 JumpAction();
             }
 
-            if (_controller.input.RetrieveJumpHoldInput() && _body.velocity.y > 0)
+            // If the player is holding the jump button and is moving upwards, reduce gravity
+            if (_controller.input.IsJumpHeld() && _body.velocity.y > 0)
             {
                 _body.gravityScale = _upwardMovementMultiplier;
             }
-            else if (!_controller.input.RetrieveJumpHoldInput() || _body.velocity.y < 0)
+            else if (!_controller.input.IsJumpHeld() || _body.velocity.y < 0)
             {
                 _body.gravityScale = _downwardMovementMultiplier;
             }
@@ -85,6 +93,7 @@ namespace Assets.Scripts.Capabilities
                 _body.gravityScale = _defaultGravityScale;
             }
 
+            // Apply the velocity to the rigidbody
             _body.velocity = _velocity;
         }
         private void JumpAction()

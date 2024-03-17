@@ -5,44 +5,44 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerController", menuName = "InputController/PlayerController")]
 public class PlayerController : InputController
 {
-    public override float RetrieveMoveInput()
+    public override float GetHorizontalMovement()
     {
         return Input.GetAxisRaw("Horizontal");
     }
-    public override float RetrieveVerticalInput()
+    public override float GetVerticalMovement()
     {
         return Input.GetAxisRaw("Vertical");
     }
-    public override bool RetrieveJumpInput()
+    public override bool IsJumpPressed()
     {
         return Input.GetButtonDown("Jump");
     }
-    public override bool RetrieveJumpHoldInput()
+    public override bool IsJumpHeld()
     {
         return Input.GetButton("Jump");
     }
-    public override bool RetrieveDashInput()
+    public override bool IsDashPressed()
     {
         return Input.GetKeyDown(KeyCode.LeftShift);
     }
 
-    public override Vector2? RetrieveAttackInput()
+    public override Vector2? GetAttackDirection()
     {
         return Input.GetMouseButtonDown(0) ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : null;
     }
-    public override Vector2? RetrieveAttackHoldInput()
+    public override Vector2? GetContinuedAttackDirection()
     {
         return Input.GetMouseButton(0) ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : null;
     }
-    public override bool RetrieveReloadInput()
+    public override bool IsReloadPressed()
     {
         return Input.GetKeyDown(KeyCode.R);
     }
-    public override bool RetrieveSwapWeaponInput()
+    public override bool IsSwapWeaponPressed()
     {
         return Input.GetKeyDown(KeyCode.Q); //TODO: confirm control with team
     }
-    public override Vector2? RetrieveHackInput()
+    public override Vector2? GetHackInput()
     {
         return Input.GetMouseButtonDown(1) ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : null;
     }

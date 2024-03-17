@@ -176,12 +176,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e562f85c6274fc48c28ae47b674013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemy: 0
-  damage: 15
-  checkLayer:
+  IsEnemy: 0
+  _damage: 15
+  _actionLayer:
     serializedVersion: 2
     m_Bits: 64
-  collideLayer:
+  _destroyLayer:
     serializedVersion: 2
     m_Bits: 128
 --- !u!96 &8426130462317985718
