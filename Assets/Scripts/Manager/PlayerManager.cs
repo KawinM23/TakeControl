@@ -6,7 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    public GameObject playerGameObject;
+    public GameObject player;
     [SerializeField] private GameObject playerPrefab;
 
     private void Awake()
@@ -30,17 +30,17 @@ public class PlayerManager : MonoBehaviour
     private void SetUp()
     {
         GameObject activePlayer = FindActivePlayer();
-        if (!playerGameObject)
+        if (!player)
         {
             if (activePlayer)
             {
-                playerGameObject = activePlayer;
+                player = activePlayer;
             }
             else if (playerPrefab)
             {
                 GameObject gameObject = Instantiate(playerPrefab);
                 gameObject.SetActive(true);
-                playerGameObject = gameObject;
+                player = gameObject;
             }
         }
     }
@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
         Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
-            if (c.input is PlayerController && !ReferenceEquals(c.gameObject ,Instance.playerGameObject))
+            if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.player))
             {
                 Destroy(c.gameObject);
             }

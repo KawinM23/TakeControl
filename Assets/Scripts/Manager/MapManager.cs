@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
     {
         if (changingScene)
         {
-            player = PlayerManager.Instance.playerGameObject;
+            player = PlayerManager.Instance.player;
             player.SetActive(true);
             player.transform.position = MapTransition.FindDestinationPosition(fromScene, toScene);
             if (player.TryGetComponent(out TrailRenderer tr))
@@ -56,7 +56,7 @@ public class MapManager : MonoBehaviour
         fromScene = fromSceneName;
         toScene = toSceneName;
 
-        player = PlayerManager.Instance.playerGameObject;
+        player = PlayerManager.Instance.player;
         DontDestroyOnLoad(player);
         player.SetActive(false);
 

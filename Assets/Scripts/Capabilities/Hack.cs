@@ -58,7 +58,7 @@ namespace Assets.Scripts.Capabilities
             // Remove the hacker
             _controller.input = null;
             target.gameObject.tag = "Player";
-            PlayerManager.Instance.playerGameObject = target.gameObject;
+            PlayerManager.Instance.player = target.gameObject;
             Destroy(gameObject);
         }
     }

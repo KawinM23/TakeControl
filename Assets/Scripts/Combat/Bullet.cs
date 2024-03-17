@@ -34,7 +34,7 @@ namespace Assets.Scripts.Combat
             }
             if (checkLayer == (checkLayer | (1 << collider.transform.gameObject.layer)))
             {
-                bool hitPlayer = collider.gameObject == PlayerManager.Instance.playerGameObject;
+                bool hitPlayer = collider.gameObject == PlayerManager.Instance.player;
                 // Enemy Bullet
                 if (isEnemy)
                 {
