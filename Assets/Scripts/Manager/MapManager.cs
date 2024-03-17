@@ -40,7 +40,7 @@ public class MapManager : MonoBehaviour
             _player.SetActive(true);
             if (_player.TryGetComponent(out Rigidbody2D rb))
             {
-                Debug.Log(PlayerPrefs.GetFloat("velocityX") + " " + PlayerPrefs.GetFloat("velocityY"));
+                /*Debug.Log(PlayerPrefs.GetFloat("velocityX") + " " + PlayerPrefs.GetFloat("velocityY"));*/
                 rb.velocity = new Vector2(PlayerPrefs.GetFloat("velocityX"), PlayerPrefs.GetFloat("velocityY"));
                 if (Direction == Direction.Up)
                 {
@@ -79,7 +79,9 @@ public class MapManager : MonoBehaviour
 
         DontDestroyOnLoad(_player);
         _player.SetActive(false);
-        SceneManager.LoadScene(toSceneName);
+        yield return SceneManager.LoadSceneAsync(toSceneName,LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
+        SceneManager.UnloadSceneAsync(fromSceneName);
 
         /*SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toSceneName));*//*
         player.SetActive(true);
