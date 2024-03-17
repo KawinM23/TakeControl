@@ -233,7 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8312403371105361069}
-  - component: {fileID: 703588886272039779}
+  - component: {fileID: 2761257291373647924}
   - component: {fileID: 570147246070492738}
   - component: {fileID: 9075951902279361321}
   - component: {fileID: 3219081331280614371}
@@ -268,8 +268,8 @@ Transform:
   - {fileID: 8765052046535671632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &703588886272039779
-BoxCollider2D:
+--- !u!70 &2761257291373647924
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -300,19 +300,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0031323433, y: -0.04053068}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.60391045, y: 0.95799875}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.0014259815, y: -0.03707272}
+  m_Size: {x: 0.605515, y: 0.94866836}
+  m_Direction: 0
 --- !u!50 &570147246070492738
 Rigidbody2D:
   serializedVersion: 4
@@ -378,9 +368,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 4.2
-  _dashingPower: 20
-  _dashingCooldown: 1
-  _dashingTime: 0.2
+  _hasDash: 1
+  _canDash: 1
+  _dashPower: 20
+  _dashCooldown: 1
+  _dashTime: 0.2
   _dodgeableLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -432,12 +424,12 @@ MonoBehaviour:
   OnHackable:
     m_PersistentCalls:
       m_Calls: []
-  maxHealth: 100
-  currentHealth: 0
-  hackableHealth: 20
-  iFrame: 0
-  iFrameDuration: 0.5
-  iFramableLayer:
+  _maxHealth: 100
+  _currentHealth: 0
+  _hackableHealth: 20
+  _iFrame: 0
+  _iFrameDuration: 0
+  _iFramableLayer:
     serializedVersion: 2
     m_Bits: 0
 --- !u!114 &9017549952657372097
@@ -452,8 +444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2703bdbbfc444f0d8891501a2a5a184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
-  currentWeaponIndex: 0
+  _weapons: []
+  _currentWeaponIndex: 0
 --- !u!114 &5993266342746026121
 MonoBehaviour:
   m_ObjectHideFlags: 0
