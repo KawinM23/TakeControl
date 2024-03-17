@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     }
     private GameObject _player;
 
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject _playerPrefab;
 
     private void Awake()
     {
@@ -48,9 +48,9 @@ public class PlayerManager : MonoBehaviour
             {
                 Player = activePlayer;
             }
-            else if (playerPrefab)
+            else if (_playerPrefab)
             {
-                GameObject gameObject = Instantiate(playerPrefab);
+                GameObject gameObject = Instantiate(_playerPrefab);
                 gameObject.SetActive(true);
                 Player = gameObject;
             }

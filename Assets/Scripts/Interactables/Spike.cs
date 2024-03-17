@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    private Collider2D collider2d;
+    private Collider2D _collider;
     private void Awake()
     {
-        collider2d = GetComponent<Collider2D>();
+        _collider = GetComponent<Collider2D>();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -17,7 +17,7 @@ public class Spike : MonoBehaviour
         collision.gameObject.TryGetComponent(out Health health);
         if (health)
         {
-            health.TakeDamage(34);
+            health.TakeDamage(34); // TODO: hardcoded
         }
     }
 

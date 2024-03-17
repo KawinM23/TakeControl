@@ -322,6 +322,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4328385829411341047, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
+      propertyPath: _hackableHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328385829411341047, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: OnHackable.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1037,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8086383678846937365, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_Enabled
@@ -1775,11 +1779,11 @@ PrefabInstance:
       objectReference: {fileID: 2039329742}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.653269
+      value: 0.10806942
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6999998
+      value: 0.35537004
       objectReference: {fileID: 0}
     - target: {fileID: 8675497350606610742, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Name

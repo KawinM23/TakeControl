@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    private bool inTrigger;
-    private bool interactable = true;
+    private bool _isInTrigger;
+    private readonly bool _isInteractable = true;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && inTrigger && interactable)
+        if (Input.GetKeyDown(KeyCode.F) && _isInTrigger && _isInteractable)
         {
             Debug.Log("Save");
         }
@@ -19,7 +19,7 @@ public class SavePoint : MonoBehaviour
     {
         if (collision.gameObject == PlayerManager.Instance.Player)
         {
-            inTrigger = true;
+            _isInTrigger = true;
         }
     }
 
@@ -27,7 +27,7 @@ public class SavePoint : MonoBehaviour
     {
         if (collision.gameObject == PlayerManager.Instance.Player)
         {
-            inTrigger = false;
+            _isInTrigger = false;
         }
     }
 }

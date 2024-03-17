@@ -6,17 +6,15 @@ using static MapTransition;
 
 public class MapManager : MonoBehaviour
 {
-    private GameObject player;
-
     public static MapManager Instance { get; private set; }
+    public bool IsChangingScene;
+    public string FromScene;
+    public string ToScene;
+    public float DistanceFromSpawn;
+    public Direction Direction;
+    private GameObject _player;
 
-    [SerializeField] private float mapChangeCooldown;
-    public bool changingScene;
-
-    public string fromScene;
-    public string toScene;
-    public float distanceFromSpawn;
-    public Direction direction;
+    [SerializeField] private float _mapChangeCooldown;
 
     private void Awake()
     {
@@ -35,52 +33,52 @@ public class MapManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (changingScene)
+        if (IsChangingScene)
         {
-            player = PlayerManager.Instance.Player;
-            player.transform.position = FindDestinationPosition(fromScene, toScene, distanceFromSpawn);
-            player.SetActive(true);
-            if (player.TryGetComponent(out Rigidbody2D rb))
+            _player = PlayerManager.Instance.Player;
+            _player.transform.position = FindDestinationPosition(FromScene, ToScene, DistanceFromSpawn);
+            _player.SetActive(true);
+            if (_player.TryGetComponent(out Rigidbody2D rb))
             {
                 Debug.Log(PlayerPrefs.GetFloat("velocityX") + " " + PlayerPrefs.GetFloat("velocityY"));
                 rb.velocity = new Vector2(PlayerPrefs.GetFloat("velocityX"), PlayerPrefs.GetFloat("velocityY"));
-                if (direction == Direction.Up)
+                if (Direction == Direction.Up)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 2f);
                 }
             }
 
 
-            if (player.TryGetComponent(out TrailRenderer tr))
+            if (_player.TryGetComponent(out TrailRenderer tr))
             {
                 tr.Clear();
             }
             PlayerManager.DestroyOtherActivePlayers();
-            changingScene = false;
+            IsChangingScene = false;
         }
     }
 
     public IEnumerator ChangeScene(string fromSceneName, string toSceneName, Direction direction, float distanceFromSpawn)
     {
-        if (changingScene)
+        if (IsChangingScene)
         {
             yield break;
         }
-        changingScene = true;
-        fromScene = fromSceneName;
-        toScene = toSceneName;
-        this.distanceFromSpawn = distanceFromSpawn;
-        this.direction = direction;
+        IsChangingScene = true;
+        FromScene = fromSceneName;
+        ToScene = toSceneName;
+        DistanceFromSpawn = distanceFromSpawn;
+        Direction = direction;
 
-        player = PlayerManager.Instance.Player;
-        if (player.TryGetComponent(out Rigidbody2D rb))
+        _player = PlayerManager.Instance.Player;
+        if (_player.TryGetComponent(out Rigidbody2D rb))
         {
             PlayerPrefs.SetFloat("velocityX", rb.velocity.x);
             PlayerPrefs.SetFloat("velocityY", rb.velocity.y);
         }
 
-        DontDestroyOnLoad(player);
-        player.SetActive(false);
+        DontDestroyOnLoad(_player);
+        _player.SetActive(false);
         SceneManager.LoadScene(toSceneName);
 
         /*SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toSceneName));*//*

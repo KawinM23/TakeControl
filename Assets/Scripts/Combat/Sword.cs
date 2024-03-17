@@ -13,27 +13,27 @@ namespace Assets.Scripts.Combat
         [SerializeField] private int _swordDamage = 25;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
-        private SpriteRenderer sprite;
+        private SpriteRenderer _sprite;
 
         private Controller _controller;
-        private Transform parentTransform;
+        private Transform _parentTransform;
 
-        private Collider2D[] _hitEnemies;
+        private readonly Collider2D[] _hitEnemies;
 
         private void Awake()
         {
             _controller = GetComponent<Controller>();
-            parentTransform = _swordCollider.transform.parent;
-            sprite = _swordCollider.GetComponent<SpriteRenderer>();
-            sprite.enabled = false;
+            _parentTransform = _swordCollider.transform.parent;
+            _sprite = _swordCollider.GetComponent<SpriteRenderer>();
+            _sprite.enabled = false;
             _swordCollider.enabled = false;
         }
 
         private void Update()
         {
-            if (_controller.input.RetrieveAttackInput().HasValue)
+            if (_controller.input.GetAttackDirection().HasValue)
             {
-                AttackAction(_controller.input.RetrieveAttackInput().Value);
+                AttackAction(_controller.input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
             }
         }
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Combat
         {
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
-            Vector2 direction = (mousePosition - (Vector2)parentTransform.position).normalized;
+            Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
             _swordCollider.transform.localPosition = direction * 1.2f;
             _swordCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
@@ -50,10 +50,10 @@ namespace Assets.Scripts.Combat
         private IEnumerator SwordAnimation()
         {
             _swordCollider.enabled = true;
-            sprite.enabled = true;
+            _sprite.enabled = true;
             yield return new WaitForSeconds(0.2f);
             _swordCollider.enabled = false;
-            sprite.enabled = false;
+            _sprite.enabled = false;
             yield return null;
         }
 

@@ -922,8 +922,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 10
-  bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
+  _bulletSpeed: 10
+  _bulletPrefab: {fileID: 0}
 --- !u!1 &667061151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1287,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3841997523053746019, guid: 856d29d8f09084d45bcf26920084fe5e, type: 3}
       propertyPath: _activable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3841997523053746019, guid: 856d29d8f09084d45bcf26920084fe5e, type: 3}
+      propertyPath: _isActivable
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3479602765337630755, guid: 856d29d8f09084d45bcf26920084fe5e, type: 3}
@@ -2108,11 +2112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.653269
+      value: 0.10806942
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6999998
+      value: 0.35537004
       objectReference: {fileID: 0}
     - target: {fileID: 8675497350606610742, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Name
