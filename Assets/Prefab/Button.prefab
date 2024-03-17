@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.78867924, g: 0.78867924, b: 0.78867924, a: 1}
   m_FlipX: 0
@@ -172,9 +172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4598581fef36a334f815f3899deb7144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDoorOpenSwitch: 0
-  _isDoorCloseSwitch: 0
-  _clicked: 0
+  Clicked: 0
+  _isActivable: 0
+  _isDeactivatable: 0
 --- !u!1 &9008623875896244115
 GameObject:
   m_ObjectHideFlags: 0
