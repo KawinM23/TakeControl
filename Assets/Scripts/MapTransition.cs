@@ -61,7 +61,7 @@ public class MapTransition : MonoBehaviour
         {
             if (mt._fromScene.name.Equals(toScene) && mt._toScene.Equals(fromScene))
             {
-                Vector2 destination = mt.spawnPoint.position; Debug.Log("Des before " + destination);
+                Vector2 destination = mt.spawnPoint.position;
                 if (mt._direction == Direction.Left || mt._direction == Direction.Right)
                 {
 

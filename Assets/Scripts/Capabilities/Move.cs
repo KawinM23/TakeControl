@@ -21,8 +21,13 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0f, 100f)] private float dashingPower = 20f;
         [SerializeField, Range(0f, 10f)] private float dashingCooldown = 1f;
         [SerializeField, Range(0f, 1f)] private float dashingTime = 0.2f;
-        private bool canDash = true;
+        [SerializeField] bool canDash = true;
+        float dashDirection;
         private bool isDashing;
+        private float dashTimer;
+        private float dashCooldownTimer;
+        private float previousGravity;
+        private LayerMask previousLayerMask;
         [SerializeField] private LayerMask dodgeableLayer;
 
         [Space(10)]
@@ -50,16 +55,36 @@ namespace Assets.Scripts.Capabilities
             {
                 isFacingRight = _desiredVelocity.x > 0 ? true : (_desiredVelocity.x < 0 ? false : isFacingRight);
             }
-            if (_spriteRenderer) { _spriteRenderer.flipX = !isFacingRight; }
+            
+            if (isDashing)
+            {
+                dashTimer -= Time.deltaTime;
+                if (dashTimer <= 0)
+                {
+                    isDashing = false;
+                    _collider.excludeLayers = previousLayerMask;
+                    _body.gravityScale = previousGravity;
+                    dashCooldownTimer = dashingCooldown;
+                }
+            }
+            else if(!canDash && dashCooldownTimer >= 0)
+            {
+                dashCooldownTimer -= Time.deltaTime;
+                if (dashCooldownTimer <= 0)
+                {
+                    canDash = true;
+                }
+            }
 
             if (_controller.input.RetrieveDashInput() && canDash)
             {
-                StartCoroutine(Dash(_direction.x, isFacingRight));
+                Dash(_direction.x, isFacingRight);
             }
             if (platform && _controller.input.RetrieveVerticalInput() < 0f && _controller.input.RetrieveJumpInput())
             {
                 platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }
+
 
         }
 
@@ -67,6 +92,7 @@ namespace Assets.Scripts.Capabilities
         {
             if (isDashing)
             {
+                _velocity = new Vector2(dashingPower * dashDirection, 0f);
                 _body.gravityScale = 0f;
             }
             else
@@ -77,37 +103,30 @@ namespace Assets.Scripts.Capabilities
 
             _body.velocity = _velocity;
 
+            if (_spriteRenderer) { _spriteRenderer.flipX = !isFacingRight; }
         }
 
-        private IEnumerator Dash(float x, bool isFacingRight)
+        private void Dash(float x, bool isFacingRight)
         {
+            Debug.Log("Dash");
             canDash = false;
             isDashing = true;
-            LayerMask previousLayerMask = _collider.excludeLayers;
+            dashTimer = dashingTime;
+            previousGravity = _body.gravityScale;
+            previousLayerMask = _collider.excludeLayers;
             _collider.excludeLayers = dodgeableLayer;
-            float originalGravity = _body.gravityScale;
-            float direction;
             if (x > 0)
             {
-                direction = 1f;
+                dashDirection = 1f;
             }
             else if (x < 0)
             {
-                direction = -1f;
+                dashDirection = -1f;
             }
             else
             {
-                direction = isFacingRight ? 1f : -1f;
+                dashDirection = isFacingRight ? 1f : -1f;
             }
-            _velocity = new Vector2(dashingPower * direction, 0f);
-
-            yield return new WaitForSeconds(dashingTime);
-            _collider.excludeLayers = previousLayerMask;
-            isDashing = false;
-            _body.gravityScale = originalGravity;
-
-            yield return new WaitForSeconds(dashingCooldown);
-            canDash = true;
         }
 
         public void SetFollowMovement(bool followMovement)
