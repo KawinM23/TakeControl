@@ -17,7 +17,7 @@ public class SavePoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == PlayerManager.Instance.playerGameObject)
+        if (collision.gameObject == PlayerManager.Instance.Player)
         {
             inTrigger = true;
         }
@@ -25,7 +25,7 @@ public class SavePoint : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == PlayerManager.Instance.playerGameObject)
+        if (collision.gameObject == PlayerManager.Instance.Player)
         {
             inTrigger = false;
         }
