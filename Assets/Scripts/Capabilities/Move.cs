@@ -29,10 +29,6 @@ namespace Assets.Scripts.Capabilities
         private float _previousGravity;
         private LayerMask _previousLayerMask;
         [SerializeField] private LayerMask _dodgeableLayer;
-        [SerializeField, Range(0f, 100f)] private float _dashingPower = 20f;
-        [SerializeField, Range(0f, 10f)] private float _dashingCooldown = 1f;
-        [SerializeField, Range(0f, 1f)] private float _dashingTime = 0.2f;
-
 
         [Space(10)]
         private bool _isFacingRight;
@@ -58,9 +54,9 @@ namespace Assets.Scripts.Capabilities
             _desiredVelocity = new Vector2(_direction.x, 0f) * Mathf.Max(_maxSpeed - _ground.Friction, 0f);
             if (_isFollowingMovement)
             {
-                _isFacingRight = _desiredVelocity.x > 0 ? true : (_desiredVelocity.x < 0 ? false : _isFacingRight);
+                _isFacingRight = _desiredVelocity.x > 0 || (_desiredVelocity.x >= 0 && _isFacingRight);
             }
-            
+
             if (_isDashing)
             {
                 _dashTimer -= Time.deltaTime;
@@ -80,16 +76,17 @@ namespace Assets.Scripts.Capabilities
                     _canDash = true;
                 }
             }
-            if (_spriteRenderer) { _spriteRenderer.flipX = !_isFacingRight; }
 
             if (_controller.input.IsDashPressed() && _canDash)
             {
-                StartCoroutine(DashAction(_direction.x, _isFacingRight));
+                DashAction(_direction.x, _isFacingRight);
             }
             if (_platform && _controller.input.GetVerticalMovement() < 0f && _controller.input.IsJumpPressed())
             {
                 _platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }
+
+
         }
 
         private void FixedUpdate()
@@ -110,29 +107,27 @@ namespace Assets.Scripts.Capabilities
             if (_spriteRenderer) { _spriteRenderer.flipX = !_isFacingRight; }
         }
 
-        /// <summary>
-        /// Coroutine that performs a dash action.
-        /// </summary>
-        /// <param name="x">The horizontal input value.</param>
-        /// <param name="isFacingRight">Flag indicating if the character is facing right.</param>
-        /// <returns>An IEnumerator representing the coroutine.</returns>
-        private IEnumerator DashAction(float x, bool isFacingRight)
+        private void DashAction(float x, bool isFacingRight)
         {
+            Debug.Log("Dash");
             _canDash = false;
             _isDashing = true;
-            LayerMask previousLayerMask = _collider.excludeLayers;
+            _dashTimer = _dashTime;
+            _previousGravity = _body.gravityScale;
+            _previousLayerMask = _collider.excludeLayers;
             _collider.excludeLayers = _dodgeableLayer;
-            float originalGravity = _body.gravityScale;
-            float direction = x != 0 ? Mathf.Sign(x) : (isFacingRight ? 1f : -1f);
-            _velocity = new Vector2(_dashingPower * direction, 0f);
-
-            yield return new WaitForSeconds(_dashingTime);
-            _collider.excludeLayers = previousLayerMask;
-            _isDashing = false;
-            _body.gravityScale = originalGravity;
-
-            yield return new WaitForSeconds(_dashingCooldown);
-            _canDash = true;
+            if (x > 0)
+            {
+                _dashDirection = 1f;
+            }
+            else if (x < 0)
+            {
+                _dashDirection = -1f;
+            }
+            else
+            {
+                _dashDirection = isFacingRight ? 1f : -1f;
+            }
         }
 
         public void SetFollowMovement(bool followMovement)
