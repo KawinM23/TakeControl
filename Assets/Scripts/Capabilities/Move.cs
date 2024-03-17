@@ -18,12 +18,17 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
         [Header("Dash")]
-        [SerializeField, Range(0f, 100f)] private float _dashingPower = 20f;
-        [SerializeField, Range(0f, 10f)] private float _dashingCooldown = 1f;
-        [SerializeField, Range(0f, 1f)] private float _dashingTime = 0.2f;
-        private bool _canDash = true;
-        private bool _isDashing;
-        [SerializeField] private LayerMask _dodgeableLayer;
+        [SerializeField, Range(0f, 100f)] private float dashingPower = 20f;
+        [SerializeField, Range(0f, 10f)] private float dashingCooldown = 1f;
+        [SerializeField, Range(0f, 1f)] private float dashingTime = 0.2f;
+        [SerializeField] bool canDash = true;
+        float dashDirection;
+        private bool isDashing;
+        private float dashTimer;
+        private float dashCooldownTimer;
+        private float previousGravity;
+        private LayerMask previousLayerMask;
+        [SerializeField] private LayerMask dodgeableLayer;
 
         [Space(10)]
         private bool _isFacingRight;
@@ -51,16 +56,37 @@ namespace Assets.Scripts.Capabilities
             {
                 _isFacingRight = _desiredVelocity.x > 0 || (_desiredVelocity.x >= 0 && _isFacingRight);
             }
-            if (_spriteRenderer) { _spriteRenderer.flipX = !_isFacingRight; }
+            
+            if (isDashing)
+            {
+                dashTimer -= Time.deltaTime;
+                if (dashTimer <= 0)
+                {
+                    isDashing = false;
+                    _collider.excludeLayers = previousLayerMask;
+                    _body.gravityScale = previousGravity;
+                    dashCooldownTimer = dashingCooldown;
+                }
+            }
+            else if(!canDash && dashCooldownTimer >= 0)
+            {
+                dashCooldownTimer -= Time.deltaTime;
+                if (dashCooldownTimer <= 0)
+                {
+                    canDash = true;
+                }
+            }
 
             if (_controller.input.IsDashPressed() && _canDash)
             {
-                StartCoroutine(DashAction(_direction.x, _isFacingRight));
+                Dash(_direction.x, isFacingRight);
             }
             if (_platform && _controller.input.GetVerticalMovement() < 0f && _controller.input.IsJumpPressed())
             {
                 _platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }
+
+
         }
 
         private void FixedUpdate()
@@ -81,29 +107,27 @@ namespace Assets.Scripts.Capabilities
             if (_spriteRenderer) { _spriteRenderer.flipX = !isFacingRight; }
         }
 
-        /// <summary>
-        /// Coroutine that performs a dash action.
-        /// </summary>
-        /// <param name="x">The horizontal input value.</param>
-        /// <param name="isFacingRight">Flag indicating if the character is facing right.</param>
-        /// <returns>An IEnumerator representing the coroutine.</returns>
-        private IEnumerator DashAction(float x, bool isFacingRight)
+        private void Dash(float x, bool isFacingRight)
         {
-            _canDash = false;
-            _isDashing = true;
-            LayerMask previousLayerMask = _collider.excludeLayers;
-            _collider.excludeLayers = _dodgeableLayer;
-            float originalGravity = _body.gravityScale;
-            float direction = x != 0 ? Mathf.Sign(x) : (isFacingRight ? 1f : -1f);
-            _velocity = new Vector2(_dashingPower * direction, 0f);
-
-            yield return new WaitForSeconds(_dashingTime);
-            _collider.excludeLayers = previousLayerMask;
-            _isDashing = false;
-            _body.gravityScale = originalGravity;
-
-            yield return new WaitForSeconds(_dashingCooldown);
-            _canDash = true;
+            Debug.Log("Dash");
+            canDash = false;
+            isDashing = true;
+            dashTimer = dashingTime;
+            previousGravity = _body.gravityScale;
+            previousLayerMask = _collider.excludeLayers;
+            _collider.excludeLayers = dodgeableLayer;
+            if (x > 0)
+            {
+                dashDirection = 1f;
+            }
+            else if (x < 0)
+            {
+                dashDirection = -1f;
+            }
+            else
+            {
+                dashDirection = isFacingRight ? 1f : -1f;
+            }
         }
 
         public void SetFollowMovement(bool followMovement)
