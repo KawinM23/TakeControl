@@ -33,6 +33,7 @@ public class MapManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        PlayerManager.SetRespawnScene(scene.name);
         if (IsChangingScene)
         {
             _player = PlayerManager.Instance.Player;
@@ -79,7 +80,7 @@ public class MapManager : MonoBehaviour
 
         DontDestroyOnLoad(_player);
         _player.SetActive(false);
-        yield return SceneManager.LoadSceneAsync(toSceneName,LoadSceneMode.Additive);
+        yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
         SceneManager.UnloadSceneAsync(fromSceneName);
 
