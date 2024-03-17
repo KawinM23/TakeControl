@@ -8,16 +8,16 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
     public static event UnityAction<GameObject> OnPlayerChanged;
 
-    public GameObject playerGameObject
+    public GameObject Player
     {
-        get => _playerGameObject;
+        get => _player;
         set
         {
-            _playerGameObject = value;
-            OnPlayerChanged?.Invoke(_playerGameObject);
+            _player = value;
+            OnPlayerChanged?.Invoke(_player);
         }
     }
-    private GameObject _playerGameObject;
+    private GameObject _player;
 
     [SerializeField] private GameObject playerPrefab;
 
@@ -42,17 +42,17 @@ public class PlayerManager : MonoBehaviour
     private void SetUp()
     {
         GameObject activePlayer = FindActivePlayer();
-        if (!playerGameObject)
+        if (!Player)
         {
             if (activePlayer)
             {
-                playerGameObject = activePlayer;
+                Player = activePlayer;
             }
             else if (playerPrefab)
             {
                 GameObject gameObject = Instantiate(playerPrefab);
                 gameObject.SetActive(true);
-                playerGameObject = gameObject;
+                Player = gameObject;
             }
         }
     }
@@ -75,7 +75,7 @@ public class PlayerManager : MonoBehaviour
         Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
-            if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.playerGameObject))
+            if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.Player))
             {
                 Destroy(c.gameObject);
             }

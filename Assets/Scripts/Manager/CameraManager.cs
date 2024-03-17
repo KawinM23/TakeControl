@@ -30,14 +30,14 @@ public class CameraManager : MonoBehaviour
             _camera = FindObjectOfType<CinemachineVirtualCamera>();
         }
         Debug.Assert(_camera != null, "Camera is not set in CameraManager");
-        _camera.Follow = PlayerManager.Instance.playerGameObject.transform;
+        _camera.Follow = PlayerManager.Instance.Player.transform;
 
         PlayerManager.OnPlayerChanged += (player) => _camera.Follow = player.transform;
 
         SceneManager.sceneLoaded += (_, _) =>
         {
             _camera = FindObjectOfType<CinemachineVirtualCamera>();
-            _camera.Follow = PlayerManager.Instance.playerGameObject.transform;
+            _camera.Follow = PlayerManager.Instance.Player.transform;
 
             // RemoveNonCinemachineCameras();
         };

@@ -37,7 +37,7 @@ public class MapManager : MonoBehaviour
     {
         if (changingScene)
         {
-            player = PlayerManager.Instance.playerGameObject;
+            player = PlayerManager.Instance.Player;
             player.transform.position = FindDestinationPosition(fromScene, toScene, distanceFromSpawn);
             player.SetActive(true);
             if (player.TryGetComponent(out Rigidbody2D rb))
@@ -72,7 +72,7 @@ public class MapManager : MonoBehaviour
         this.distanceFromSpawn = distanceFromSpawn;
         this.direction = direction;
 
-        player = PlayerManager.Instance.playerGameObject;
+        player = PlayerManager.Instance.Player;
         if (player.TryGetComponent(out Rigidbody2D rb))
         {
             PlayerPrefs.SetFloat("velocityX", rb.velocity.x);
