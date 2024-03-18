@@ -54,7 +54,7 @@ MonoBehaviour:
   ToScene: 
   DistanceFromSpawn: 0
   Direction: 0
-  _mapChangeCooldown: 0
+  _mapChangeCooldown: 1
 --- !u!114 &8389585372730492381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isDead: 0
   _respawnCanvas: {fileID: 2985608818617242529}
-  _playerPrefab: {fileID: 0}
+  _playerPrefab: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
 --- !u!114 &572526612175155861
 MonoBehaviour:
   m_ObjectHideFlags: 0
