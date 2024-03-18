@@ -1,49 +1,51 @@
 using Assets.Scripts.Combat;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public Gun gun;
-    public Sword sword;
-    private Controller controller;
+    [SerializeField] private List<MonoBehaviour> _weapons;
+    [SerializeField] private int _currentWeaponIndex;
+    private Controller _controller;
 
     private void Awake()
     {
-        controller = GetComponent<Controller>();
+        _controller = GetComponent<Controller>();
+        if (TryGetComponent(out Gun gun))
+        {
+            _weapons.Add(gun);
+        }
+        if (TryGetComponent(out Sword sword))
+        {
+            _weapons.Add(sword);
+        }
     }
 
     private void Start()
     {
         // Ensure only one weapon is active at start
-        if (gun)
+        foreach (MonoBehaviour weapon in _weapons)
         {
-            gun.enabled = true;
+            weapon.enabled = false;
         }
-
-        if (sword)
-        {
-            sword.enabled = false;
-        }
+        _weapons[0].enabled = true;
     }
 
     private void Update()
     {
         // Swap weapons when "Q" key is pressed
-        if (controller.input.RetrieveSwapWeaponInput())
+        if (_controller.input.IsSwapWeaponPressed())
         {
-            Debug.Log("Switching weapon");
             SwapWeapons();
-            Debug.Log(sword.enabled);
         }
     }
 
     private void SwapWeapons()
     {
-        // Toggle weapon activation
-        if (gun && sword)
-        {
-            gun.enabled = !gun.enabled;
-            sword.enabled = !gun.enabled;
-        }
+        Debug.Log("Switching weapon");
+        _weapons[_currentWeaponIndex].enabled = false;
+        _currentWeaponIndex = (_currentWeaponIndex + 1) % _weapons.Count;
+        _weapons[_currentWeaponIndex].enabled = true;
+        Debug.Log(_weapons[_currentWeaponIndex]);
     }
 }

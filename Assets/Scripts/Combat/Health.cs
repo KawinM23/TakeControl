@@ -9,71 +9,66 @@ namespace Assets.Scripts.Combat
     {
         public UnityEvent OnHackable;
 
-        [SerializeField] private int maxHealth = 100;
-        [SerializeField] private int currentHealth;
-        [SerializeField] private int hackableHealth = 20;
+        [SerializeField] private int _maxHealth = 100;
+        [SerializeField] private int _currentHealth;
+        [SerializeField] private int _hackableHealth = 20;
 
         [Header("iFrame")]
-        [SerializeField] private bool iFrame = false;
-        [SerializeField] private float iFrameDuration;
-        private float iFrameCounter;
-        [SerializeField] private LayerMask iFramableLayer;
+        [SerializeField] private bool _iFrame = false;
+        [SerializeField] private float _iFrameDuration;
+        private float _iFrameCounter;
+        [SerializeField] private LayerMask _iFramableLayer;
 
-        private SpriteRenderer spriteRenderer;
-        private Collider2D collider;
+        private SpriteRenderer _spriteRenderer;
+        private readonly Collider2D _collider;
 
         private Coroutine flashCoroutine;
         IEnumerator Flash(Color targetColor)
         {
-            var originalColor = spriteRenderer.color;
-            spriteRenderer.color = targetColor;
+            var originalColor = _spriteRenderer.color;
+            _spriteRenderer.color = targetColor;
             yield return new WaitForSeconds(0.1f);
-            spriteRenderer.color = originalColor;
+            _spriteRenderer.color = originalColor;
             yield return new WaitForSeconds(0.1f);
             flashCoroutine = null;
-        }
-
-        private void Awake()
-        {
-
         }
 
         // Use this for initialization
         private void Start()
         {
-            currentHealth = maxHealth;
-            iFrame = false;
-            iFrameCounter = 0f;
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _currentHealth = _maxHealth;
+            _iFrame = false;
+            _iFrameCounter = 0f;
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         // Update is called once per frame
         private void Update()
         {
-            if (currentHealth <= 0)
+            if (_currentHealth <= 0)
             {
                 Die();
             }
-            if (Hackable())
+            if (IsHackable())
             {
                 OnHackable?.Invoke();
             }
         }
         private void FixedUpdate()
         {
-            if (iFrame)
+            if (_iFrame)
             {
-                iFrameCounter -= Time.fixedDeltaTime;
+                _iFrameCounter -= Time.fixedDeltaTime;
             }
-            if (iFrameCounter <= 0f)
+            if (_iFrameCounter <= 0f)
             {
-                iFrame = false;
+                _iFrame = false;
             }
 
         }
         public void TakeDamage(int damage)
         {
-            if (iFrame)
+            if (_iFrame)
             {
                 return;
             }
@@ -81,9 +76,9 @@ namespace Assets.Scripts.Combat
             if (flashCoroutine != null) StopCoroutine(flashCoroutine);
             flashCoroutine = StartCoroutine(Flash(Color.red));
 
-            currentHealth -= damage;
-            iFrame = true;
-            iFrameCounter = iFrameDuration;
+            _currentHealth -= damage;
+            _iFrame = true;
+            _iFrameCounter = _iFrameDuration;
         }
 
         private void Die()
@@ -102,6 +97,6 @@ namespace Assets.Scripts.Combat
         /// <summary>
         /// Does the health meet the requirements to be hacked
         /// </summary>
-        public bool Hackable() => currentHealth <= hackableHealth;
+        public bool IsHackable() => _currentHealth <= _hackableHealth;
     }
 }

@@ -8,62 +8,69 @@ namespace Assets.Scripts.Combat
 
     public class Gun : MonoBehaviour
     {
-        [SerializeField] private float bulletSpeed = 10f; //TODO: confirm design with team
-        [SerializeField] private GameObject bulletPrefab;
-        private Controller controller;
-        private double lastFireTime, lastReloadTime = -1;
-        private readonly double shootingDelay = 0.25, reloadTime = 5;
-        private uint currentAmmo = 20;
-        private readonly uint maxAmmo = 20;
+        [SerializeField] private float _bulletSpeed = 10f; //TODO: confirm design with team
+        [SerializeField] private GameObject _bulletPrefab;
+        private Controller _controller;
+        private double _lastFireTime, _lastReloadTime = -1;
+        private readonly double _shootingDelay = 0.25, _reloadTime = 5;
+        private uint _currentAmmo = 20;
+        private readonly uint _maxAmmo = 20;
 
         private void Awake()
         {
-            controller = GetComponent<Controller>();
+            _controller = GetComponent<Controller>();
         }
 
         private void Update()
         {
-            controller.input.UpdateInputEventLoop();
-            if (lastReloadTime == -1)
+            if (_lastReloadTime == -1)
             {
-                if (controller.input.RetrieveAttackInput())
+                Vector2? pos = null;
+                if (_controller.input.GetAttackDirection().HasValue)
                 {
-                    if (Time.fixedTimeAsDouble - lastFireTime >= shootingDelay && currentAmmo > 0)
+                    pos = _controller.input.GetAttackDirection().Value;
+                }
+                else if (_controller.input.GetContinuedAttackDirection().HasValue)
+                {
+                    pos = _controller.input.GetContinuedAttackDirection().Value;
+                }
+                if (pos != null)
+                {
+                    if (Time.fixedTimeAsDouble - _lastFireTime >= _shootingDelay && _currentAmmo > 0)
                     {
-                        Shoot();
-                        lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
-                        currentAmmo -= 1;
+                        Shoot(pos.Value);
+                        _lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                        _currentAmmo -= 1;
                     }
                 }
-                if (controller.input.RetrieveReloadInput())
+                if (_controller.input.IsReloadPressed())
                 {
-                    lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                    _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
                 }
             }
-            else if (Time.fixedTimeAsDouble - lastReloadTime >= reloadTime)
+            else if (Time.fixedTimeAsDouble - _lastReloadTime >= _reloadTime)
             {
-                currentAmmo = maxAmmo;
-                lastReloadTime = -1;
+                _currentAmmo = _maxAmmo;
+                _lastReloadTime = -1;
             }
         }
 
-        public void Shoot()
+        public void Shoot(Vector2 target)
         {
             Debug.Log("Shoot");
 
             Vector2 firePoint = transform.position;
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 bulletDirection = mousePosition - firePoint;
+            Vector2 bulletDirection = target - firePoint;
 
-            GameObject bulletInstance = Instantiate(bulletPrefab, firePoint, Quaternion.identity);
+            GameObject bulletInstance = Instantiate(_bulletPrefab, firePoint, Quaternion.identity);
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
             if (bullet)
             {
                 if (gameObject)
                 {
-                    bullet.isEnemy = false;
+                    bullet.IsEnemy = false;
                 }
-                bullet.Fire(bulletDirection.normalized * bulletSpeed);
+                bullet.Fire(bulletDirection.normalized * _bulletSpeed);
             }
         }
     }

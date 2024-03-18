@@ -13,38 +13,59 @@ namespace Assets.Scripts.Combat
         [SerializeField] private int _swordDamage = 25;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
+        private SpriteRenderer _sprite;
 
         private Controller _controller;
+        private Transform _parentTransform;
 
-        private Collider2D[] _hitEnemies;
+        private readonly Collider2D[] _hitEnemies;
 
         private void Awake()
         {
             _controller = GetComponent<Controller>();
+            _parentTransform = _swordCollider.transform.parent;
+            _sprite = _swordCollider.GetComponent<SpriteRenderer>();
+            _sprite.enabled = false;
+            _swordCollider.enabled = false;
         }
 
         private void Update()
         {
-            if (_controller.input.RetrieveAttackInput())
+            if (_controller.input.GetAttackDirection().HasValue)
             {
-                AttackAction();
+                AttackAction(_controller.input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
             }
         }
 
-        private void AttackAction()
+        private void AttackAction(Vector2 mousePosition)
         {
+            StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
-            _hitEnemies = Physics2D.OverlapBoxAll(_swordCollider.transform.position, _swordCollider.transform.lossyScale, 0, _attackableLayer);
+            Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
-            foreach (Collider2D collider in _hitEnemies)
+            _swordCollider.transform.localPosition = direction * 1.2f;
+            _swordCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+        }
+        private IEnumerator SwordAnimation()
+        {
+            _swordCollider.enabled = true;
+            _sprite.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+            _swordCollider.enabled = false;
+            _sprite.enabled = false;
+            yield return null;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+
+            if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
-                if (collider.gameObject != gameObject && collider.TryGetComponent(out Health health))
-                {
-                    Debug.Log(collider);
-                    health.TakeDamage(_swordDamage);
-                }
+                Debug.Log(collision);
+                health.TakeDamage(_swordDamage);
             }
+
         }
     }
 }

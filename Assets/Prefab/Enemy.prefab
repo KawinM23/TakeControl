@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1801290139455799429}
   - component: {fileID: 3416730720523339364}
   - component: {fileID: 7315772924322691058}
+  - component: {fileID: 2294779569602634007}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -202,10 +203,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 4.2
-  dashingPower: 20
-  dashingCooldown: 1
-  dashingTime: 0.2
-  isFacingRight: 0
+  _dashPower: 20
+  _dashCooldown: 1
+  _dashTime: 0.2
+  _canDash: 1
+  _dodgeableLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3416730720523339364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +257,27 @@ MonoBehaviour:
         m_CallState: 2
   _maxHealth: 100
   _currentHealth: 0
-  _HackableHealth: 50
+  _hackableHealth: 20
+  _iFrame: 0
+  _iFrameDuration: 0
+  _iFramableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &2294779569602634007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517011557371429162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc5f04a912d2678888f76decdcc59055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hackableLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2922317834293804138
 GameObject:
   m_ObjectHideFlags: 0
