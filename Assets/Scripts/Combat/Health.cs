@@ -85,7 +85,10 @@ namespace Assets.Scripts.Combat
 
         private void Die()
         {
-            _playerManager.Die();
+            if (gameObject == PlayerManager.Instance.Player)
+            {
+                _playerManager.Die();
+            }
             Destroy(gameObject);
         }
 
