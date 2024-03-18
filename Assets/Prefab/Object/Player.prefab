@@ -298,10 +298,11 @@ MonoBehaviour:
   _currentHealth: 0
   _hackableHealth: 20
   _iFrame: 0
-  _iFrameDuration: 0
+  _iFrameDuration: 0.2
   _iFramableLayer:
     serializedVersion: 2
     m_Bits: 0
+  _playerManager: {fileID: 0}
 --- !u!114 &9017549952657372097
 MonoBehaviour:
   m_ObjectHideFlags: 0

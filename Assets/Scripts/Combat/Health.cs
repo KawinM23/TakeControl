@@ -23,16 +23,9 @@ namespace Assets.Scripts.Combat
         private SpriteRenderer _spriteRenderer;
         private readonly Collider2D _collider;
 
-        private Coroutine flashCoroutine;
-        IEnumerator Flash(Color targetColor)
-        {
-            var originalColor = _spriteRenderer.color;
-            _spriteRenderer.color = targetColor;
-            yield return new WaitForSeconds(0.1f);
-            _spriteRenderer.color = originalColor;
-            yield return new WaitForSeconds(0.1f);
-            flashCoroutine = null;
-        }
+        private Coroutine _flashCoroutine;
+        private Color _originalColor;
+
 
         // Use this for initialization
         private void Start()
@@ -40,34 +33,36 @@ namespace Assets.Scripts.Combat
             _currentHealth = _maxHealth;
             _iFrame = false;
             _iFrameCounter = 0f;
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             _playerManager = PlayerManager.Instance;
         }
 
         // Update is called once per frame
         private void Update()
         {
+            if (_iFrame)
+            {
+                _iFrameCounter -= Time.deltaTime;
+                if (_iFrameCounter <= 0f)
+                {
+                    _iFrame = false;
+                }
+            }
             if (_currentHealth <= 0)
             {
                 Die();
             }
-            if (IsHackable())
+            if (IsHackable() && gameObject!=PlayerManager.Instance.Player)
             {
                 OnHackable?.Invoke();
             }
         }
-        private void FixedUpdate()
-        {
-            if (_iFrame)
-            {
-                _iFrameCounter -= Time.fixedDeltaTime;
-            }
-            if (_iFrameCounter <= 0f)
-            {
-                _iFrame = false;
-            }
 
+        public void ResetHealth()
+        {
+            _currentHealth = _maxHealth;
         }
+
         public void TakeDamage(int damage)
         {
             if (_iFrame)
@@ -75,12 +70,22 @@ namespace Assets.Scripts.Combat
                 return;
             }
             // TODO: for debug, remove of refactor
-            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-            flashCoroutine = StartCoroutine(Flash(Color.red));
+            if (_flashCoroutine != null) StopCoroutine(_flashCoroutine);
+            _flashCoroutine = StartCoroutine(Flash(Color.red));
 
             _currentHealth -= damage;
             _iFrame = true;
             _iFrameCounter = _iFrameDuration;
+        }
+
+        IEnumerator Flash(Color targetColor)
+        {
+            _originalColor = _spriteRenderer.color;
+            _spriteRenderer.color = targetColor;
+            yield return new WaitForSeconds(0.1f);
+            _spriteRenderer.color = _originalColor;
+            yield return new WaitForSeconds(0.1f);
+            _flashCoroutine = null;
         }
 
         private void Die()

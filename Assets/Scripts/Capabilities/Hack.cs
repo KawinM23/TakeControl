@@ -38,7 +38,8 @@ namespace Assets.Scripts.Capabilities
             {
                 return;
             }
-            if (!(target.CompareTag("Enemy") && target.TryGetComponent<Health>(out var health) && health.IsHackable()))
+            target.TryGetComponent(out Health health);
+            if (!(target.CompareTag("Enemy") && health && health.IsHackable()))
             {
                 Debug.Log("Can't hack", target);
                 return;
@@ -47,6 +48,9 @@ namespace Assets.Scripts.Capabilities
             // Override the target's input with the hacker's input
             var targetController = target.GetComponent<Controller>();
             targetController.input = _controller.input;
+
+            //Reset target robot's health
+            health.ResetHealth();
 
             // Remove hack effect
             var effect = target.GetComponentInChildren<Effect.Hack>();
