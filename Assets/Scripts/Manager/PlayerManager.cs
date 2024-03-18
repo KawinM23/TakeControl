@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI; // For UI elements
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -18,6 +21,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
     private GameObject _player;
+    [SerializeField] private bool _isDead = false; // Flag to track player death
+    [SerializeField] private Canvas _respawnCavas; // Reference to the respawn canvas
+    private static string _respawnScene = ""; // starts as blank, change on first scene load and checkpoint trigger
 
     [SerializeField] private GameObject _playerPrefab;
 
@@ -37,6 +43,20 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         SetUp();
+    }
+
+    public void Die()
+    {
+        Debug.Log("Player is dead");
+        _respawnCavas.gameObject.SetActive(true); // Show respawn canvas
+    }
+    public void Respawn() // Called when respawn button is clicked
+    {
+        Debug.Log("Respawning...");
+        _isDead = false; // Reset death flag
+        Debug.Log("Reloading scene: " + _respawnScene);
+        SceneManager.LoadScene(_respawnScene); // Reload current scene
+        _respawnCavas.gameObject.SetActive(false); // Hide respawn canvas
     }
 
     private void SetUp()
@@ -80,6 +100,16 @@ public class PlayerManager : MonoBehaviour
                 Destroy(c.gameObject);
             }
         }
+    }
+
+    public static void SetRespawnScene(string sceneName)
+    {
+        if (_respawnScene == "")
+        {
+            Debug.Log("Setting respawn scene to: " + sceneName);
+            _respawnScene = sceneName;
+        }
+
     }
 
 }

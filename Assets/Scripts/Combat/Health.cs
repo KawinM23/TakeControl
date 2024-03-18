@@ -18,6 +18,7 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float _iFrameDuration;
         private float _iFrameCounter;
         [SerializeField] private LayerMask _iFramableLayer;
+        [SerializeField] private PlayerManager _playerManager;
 
         private SpriteRenderer _spriteRenderer;
         private readonly Collider2D _collider;
@@ -40,6 +41,7 @@ namespace Assets.Scripts.Combat
             _iFrame = false;
             _iFrameCounter = 0f;
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _playerManager = PlayerManager.Instance;
         }
 
         // Update is called once per frame
@@ -83,6 +85,7 @@ namespace Assets.Scripts.Combat
 
         private void Die()
         {
+            _playerManager.Die();
             Destroy(gameObject);
         }
 
