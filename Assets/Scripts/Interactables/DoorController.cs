@@ -8,8 +8,15 @@ public class DoorController : MonoBehaviour
     [SerializeField] private List<SwitchController> _switchController;
 
     private bool _isOpened = false;
+    private Vector3 position;
+
+    private void Awake()
+    {
+        position = transform.localScale;
+    }
 
     // Update is called once per frame
+
     void Update()
     {
         CheckSwitches();
@@ -47,7 +54,7 @@ public class DoorController : MonoBehaviour
     {
 
         _isOpened = false;
-        transform.localScale = new Vector3(0.2f, 2, 1);
+        transform.localScale = position;
 
     }
 }
