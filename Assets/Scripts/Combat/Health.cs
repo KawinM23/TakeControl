@@ -88,11 +88,11 @@ namespace Assets.Scripts.Combat
 
         public int GetMaxHealth()
         {
-            return this.maxHealth;
+            return this._maxHealth;
         }
         public int GetCurrentHealth()
         {
-            return this.currentHealth;
+            return this._currentHealth;
         }
         /// <summary>
         /// Does the health meet the requirements to be hacked
