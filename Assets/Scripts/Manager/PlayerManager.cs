@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     private GameObject _player;
     [SerializeField] private bool _isDead = false; // Flag to track player death
     [SerializeField] private Canvas _respawnCavas; // Reference to the respawn canvas
-    private static string _respawnScene;
+    private static string _respawnScene = ""; // starts as blank, change on first scene load and checkpoint trigger
 
     [SerializeField] private GameObject _playerPrefab;
 
@@ -104,8 +104,12 @@ public class PlayerManager : MonoBehaviour
 
     public static void SetRespawnScene(string sceneName)
     {
-        Debug.Log("Setting respawn scene to: " + sceneName);
-        _respawnScene = sceneName;
+        if (_respawnScene == "")
+        {
+            Debug.Log("Setting respawn scene to: " + sceneName);
+            _respawnScene = sceneName;
+        }
+
     }
 
 }
