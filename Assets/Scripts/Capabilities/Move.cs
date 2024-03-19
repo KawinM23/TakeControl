@@ -18,7 +18,7 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
         [Header("Dash")]
-        [SerializeField] private bool _hasDash = true;
+        [SerializeField] public bool _hasDash = true;
         [SerializeField] private bool _canDash = true;
         [SerializeField, Range(0f, 100f)] private float _dashPower = 20f;
         [SerializeField, Range(0f, 10f)] private float _dashCooldown = 1f;

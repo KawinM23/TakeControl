@@ -121,5 +121,10 @@ namespace Assets.Scripts.Capabilities
                 _velocity.y += _jumpSpeed;
             }
         }
+
+        public int GetMaxAirJump()
+        {
+            return _maxAirJumps;
+        }
     }
 }
