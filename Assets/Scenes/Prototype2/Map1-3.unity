@@ -375,7 +375,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Attack enemy and Take Control
+  m_text: 'Shoot an enemy and Take Control
 
     This robot can Double Jump!'
   m_isRightToLeft: 0
