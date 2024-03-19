@@ -18,6 +18,9 @@ public class Spike : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Health health))
         {
             health.TakeDamage(damagePerTick);
+
+            // TODO: temp knockback, remove later
+            health.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 5, ForceMode2D.Impulse);
         }
     }
 
