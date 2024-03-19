@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,6 +81,8 @@ public class MapManager : MonoBehaviour
 
         DontDestroyOnLoad(_player);
         _player.SetActive(false);
+
+        SaveManager.Instance.PersistSave();
         yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
         SceneManager.UnloadSceneAsync(fromSceneName);

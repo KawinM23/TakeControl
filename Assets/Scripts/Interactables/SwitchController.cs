@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.SaveLoad;
+using System;
 
-public class SwitchController : MonoBehaviour
+public class SwitchController : MonoBehaviour, IDataPersist
 {
     public bool Clicked = false;
     [SerializeField] private bool _isActivable;
@@ -14,6 +16,9 @@ public class SwitchController : MonoBehaviour
     private Vector3 _switchDownPos;
     private readonly float _switchSpeed = 1f;
     private readonly float _switchDelay = 0.3f;
+
+    // TODO: handle better the id generation
+    [SerializeField] string id = Guid.NewGuid().ToString();
 
     // Start is called before the first frame update
     private void Awake()
@@ -82,5 +87,18 @@ public class SwitchController : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _isBeingPressed = false;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.switches[id] = Clicked;
+    }
+
+    public void LoadData(in GameData data)
+    {
+        if (data.switches.TryGetValue(id, out bool val))
+        {
+            Clicked = val;
+        }
     }
 }
