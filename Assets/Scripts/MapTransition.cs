@@ -35,7 +35,7 @@ public class MapTransition : MonoBehaviour
         yield return null;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         collision.gameObject.TryGetComponent(out Controller controller);
         if (controller && controller.input is PlayerController)
