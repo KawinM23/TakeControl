@@ -917,7 +917,8 @@ PrefabInstance:
       propertyPath: _hackableHealth
       value: 40
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8320001392360808218, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

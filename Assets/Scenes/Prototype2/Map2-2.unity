@@ -1412,31 +1412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4598581fef36a334f815f3899deb7144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &501777422 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 517011557371429162, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
-  m_PrefabInstance: {fileID: 1295696178}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &501777423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501777422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 062aafe1693c3654ea0b5540e0bfb72b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  _swordDamage: 25
-  _swordCollider: {fileID: 1295696179}
-  _attackableLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &554201993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3625,7 +3600,8 @@ PrefabInstance:
       propertyPath: _hackableHealth
       value: 40
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8320001392360808218, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -4886,16 +4862,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 517011557371429162, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 501777423}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
---- !u!60 &1295696179 stripped
-PolygonCollider2D:
-  m_CorrespondingSourceObject: {fileID: 8033630153628837990, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
-  m_PrefabInstance: {fileID: 1295696178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1331410796
 GameObject:
   m_ObjectHideFlags: 0
@@ -8105,7 +8073,8 @@ PrefabInstance:
       propertyPath: _hackableHealth
       value: 40
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8320001392360808218, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

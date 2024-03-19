@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3416730720523339364}
   - component: {fileID: 7315772924322691058}
   - component: {fileID: 2294779569602634007}
+  - component: {fileID: 8320001392360808218}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -229,6 +230,63 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &8320001392360808218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517011557371429162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062aafe1693c3654ea0b5540e0bfb72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _swordDamage: 25
+  _swordCollider: {fileID: 8033630153628837990}
+  _attackableLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _radialCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animationDuration: 0.15
 --- !u!1 &2922317834293804138
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 1298145703290883797, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_MaskAlphaCutoff
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8704814733547641630, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.2
@@ -471,5 +533,10 @@ PrefabInstance:
 --- !u!4 &7781252939115259706 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8704814733547641630, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+  m_PrefabInstance: {fileID: 1382929112764283940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &8033630153628837990 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8956558759806997570, guid: 28fe041944cf928458b0fd7891839126, type: 3}
   m_PrefabInstance: {fileID: 1382929112764283940}
   m_PrefabAsset: {fileID: 0}
