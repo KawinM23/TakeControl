@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 public class EquipmentSlot : MonoBehaviour
 {
-    public Image image;
+    private Image image;
     public Color selectedColor, notSelectedColor;
 
     private void Awake() 
     {
+        image = GetComponent<Image>();
         Deselect();
     }
     public void Select()

@@ -2,26 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Combat;
 public class HealthBar : MonoBehaviour
 {
     public Slider slider;
     public Gradient gradient;
     public Image fill;
 
-    [SerializeField]  private Assets.Scripts.Combat.Health health;
+    [SerializeField] private Health _health;
 
-    public void Awake()
+    void Awake()
     {
-        if(!health)
+        PlayerManager.OnPlayerChanged += (player) => { if (player.TryGetComponent(out Health health)) { _health = health; } };
+    }
+
+    private void Start()
+    {
+        PlayerManager.Instance.Player.TryGetComponent(out _health);
+    }
+
+    private void Update()
+    {
+        if (!_health)
         {
-            health = transform.parent.GetComponent<Assets.Scripts.Combat.Health>();
+            PlayerManager.Instance.Player.TryGetComponent(out _health);
+        }
+        else
+        {
+            SetHealthBar();
         }
     }
 
     public void SetHealthBar()
     {
-        slider.maxValue = health.GetMaxHealth();
-        slider.value = health.GetCurrentHealth();
+        slider.maxValue = _health.GetMaxHealth();
+        slider.value = _health.GetCurrentHealth();
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

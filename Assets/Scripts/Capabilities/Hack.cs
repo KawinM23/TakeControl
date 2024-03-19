@@ -49,9 +49,6 @@ namespace Assets.Scripts.Capabilities
             var targetController = target.GetComponent<Controller>();
             targetController.input = _controller.input;
 
-            //Reset target robot's health
-            health.ResetHealth();
-
             // Remove hack effect
             var effect = target.GetComponentInChildren<Effect.Hack>();
             if (effect != null)
@@ -65,6 +62,9 @@ namespace Assets.Scripts.Capabilities
             // Take Control; changing the target's tag to "Player" and set it as the player
             target.gameObject.tag = "Player";
             PlayerManager.Instance.Player = target.gameObject;
+
+            //Reset target robot's health
+            health.ResetHealth();
 
             // Destroy the previous body
             Destroy(gameObject);

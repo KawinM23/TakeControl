@@ -46,6 +46,7 @@ public class WeaponManager : MonoBehaviour
         _weapons[_currentWeaponIndex].enabled = false;
         _currentWeaponIndex = (_currentWeaponIndex + 1) % _weapons.Count;
         _weapons[_currentWeaponIndex].enabled = true;
+        EquipmentUIManager.Instance.Select(_weapons[_currentWeaponIndex]);
         Debug.Log(_weapons[_currentWeaponIndex]);
     }
 }
