@@ -48,17 +48,37 @@ public class SaveManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _dataPersists = FindAllDataPersist();
-        LoadSave();
+        LoadData();
     }
 
-    void OnChangingScene(string fromScene, string toScene)
+    /// <summary>
+    /// Save data from all IDataPersist objects into the GameData object
+    ///  
+    /// should be called before every scene transition.
+    /// </summary>
+    public void SaveData()
     {
-        Debug.Log("Changing scene from " + fromScene + " to " + toScene);
-        // PersistSave();
+        foreach (var dataPersist in _dataPersists)
+        {
+            dataPersist.SaveData(ref _gameData);
+        }
     }
+
+    /// <summary>
+    /// Load data from the GameData object into all IDataPersist objects.
+    ///  
+    /// should be called after every scene transition.
+    /// </summary>
+    public void LoadData()
+    {
+        foreach (var dataPersist in _dataPersists)
+        {
+            dataPersist.LoadData(in _gameData);
+        }
+    }
+
 
     // TODO: handle multiple saves later (if needed)
-
 
     public void NewGame()
     {
@@ -83,10 +103,7 @@ public class SaveManager : MonoBehaviour
         }
         _gameData.currentScene = SceneManager.GetActiveScene().name;
 
-        foreach (var dataPersist in _dataPersists)
-        {
-            dataPersist.SaveData(ref _gameData);
-        }
+        SaveData();
 
         _saver.PersistSave(_gameData, defaultSaveName);
     }
@@ -95,12 +112,7 @@ public class SaveManager : MonoBehaviour
     private void LoadSave()
     {
         _gameData = _saver.LoadSave(defaultSaveName);
-
-        // SceneManager.LoadScene(_gameData.currentScene);
-        foreach (var dataPersist in _dataPersists)
-        {
-            dataPersist.LoadData(in _gameData);
-        }
+        LoadData();
     }
 
     [ContextMenu("Delete")]

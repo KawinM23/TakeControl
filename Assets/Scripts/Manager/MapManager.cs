@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour
         DontDestroyOnLoad(_player);
         _player.SetActive(false);
 
-        SaveManager.Instance.PersistSave();
+        SaveManager.Instance.SaveData();
         yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
         SceneManager.UnloadSceneAsync(fromSceneName);
