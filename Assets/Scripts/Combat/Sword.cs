@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,13 @@ namespace Assets.Scripts.Combat
         [SerializeField] private int _swordDamage = 25;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
+
+        [Header("Animation")]
+        [Tooltip("Radial of slash animation over time")]
+        [SerializeField] private AnimationCurve _radialCurve;
+        [Tooltip("Duration of the slash animation")]
+        [SerializeField] private float _animationDuration = 0.2f;
+
         private SpriteRenderer _sprite;
 
         private Controller _controller;
@@ -49,12 +57,28 @@ namespace Assets.Scripts.Combat
         }
         private IEnumerator SwordAnimation()
         {
+            var mask = GetComponentInChildren<SpriteMask>();
+
             _swordCollider.enabled = true;
             _sprite.enabled = true;
-            yield return new WaitForSeconds(0.2f);
+
+            for (float t = 0; t <= _animationDuration; t += Time.fixedDeltaTime)
+            {
+                mask.alphaCutoff = _radialCurve.Evaluate(t / _animationDuration);
+                yield return new WaitForFixedUpdate();
+            }
+
             _swordCollider.enabled = false;
             _sprite.enabled = false;
-            yield return null;
+            mask.alphaCutoff = 0f;
+
+
+            // _swordCollider.enabled = true;
+            // _sprite.enabled = true;
+            // yield return new WaitForSeconds(0.2f);
+            // _swordCollider.enabled = false;
+            // _sprite.enabled = false;
+            // yield return null;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
