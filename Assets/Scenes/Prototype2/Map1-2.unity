@@ -956,7 +956,7 @@ GameObject:
   - component: {fileID: 667061153}
   - component: {fileID: 667061152}
   m_Layer: 0
-  m_Name: LeftDoor
+  m_Name: LeftTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1792,7 +1792,7 @@ GameObject:
   - component: {fileID: 1113003993}
   - component: {fileID: 1113003992}
   m_Layer: 0
-  m_Name: TopRightDoor
+  m_Name: TopRightTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1916,7 +1916,7 @@ GameObject:
   - component: {fileID: 1513476251}
   - component: {fileID: 1513476250}
   m_Layer: 0
-  m_Name: BottomRightDoor
+  m_Name: BottomRightTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

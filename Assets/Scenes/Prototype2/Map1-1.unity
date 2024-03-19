@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 1379807519}
   - component: {fileID: 1379807521}
   m_Layer: 0
-  m_Name: RightDoor
+  m_Name: RightTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
