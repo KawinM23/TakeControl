@@ -17,8 +17,14 @@ public class SwitchController : MonoBehaviour, IDataPersist
     private readonly float _switchSpeed = 1f;
     private readonly float _switchDelay = 0.3f;
 
-    // TODO: handle better the id generation
-    [SerializeField] string id = Guid.NewGuid().ToString();
+    [SerializeField] string id;
+    void OnValidate()
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            id = Guid.NewGuid().ToString();
+        }
+    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -99,6 +105,15 @@ public class SwitchController : MonoBehaviour, IDataPersist
         if (data.switches.TryGetValue(id, out bool val))
         {
             Clicked = val;
+        }
+    }
+
+    [ContextMenu("Reroll All Id")]
+    private void RerollAllId()
+    {
+        foreach (var x in FindObjectsOfType<SwitchController>())
+        {
+            x.id = Guid.NewGuid().ToString();
         }
     }
 }
