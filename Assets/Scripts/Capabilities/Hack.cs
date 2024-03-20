@@ -15,6 +15,10 @@ namespace Assets.Scripts.Capabilities
 
         private Controller _controller;
 
+        [Header("Animation")]
+        [SerializeField] private GameObject _hackLinePrefab;
+        [SerializeField] private float _hackLineDuration = 0.5f;
+
         private void Awake()
         {
             _controller = GetComponent<Controller>();
@@ -68,6 +72,16 @@ namespace Assets.Scripts.Capabilities
 
             // Destroy the previous body
             Destroy(gameObject);
+        }
+
+        IEnumerator HackLineAnimation(Vector2 from, Vector2 to)
+        {
+            var line = Instantiate(_hackLinePrefab, from, Quaternion.identity);
+            var lineRenderer = line.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, from);
+            lineRenderer.SetPosition(1, to);
+            yield return new WaitForSeconds(_hackLineDuration);
+            Destroy(line);
         }
     }
 }
