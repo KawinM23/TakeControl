@@ -73,3 +73,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .DS_Store
+
+# Downloaded assets to choose from, please don't commit heavy audio or video files
+*AudioClipsLocal*
