@@ -49,6 +49,7 @@ namespace Assets.Scripts.Combat
         {
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
+            SoundManager.Instance.PlaySlash();
             Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
             _swordCollider.transform.localPosition = direction * 1.2f;
@@ -86,8 +87,11 @@ namespace Assets.Scripts.Combat
             if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
                 Debug.Log(collision);
+
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
                 health.TakeDamage(_swordDamage, hitDirection);
+                SoundManager.Instance.PlaySwordImpact();
+
             }
 
         }

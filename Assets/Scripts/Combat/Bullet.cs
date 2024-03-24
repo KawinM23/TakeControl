@@ -65,9 +65,10 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
+
                         Vector2 hitDirection = _rigidbody.velocity.normalized;
                         health.TakeDamage(_damage, hitDirection);
-
+                        SoundManager.Instance.PlayBulletImpact();
                     }
                 }
                 Destroy(gameObject);
