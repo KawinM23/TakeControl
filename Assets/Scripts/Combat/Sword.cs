@@ -49,6 +49,7 @@ namespace Assets.Scripts.Combat
         {
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
+            SoundManager.Instance.Play("Slash");
             Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
             _swordCollider.transform.localPosition = direction * 1.2f;
