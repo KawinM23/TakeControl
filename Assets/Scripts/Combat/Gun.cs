@@ -58,7 +58,7 @@ namespace Assets.Scripts.Combat
         public void Shoot(Vector2 target)
         {
             Debug.Log("Shoot");
-
+            SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
 

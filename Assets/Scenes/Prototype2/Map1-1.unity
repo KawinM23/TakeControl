@@ -1745,26 +1745,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 2039329742}
-    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
-      propertyPath: sounds.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
-      propertyPath: sounds.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b7914b9b5de5942e292fbf0a7bb7b1f4, type: 3}
-    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
-      propertyPath: sounds.Array.data[1].name
-      value: Slash
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
-      propertyPath: sounds.Array.data[1].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
-      propertyPath: sounds.Array.data[1].volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5692816951723743413, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

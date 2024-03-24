@@ -78,6 +78,7 @@ public class SwitchController : MonoBehaviour, IDataPersist
             else if (_isDeactivatable && Clicked)
             {
                 Clicked = false;
+                SoundManager.Instance.PlayPressurePlateUp();
             }
 
         }

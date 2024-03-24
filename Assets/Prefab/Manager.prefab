@@ -156,6 +156,56 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     source: {fileID: 0}
+  - name: Slash
+    clip: {fileID: 8300000, guid: b7914b9b5de5942e292fbf0a7bb7b1f4, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Hack
+    clip: {fileID: 8300000, guid: 23270394686a14d90a145c4c1a2d3731, type: 3}
+    volume: 0.7
+    pitch: 1
+    source: {fileID: 0}
+  - name: Shoot Single
+    clip: {fileID: 8300000, guid: 4f30e08e3524e4ab7911bdde6f70b9e8, type: 3}
+    volume: 0.51
+    pitch: 1
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: b96b54138704e4d1488a1faa00e4ac14, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Bullet Impact 1
+    clip: {fileID: 8300000, guid: 95fad3ab005a0485880774889f340f41, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Bullet Impact 2
+    clip: {fileID: 8300000, guid: f731895130c0848cb984473813a77bcb, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: BGM Isolation
+    clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
+    volume: 0.07
+    pitch: 1
+    source: {fileID: 0}
+  - name: Sword Impact 1
+    clip: {fileID: 8300000, guid: 3a4e0b38ac6f4439c9d09fef2df11026, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pressure Plate Up
+    clip: {fileID: 8300000, guid: a2e4223a5f3024ac7bb8afb7baf7580a, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pressure Plate Down
+    clip: {fileID: 8300000, guid: 712eed3608a3f49faa44086c330e9dba, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1001 &4126386514455063634
 PrefabInstance:
   m_ObjectHideFlags: 0

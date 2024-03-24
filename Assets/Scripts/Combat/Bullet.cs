@@ -53,6 +53,7 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
+
                         health.TakeDamage(_damage);
                     }
                 }
@@ -64,6 +65,7 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
+                        SoundManager.Instance.PlayBulletImpact();
                         health.TakeDamage(_damage);
                     }
                 }
