@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,35 +9,43 @@ namespace Assets.Scripts.Combat
 
     public class Bullet : MonoBehaviour
     {
-        private Rigidbody2D rb;
-        private Collider2D cl;
+        public bool IsEnemy;
 
-        public bool isEnemy;
-        [SerializeField] private int damage = 15;
-        [SerializeField] private LayerMask checkLayer;
-        [SerializeField] private LayerMask collideLayer;
+        [SerializeField] private int _damage = 15;
+        [SerializeField] private LayerMask _actionLayer;
+        [SerializeField] private LayerMask _destroyLayer;
+        private Rigidbody2D _rigidbody;
+        private readonly Collider2D _collider;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         public void Fire(Vector2 velocity)
         {
-            rb.velocity = velocity;
+            _rigidbody.velocity = velocity;
+            StartCoroutine(Init());
         }
+
+        private IEnumerator Init()
+        {
+            yield return new WaitForSeconds(5);
+            Destroy(gameObject);
+        }
+
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collideLayer == (collideLayer | (1 << collider.transform.gameObject.layer)))
+            if (_destroyLayer == (_destroyLayer | (1 << collider.transform.gameObject.layer)))
             {
                 Destroy(gameObject);
             }
-            if (checkLayer == (checkLayer | (1 << collider.transform.gameObject.layer)))
+            if (_actionLayer == (_actionLayer | (1 << collider.transform.gameObject.layer)))
             {
-                bool hitPlayer = collider.gameObject == PlayerManager.Instance.player;
+                bool hitPlayer = collider.gameObject == PlayerManager.Instance.Player;
                 // Enemy Bullet
-                if (isEnemy)
+                if (IsEnemy)
                 {
                     if (!hitPlayer)
                     {
@@ -45,7 +54,7 @@ namespace Assets.Scripts.Combat
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
                         Vector2 hitDirection = (collider.transform.position - transform.position).normalized;
-                        health.TakeDamage(damage, hitDirection);
+                        health.TakeDamage(_damage, hitDirection);
                     }
                 }
                 else// Our Bullet
@@ -56,8 +65,9 @@ namespace Assets.Scripts.Combat
                     }
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
-                        Vector2 hitDirection = rb.velocity.normalized;
-                        health.TakeDamage(damage, hitDirection);
+                        Vector2 hitDirection = _rigidbody.velocity.normalized;
+                        health.TakeDamage(_damage, hitDirection);
+
                     }
                 }
                 Destroy(gameObject);

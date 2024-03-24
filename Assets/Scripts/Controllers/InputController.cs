@@ -4,17 +4,19 @@ using UnityEngine;
 
 public abstract class InputController : ScriptableObject
 {
-    //Movement
-    public abstract float RetrieveMoveInput();
-    public abstract float RetrieveVerticalInput();
-    public abstract bool RetrieveJumpInput();
-    public abstract bool RetrieveJumpHoldInput();
-    public abstract bool RetrieveDashInput();
+    // Movement
+    public abstract float GetHorizontalMovement();
+    public abstract float GetVerticalMovement();
+    public abstract bool IsJumpPressed();
+    public abstract bool IsJumpHeld();
+    public abstract bool IsDashPressed();
 
-    public abstract Vector2? RetrieveAttackInput();
-    public abstract Vector2? RetrieveAttackHoldInput();
-    public abstract bool RetrieveReloadInput();
-    public abstract bool RetrieveSwapWeaponInput();
+    // Combat
+    public abstract Vector2? GetAttackDirection();
+    public abstract Vector2? GetContinuedAttackDirection();
+    public abstract bool IsReloadPressed();
+    public abstract bool IsSwapWeaponPressed();
 
-    public abstract Vector2? RetrieveHackInput();
+    // Hack
+    public abstract Vector2? GetHackInput();
 }

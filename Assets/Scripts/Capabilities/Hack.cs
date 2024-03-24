@@ -15,6 +15,10 @@ namespace Assets.Scripts.Capabilities
 
         private Controller _controller;
 
+        [Header("Animation")]
+        [SerializeField] private GameObject _hackLinePrefab;
+        [SerializeField] private float _hackLineDuration = 0.5f;
+
         private void Awake()
         {
             _controller = GetComponent<Controller>();
@@ -22,7 +26,7 @@ namespace Assets.Scripts.Capabilities
 
         private void Update()
         {
-            var hackPoint = _controller.input.RetrieveHackInput();
+            var hackPoint = _controller.input.GetHackInput();
             if (hackPoint.HasValue)
             {
                 HackAction(hackPoint.Value);
@@ -38,28 +42,46 @@ namespace Assets.Scripts.Capabilities
             {
                 return;
             }
-            if (!(target.CompareTag("Enemy") && target.TryGetComponent<Health>(out var health) && health.Hackable()))
+            target.TryGetComponent(out Health health);
+            if (!(target.CompareTag("Enemy") && health && health.IsHackable()))
             {
-                Debug.Log(target);
+                Debug.Log("Can't hack", target);
                 return;
             }
 
             // Override the target's input with the hacker's input
-            var targetCtrl = target.GetComponent<Controller>();
-            targetCtrl.input = _controller.input;
+            var targetController = target.GetComponent<Controller>();
+            targetController.input = _controller.input;
 
-            // Remoove hack effect
+            // Remove hack effect
             var effect = target.GetComponentInChildren<Effect.Hack>();
             if (effect != null)
             {
                 effect.gameObject.SetActive(false);
             }
 
-            // Remove the hacker
+            // Remove the hacker (player)
             _controller.input = null;
+
+            // Take Control; changing the target's tag to "Player" and set it as the player
             target.gameObject.tag = "Player";
-            PlayerManager.Instance.player = target.gameObject;
+            PlayerManager.Instance.Player = target.gameObject;
+
+            //Reset target robot's health
+            health.ResetHealth();
+
+            // Destroy the previous body
             Destroy(gameObject);
+        }
+
+        IEnumerator HackLineAnimation(Vector2 from, Vector2 to)
+        {
+            var line = Instantiate(_hackLinePrefab, from, Quaternion.identity);
+            var lineRenderer = line.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, from);
+            lineRenderer.SetPosition(1, to);
+            yield return new WaitForSeconds(_hackLineDuration);
+            Destroy(line);
         }
     }
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ground: MonoBehaviour
+public class Ground : MonoBehaviour
 {
-    public bool OnGround { get; private set; }
+    public bool IsOnGround { get; private set; }
     public float Friction { get; private set; }
 
     private Vector2 _normal;
@@ -12,7 +12,7 @@ public class Ground: MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        OnGround = false;
+        IsOnGround = false;
         Friction = 0;
     }
 
@@ -33,13 +33,13 @@ public class Ground: MonoBehaviour
         for (int i = 0; i < collision.contactCount; i++)
         {
             _normal = collision.GetContact(i).normal;
-            OnGround |= _normal.y >= 0.9f;
+            IsOnGround |= _normal.y >= 0.9f;
         }
     }
 
     private void RetrieveFriction(Collision2D collision)
     {
-        _material = collision.rigidbody.sharedMaterial;
+        collision.transform.TryGetComponent(out _material);
 
         Friction = 0;
 
