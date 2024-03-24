@@ -16,15 +16,17 @@ namespace Assets.Scripts.Combat
         [SerializeField] private LayerMask _destroyLayer;
         private Rigidbody2D _rigidbody;
         private readonly Collider2D _collider;
+        private float _knockbackMultiplier; // set from gun
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void Fire(Vector2 velocity)
+        public void Fire(Vector2 velocity, float knockbackMultiplier)
         {
             _rigidbody.velocity = velocity;
+            _knockbackMultiplier = knockbackMultiplier;
             StartCoroutine(Init());
         }
 
@@ -54,7 +56,7 @@ namespace Assets.Scripts.Combat
                     if (collider.gameObject.TryGetComponent(out Health health))
                     {
                         Vector2 hitDirection = (collider.transform.position - transform.position).normalized;
-                        health.TakeDamage(_damage, hitDirection);
+                        health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
                     }
                 }
                 else// Our Bullet
@@ -67,7 +69,7 @@ namespace Assets.Scripts.Combat
                     {
 
                         Vector2 hitDirection = _rigidbody.velocity.normalized;
-                        health.TakeDamage(_damage, hitDirection);
+                        health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
                         SoundManager.Instance.PlayBulletImpact();
                     }
                 }

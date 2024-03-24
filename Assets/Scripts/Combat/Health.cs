@@ -9,9 +9,13 @@ namespace Assets.Scripts.Combat
     {
         public UnityEvent OnHackable;
 
+        [Header("Health")]
         [SerializeField] private int _maxHealth = 100;
         [SerializeField] private int _currentHealth;
         [SerializeField] private int _hackableHealth = 20;
+
+        [Header("Knockback")]
+        [SerializeField] private float _defaultKnockbackForce = 200f;
 
         [Header("iFrame")]
         [SerializeField] private bool _iFrame = false;
@@ -71,7 +75,8 @@ namespace Assets.Scripts.Combat
         }
 
 
-        public void TakeDamage(int damage, Vector2 hitDirection)
+        // as the parameter grows larger, make a struct for damage inputs
+        public void TakeDamage(int damage, Vector2 hitDirection, float knockbackMultiplier)
         {
             if (_iFrame)
             {
@@ -86,7 +91,7 @@ namespace Assets.Scripts.Combat
             _flashCoroutine = StartCoroutine(Flash(Color.red));
 
 
-            ApplyKnockback(hitDirection, damage);
+            ApplyKnockback(hitDirection, knockbackMultiplier);
 
             _currentHealth -= damage;
             _iFrame = true;
@@ -131,10 +136,10 @@ namespace Assets.Scripts.Combat
         /// </summary>
         public bool IsHackable() => _currentHealth <= _hackableHealth;
 
-        public void ApplyKnockback(Vector2 hitDirection, float damage)
+        public void ApplyKnockback(Vector2 hitDirection, float multiplier)
         {
             // The more damage, the more knockback force is applied
-            float knockbackForce = 500f * damage / _maxHealth;
+            float knockbackForce = _defaultKnockbackForce * multiplier;
 
             _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
             _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);

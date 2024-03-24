@@ -11,6 +11,7 @@ namespace Assets.Scripts.Combat
         public UnityEvent OnAttack;
 
         [SerializeField] private int _swordDamage = 25;
+        [SerializeField] private float _knockbackMultiplier = 1f;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
 
@@ -89,7 +90,7 @@ namespace Assets.Scripts.Combat
                 Debug.Log(collision);
 
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
-                health.TakeDamage(_swordDamage, hitDirection);
+                health.TakeDamage(_swordDamage, hitDirection, _knockbackMultiplier);
                 SoundManager.Instance.PlaySwordImpact();
 
             }
