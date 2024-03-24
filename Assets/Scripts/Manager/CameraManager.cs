@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class CameraManager : MonoBehaviour
 {
@@ -36,7 +37,9 @@ public class CameraManager : MonoBehaviour
 
         SceneManager.sceneLoaded += (_, _) =>
         {
-            _camera = FindObjectOfType<CinemachineVirtualCamera>();
+            _camera = FindObjectsByType<CinemachineVirtualCamera>(FindObjectsSortMode.None).First(
+                obj => obj != _camera
+            );
             _camera.Follow = PlayerManager.Instance.Player.transform;
 
             // RemoveNonCinemachineCameras();

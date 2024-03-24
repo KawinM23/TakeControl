@@ -25,7 +25,7 @@ public class HealthBar : MonoBehaviour
     {
         if (!_health)
         {
-            PlayerManager.Instance.Player.TryGetComponent(out _health);
+            if (PlayerManager.Instance.Player) PlayerManager.Instance.Player.TryGetComponent(out _health);
         }
         else
         {

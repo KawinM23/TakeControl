@@ -52,7 +52,7 @@ namespace Assets.Scripts.Combat
             {
                 Die();
             }
-            if (IsHackable() && gameObject!=PlayerManager.Instance.Player)
+            if (IsHackable() && gameObject != PlayerManager.Instance.Player)
             {
                 OnHackable?.Invoke();
             }
@@ -70,7 +70,11 @@ namespace Assets.Scripts.Combat
                 return;
             }
             // TODO: for debug, remove of refactor
-            if (_flashCoroutine != null) StopCoroutine(_flashCoroutine);
+            if (_flashCoroutine != null)
+            {
+                StopCoroutine(_flashCoroutine);
+                AfterFlash();
+            }
             _flashCoroutine = StartCoroutine(Flash(Color.red));
 
             _currentHealth -= damage;
@@ -85,6 +89,12 @@ namespace Assets.Scripts.Combat
             yield return new WaitForSeconds(0.1f);
             _spriteRenderer.color = _originalColor;
             yield return new WaitForSeconds(0.1f);
+            AfterFlash();
+        }
+
+        void AfterFlash()
+        {
+            _spriteRenderer.color = _originalColor;
             _flashCoroutine = null;
         }
 
