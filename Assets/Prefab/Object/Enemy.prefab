@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3416730720523339364}
   - component: {fileID: 7315772924322691058}
   - component: {fileID: 2294779569602634007}
+  - component: {fileID: 5910027491072952197}
   - component: {fileID: 8320001392360808218}
   m_Layer: 6
   m_Name: Enemy
@@ -209,7 +210,6 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _hackableHealth: 20
-  _defaultKnockbackForce: 200
   _iFrame: 0
   _iFrameDuration: 0
   _iFramableLayer:
@@ -233,6 +233,20 @@ MonoBehaviour:
     m_Bits: 64
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
+--- !u!114 &5910027491072952197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517011557371429162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2703bdbbfc444f0d8891501a2a5a184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapons: []
+  _currentWeaponIndex: 0
 --- !u!114 &8320001392360808218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +275,6 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
-  _knockbackMultiplier: 1
   _swordCollider: {fileID: 8033630153628837990}
   _attackableLayer:
     serializedVersion: 2
