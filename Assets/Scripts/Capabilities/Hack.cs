@@ -26,7 +26,7 @@ namespace Assets.Scripts.Capabilities
 
         private void Update()
         {
-            var hackPoint = _controller.input.GetHackInput();
+            var hackPoint = _controller.Input.GetHackInput();
             if (hackPoint.HasValue)
             {
                 HackAction(hackPoint.Value);
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Capabilities
 
             // Override the target's input with the hacker's input
             var targetController = target.GetComponent<Controller>();
-            targetController.input = _controller.input;
+            targetController.Input = _controller.Input;
 
             // Remove hack effect
             var effect = target.GetComponentInChildren<Effect.Hack>();
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Capabilities
             }
 
             // Remove the hacker (player)
-            _controller.input = null;
+            _controller.Input = null;
 
             // Take Control; changing the target's tag to "Player" and set it as the player
             target.gameObject.tag = "Player";

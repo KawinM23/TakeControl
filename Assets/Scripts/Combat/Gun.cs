@@ -35,13 +35,13 @@ namespace Assets.Scripts.Combat
             if (_lastReloadTime == -1)
             {
                 Vector2? pos = null;
-                if (_controller.input.GetAttackDirection().HasValue)
+                if (_controller.Input.GetAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetAttackDirection().Value;
+                    pos = _controller.Input.GetAttackDirection().Value;
                 }
-                else if (_controller.input.GetContinuedAttackDirection().HasValue)
+                else if (_controller.Input.GetContinuedAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetContinuedAttackDirection().Value;
+                    pos = _controller.Input.GetContinuedAttackDirection().Value;
                 }
                 if (pos != null)
                 {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Combat
                         _currentAmmo -= 1;
                     }
                 }
-                if (_controller.input.IsReloadPressed())
+                if (_controller.Input.IsReloadPressed())
                 {
                     _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
                 }

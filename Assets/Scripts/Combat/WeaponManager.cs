@@ -34,7 +34,7 @@ public class WeaponManager : MonoBehaviour
     private void Update()
     {
         // Swap weapons when "Q" key is pressed
-        if (_controller.input.IsSwapWeaponPressed())
+        if (_controller.Input.IsSwapWeaponPressed())
         {
             SwapWeapons();
         }

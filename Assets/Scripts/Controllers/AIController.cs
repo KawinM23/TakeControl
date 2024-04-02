@@ -2,49 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AIController", menuName = "InputController/AIController")]
-public class AIController : InputController
+public class AIController : MonoBehaviour, InputController
 {
-    public override float GetHorizontalMovement()
+    public float GetHorizontalMovement()
     {
         return 0f;
     }
-    public override float GetVerticalMovement()
+
+    public float GetVerticalMovement()
     {
         return 0f;
     }
-    public override bool IsJumpPressed()
+    public bool IsJumpPressed()
     {
         return false;
     }
-    public override bool IsJumpHeld()
+    public bool IsJumpHeld()
     {
         return false;
     }
 
-    public override Vector2? GetAttackDirection()
+    public Vector2? GetAttackDirection()
     {
         return null;
     }
-    public override Vector2? GetContinuedAttackDirection()
+    public Vector2? GetContinuedAttackDirection()
     {
         return null;
     }
-    public override bool IsReloadPressed()
+    public bool IsReloadPressed()
     {
         return false;
     }
 
-    public override bool IsDashPressed()
+    public bool IsDashPressed()
     {
         return false;
     }
-    public override bool IsSwapWeaponPressed()
+    public bool IsSwapWeaponPressed()
     {
         return false;
     }
 
-    public override Vector2? GetHackInput()
+    public Vector2? GetHackInput()
     {
         return null;
     }

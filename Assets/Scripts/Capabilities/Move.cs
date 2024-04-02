@@ -52,7 +52,7 @@ namespace Assets.Scripts.Capabilities
 
         private void Update()
         {
-            _direction.x = _controller.input.GetHorizontalMovement();
+            _direction.x = _controller.Input.GetHorizontalMovement();
             _desiredVelocity = new Vector2(_direction.x, 0f) * Mathf.Max(_maxSpeed - _ground.Friction, 0f);
             if (_isFollowingMovement)
             {
@@ -79,11 +79,11 @@ namespace Assets.Scripts.Capabilities
                 }
             }
 
-            if (_controller.input.IsDashPressed() && _hasDash && _canDash)
+            if (_controller.Input.IsDashPressed() && _hasDash && _canDash)
             {
                 DashAction(_direction.x, _isFacingRight);
             }
-            if (_platform && _controller.input.GetVerticalMovement() < 0f && _controller.input.IsJumpPressed())
+            if (_platform && _controller.Input.GetVerticalMovement() < 0f && _controller.Input.IsJumpPressed())
             {
                 _platform.GetComponentInChildren<PlatformTrigger>().DropPlayer();
             }

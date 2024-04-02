@@ -39,9 +39,9 @@ namespace Assets.Scripts.Combat
 
         protected override void Update()
         {
-            if (_controller.input.GetAttackDirection().HasValue)
+            if (_controller.Input.GetAttackDirection().HasValue)
             {
-                AttackAction(_controller.input.GetAttackDirection().Value);
+                AttackAction(_controller.Input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
             }
         }
