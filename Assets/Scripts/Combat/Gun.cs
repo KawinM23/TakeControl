@@ -15,15 +15,13 @@ namespace Assets.Scripts.Combat
         private double _lastFireTime, _lastReloadTime = -1;
         private readonly double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
-        public uint CurrentAmmo
-        {
-            get { return _currentAmmo; }
-        }
+        public uint CurrentAmmo => _currentAmmo;
         private readonly uint _maxAmmo = 20;
         public uint MaxAmmo
         {
             get { return _maxAmmo; }
         }
+        public bool Reloading => _lastReloadTime != -1;
 
         protected override void Awake()
         {
@@ -80,6 +78,7 @@ namespace Assets.Scripts.Combat
                     bullet.IsEnemy = false;
                 }
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+                bullet.IsEnemy = gameObject.tag != "Player";
             }
         }
 

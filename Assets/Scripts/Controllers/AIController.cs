@@ -4,47 +4,47 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour, InputController
 {
-    public float GetHorizontalMovement()
+    public virtual float GetHorizontalMovement()
     {
         return 0f;
     }
 
-    public float GetVerticalMovement()
+    public virtual float GetVerticalMovement()
     {
         return 0f;
     }
-    public bool IsJumpPressed()
+    public virtual bool IsJumpPressed()
     {
         return false;
     }
-    public bool IsJumpHeld()
+    public virtual bool IsJumpHeld()
     {
         return false;
     }
 
-    public Vector2? GetAttackDirection()
+    public virtual Vector2? GetAttackDirection()
     {
         return null;
     }
-    public Vector2? GetContinuedAttackDirection()
+    public virtual Vector2? GetContinuedAttackDirection()
     {
         return null;
     }
-    public bool IsReloadPressed()
+    public virtual bool IsReloadPressed()
     {
         return false;
     }
 
-    public bool IsDashPressed()
+    public virtual bool IsDashPressed()
     {
         return false;
     }
-    public bool IsSwapWeaponPressed()
+    public virtual bool IsSwapWeaponPressed()
     {
         return false;
     }
 
-    public Vector2? GetHackInput()
+    public virtual Vector2? GetHackInput()
     {
         return null;
     }
