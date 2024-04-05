@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Combat;
-public class HealthBar : MonoBehaviour
+
+public class EnemyHealthBar : MonoBehaviour
 {
+    [SerializeField] private GameObject _gameObject;
     private Slider _slider;
     public Gradient gradient;
     public Image fill;
@@ -13,25 +15,17 @@ public class HealthBar : MonoBehaviour
 
     void Awake()
     {
+        _health = _gameObject.GetComponent<Health>();
         _slider = GetComponent<Slider>();
-        PlayerManager.OnPlayerChanged += (player) => { if (player.TryGetComponent(out Health health)) { _health = health; } };
-    }
-
-    private void Start()
-    {
-        PlayerManager.Instance.Player.TryGetComponent(out _health);
     }
 
     private void Update()
     {
-        if (!_health)
-        {
-            if (PlayerManager.Instance.Player) PlayerManager.Instance.Player.TryGetComponent(out _health);
-        }
-        else
+        if (_health)
         {
             SetHealthBar();
         }
+        gameObject.SetActive(_gameObject != PlayerManager.Instance.Player);
     }
 
     public void SetHealthBar()
