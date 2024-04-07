@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
-    public class Sword : MonoBehaviour
+    public class Sword : BaseWeapon
     {
         public UnityEvent OnAttack;
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Combat
 
         private readonly Collider2D[] _hitEnemies;
 
-        private void Awake()
+        protected override void Awake()
         {
             _controller = GetComponent<Controller>();
             _parentTransform = _swordCollider.transform.parent;
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Combat
             _swordCollider.enabled = false;
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (_controller.input.GetAttackDirection().HasValue)
             {

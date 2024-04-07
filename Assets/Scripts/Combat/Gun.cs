@@ -6,7 +6,7 @@ namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
 
-    public class Gun : MonoBehaviour
+    public class Gun : BaseWeapon
     {
         [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
         [SerializeField] private float _knockbackMultiplier = 0.7f;
@@ -15,14 +15,22 @@ namespace Assets.Scripts.Combat
         private double _lastFireTime, _lastReloadTime = -1;
         private readonly double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
+        public uint CurrentAmmo
+        {
+            get { return _currentAmmo; }
+        }
         private readonly uint _maxAmmo = 20;
+        public uint MaxAmmo
+        {
+            get { return _maxAmmo; }
+        }
 
-        private void Awake()
+        protected override void Awake()
         {
             _controller = GetComponent<Controller>();
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (_lastReloadTime == -1)
             {
@@ -72,6 +80,26 @@ namespace Assets.Scripts.Combat
                     bullet.IsEnemy = false;
                 }
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+            }
+        }
+
+        public bool IsReloading()
+        {
+            return _lastReloadTime != -1;
+        }
+
+        public double GetCurrentReloadPercent()
+        {
+            if (!IsReloading())
+            {
+                return 100;
+            }
+            else
+            {
+                double reloadPercent = ((Time.fixedTimeAsDouble - _lastReloadTime) / _reloadTime) * 100;
+                reloadPercent = System.Math.Min(reloadPercent, 100);
+                reloadPercent = System.Math.Max(reloadPercent, 0);
+                return reloadPercent;
             }
         }
     }
