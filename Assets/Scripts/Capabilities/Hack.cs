@@ -41,7 +41,10 @@ namespace Assets.Scripts.Capabilities
 
         private void HackAction(Vector2 hackPoint)
         {
-            
+            if (HackEventManager.Instance.IsHacking)
+            {
+                return;
+            }
             // Find on hack point the enemy which is hackable 
             Collider2D? target = Physics2D.OverlapPoint(hackPoint, _hackableLayer);
             if (target == null)
