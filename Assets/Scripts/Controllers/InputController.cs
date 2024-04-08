@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InputController : ScriptableObject
+public interface InputController
 {
     // Movement
-    public abstract float GetHorizontalMovement();
-    public abstract float GetVerticalMovement();
-    public abstract bool IsJumpPressed();
-    public abstract bool IsJumpHeld();
-    public abstract bool IsDashPressed();
+    float GetHorizontalMovement();
+    float GetVerticalMovement();
+    bool IsJumpPressed();
+    bool IsJumpHeld();
+    bool IsDashPressed();
 
     // Combat
-    public abstract Vector2? GetAttackDirection();
-    public abstract Vector2? GetContinuedAttackDirection();
-    public abstract bool IsReloadPressed();
-    public abstract bool IsSwapWeaponPressed();
+    Vector2? GetAttackDirection();
+    Vector2? GetContinuedAttackDirection();
+    bool IsReloadPressed();
+    bool IsSwapWeaponPressed();
 
     // Hack
-    public abstract Vector2? GetHackInput();
+    Vector2? GetHackInput();
 }

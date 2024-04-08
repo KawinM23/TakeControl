@@ -97,6 +97,11 @@ public class SoundManager : MonoBehaviour
         Play("Pressure Plate Up");
     }
 
+    public void PlayExplosion()
+    {
+        Play("Explosion");
+    }
+
     private void Play(string name)
     {
         Sound s = System.Array.Find(sounds, sound => sound.name == name);

@@ -38,7 +38,7 @@ public class MapTransition : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         collision.gameObject.TryGetComponent(out Controller controller);
-        if (controller && controller.input is PlayerController)
+        if (controller && controller.Input is PlayerController)
         {
             float distanceFromSpawn = 0f;
             /*if (_direction == Direction.Left || _direction == Direction.Right)
@@ -54,7 +54,7 @@ public class MapTransition : MonoBehaviour
         }
     }
 
-    public static Vector2 FindDestinationPosition(string fromScene, string toScene,float distanceFromSpawn)
+    public static Vector2 FindDestinationPosition(string fromScene, string toScene, float distanceFromSpawn)
     {
         MapTransition[] mta = FindObjectsByType<MapTransition>(FindObjectsSortMode.None);
         foreach (MapTransition mt in mta)

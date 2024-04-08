@@ -6,34 +6,40 @@ namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
 
-    public class Gun : MonoBehaviour
+    public class Gun : BaseWeapon
     {
         [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
         [SerializeField] private float _knockbackMultiplier = 0.7f;
         [SerializeField] private GameObject _bulletPrefab;
         private Controller _controller;
         private double _lastFireTime, _lastReloadTime = -1;
-        private readonly double _shootingDelay = 0.25, _reloadTime = 5;
+        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
+        public uint CurrentAmmo => _currentAmmo;
         private readonly uint _maxAmmo = 20;
+        public uint MaxAmmo
+        {
+            get { return _maxAmmo; }
+        }
+        public bool Reloading => _lastReloadTime != -1;
 
-        private void Awake()
+        protected override void Awake()
         {
             _controller = GetComponent<Controller>();
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (_lastReloadTime == -1)
             {
                 Vector2? pos = null;
-                if (_controller.input.GetAttackDirection().HasValue)
+                if (_controller.Input.GetAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetAttackDirection().Value;
+                    pos = _controller.Input.GetAttackDirection().Value;
                 }
-                else if (_controller.input.GetContinuedAttackDirection().HasValue)
+                else if (_controller.Input.GetContinuedAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetContinuedAttackDirection().Value;
+                    pos = _controller.Input.GetContinuedAttackDirection().Value;
                 }
                 if (pos != null)
                 {
@@ -44,7 +50,7 @@ namespace Assets.Scripts.Combat
                         _currentAmmo -= 1;
                     }
                 }
-                if (_controller.input.IsReloadPressed())
+                if (_controller.Input.IsReloadPressed())
                 {
                     _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
                 }
@@ -72,6 +78,27 @@ namespace Assets.Scripts.Combat
                     bullet.IsEnemy = false;
                 }
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+                bullet.IsEnemy = gameObject.tag != "Player";
+            }
+        }
+
+        public bool IsReloading()
+        {
+            return _lastReloadTime != -1;
+        }
+
+        public double GetCurrentReloadPercent()
+        {
+            if (!IsReloading())
+            {
+                return 100;
+            }
+            else
+            {
+                double reloadPercent = ((Time.fixedTimeAsDouble - _lastReloadTime) / _reloadTime) * 100;
+                reloadPercent = System.Math.Min(reloadPercent, 100);
+                reloadPercent = System.Math.Max(reloadPercent, 0);
+                return reloadPercent;
             }
         }
     }

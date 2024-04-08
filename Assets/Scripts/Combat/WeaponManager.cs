@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] private List<MonoBehaviour> _weapons;
+    [SerializeField] private List<BaseWeapon> _weapons;
     [SerializeField] private int _currentWeaponIndex;
     private Controller _controller;
 
@@ -24,7 +24,7 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         // Ensure only one weapon is active at start
-        foreach (MonoBehaviour weapon in _weapons)
+        foreach (BaseWeapon weapon in _weapons)
         {
             weapon.enabled = false;
         }
@@ -34,7 +34,7 @@ public class WeaponManager : MonoBehaviour
     private void Update()
     {
         // Swap weapons when "Q" key is pressed
-        if (_controller.input.IsSwapWeaponPressed())
+        if (_controller.Input.IsSwapWeaponPressed())
         {
             SwapWeapons();
         }
@@ -48,5 +48,10 @@ public class WeaponManager : MonoBehaviour
         _weapons[_currentWeaponIndex].enabled = true;
         EquipmentUIManager.Instance.Select(_weapons[_currentWeaponIndex]);
         Debug.Log(_weapons[_currentWeaponIndex]);
+    }
+
+    public BaseWeapon CurrentWeapon()
+    {
+        return _weapons[_currentWeaponIndex];
     }
 }
