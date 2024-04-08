@@ -1,22 +1,24 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
 
-    public class Bullet : MonoBehaviour
+    public class Bullet : BaseProjectile
     {
-        public bool IsEnemy;
-
         [SerializeField] private int _damage = 15;
         [SerializeField] private LayerMask _actionLayer;
         [SerializeField] private LayerMask _destroyLayer;
         private Rigidbody2D _rigidbody;
-        private readonly Collider2D _collider;
         private float _knockbackMultiplier; // set from gun
+
+        private void Start()
+        {
+            Damage = _damage;
+            ActionLayer = _actionLayer;
+            DestroyLayer = _destroyLayer;
+        }
 
         private void Awake()
         {
@@ -36,44 +38,23 @@ namespace Assets.Scripts.Combat
             Destroy(gameObject);
         }
 
-
-        private void OnTriggerEnter2D(Collider2D collider)
+        protected override void OnEnemyHitPlayerAction(GameObject player, Vector3 hitPosition)
         {
-            if (_destroyLayer == (_destroyLayer | (1 << collider.transform.gameObject.layer)))
+            if (player.TryGetComponent(out Health health))
             {
-                Destroy(gameObject);
+                Vector2 hitDirection = (hitPosition - transform.position).normalized;
+                health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
             }
-            if (_actionLayer == (_actionLayer | (1 << collider.transform.gameObject.layer)))
-            {
-                bool hitPlayer = collider.gameObject == PlayerManager.Instance.Player;
-                // Enemy Bullet
-                if (IsEnemy)
-                {
-                    if (!hitPlayer)
-                    {
-                        return;
-                    }
-                    if (collider.gameObject.TryGetComponent(out Health health))
-                    {
-                        Vector2 hitDirection = (collider.transform.position - transform.position).normalized;
-                        health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
-                    }
-                }
-                else// Our Bullet
-                {
-                    if (hitPlayer)
-                    {
-                        return;
-                    }
-                    if (collider.gameObject.TryGetComponent(out Health health))
-                    {
+        }
 
-                        Vector2 hitDirection = _rigidbody.velocity.normalized;
-                        health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
-                        SoundManager.Instance.PlayBulletImpact();
-                    }
-                }
-                Destroy(gameObject);
+        protected override void OnPlayerHitEnemyAction(GameObject enemy, Vector3 hitPosition)
+        {
+            if (enemy.TryGetComponent(out Health health))
+            {
+
+                Vector2 hitDirection = _rigidbody.velocity.normalized;
+                health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
+                SoundManager.Instance.PlayBulletImpact();
             }
         }
     }
