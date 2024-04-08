@@ -44,6 +44,7 @@ namespace Assets.Scripts.Combat
             {
                 Vector2 hitDirection = (hitPosition - transform.position).normalized;
                 health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
+                SoundManager.Instance.PlayBulletImpact();
             }
         }
 
