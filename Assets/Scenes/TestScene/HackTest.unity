@@ -1150,6 +1150,14 @@ PrefabInstance:
       propertyPath: buttonAmount
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2294779569602634007, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294779569602634007, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
+      propertyPath: _hackDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4371959835983710472, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

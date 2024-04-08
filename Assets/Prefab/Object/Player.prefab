@@ -279,6 +279,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  _hackDuration: 5
+  _buttonAmount: 1
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &4328385829411341047
@@ -299,6 +301,7 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _hackableHealth: 20
+  _defaultKnockbackForce: 200
   _iFrame: 0
   _iFrameDuration: 0.2
   _iFramableLayer:
@@ -332,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpeed: 40
+  _knockbackMultiplier: 0.7
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
 --- !u!114 &8086383678846937365
 MonoBehaviour:
@@ -361,6 +365,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _knockbackMultiplier: 1
   _swordCollider: {fileID: 9016796033066577932}
   _attackableLayer:
     serializedVersion: 2

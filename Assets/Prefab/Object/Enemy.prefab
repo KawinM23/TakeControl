@@ -233,8 +233,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
-  hackDuration: 3
-  buttonAmount: 3
+  _hackDuration: 3
+  _buttonAmount: 3
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &5910027491072952197
