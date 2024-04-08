@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Capabilities
 {
+    using Assets.Scripts.Combat;
     [RequireComponent(typeof(Controller))]
     public class Move : MonoBehaviour
     {
@@ -130,6 +131,12 @@ namespace Assets.Scripts.Capabilities
             else
             {
                 _dashDirection = isFacingRight ? 1f : -1f;
+            }
+
+            // Check if this object has Health, then set IFrame
+            if (TryGetComponent(out Health health))
+            {
+                health.TriggerIFrame();
             }
         }
 

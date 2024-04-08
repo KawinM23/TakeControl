@@ -4,8 +4,11 @@ using System.Linq;
 using Assets.Scripts.Combat;
 using UnityEngine;
 
+// This is a template file for AIController
+// IDLE util found player -> SHOOT -> RELOAD (while jumping) -> IDLE
+
 #nullable enable annotations
-public class TurretController : AIController, InputController
+public class TemplateController : AIController, InputController
 {
     [SerializeField] private LayerMask _layerMask;
     private Gun _gun;

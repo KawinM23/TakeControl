@@ -144,6 +144,13 @@ namespace Assets.Scripts.Combat
             _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
             _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
         }
+
+        // Let other scripts trigger IFrame, for example, dashing
+        public void TriggerIFrame()
+        {
+            _iFrame = true;
+            _iFrameCounter = _iFrameDuration;
+        }
     }
 
 
