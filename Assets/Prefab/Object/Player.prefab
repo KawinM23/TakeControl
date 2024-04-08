@@ -279,6 +279,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  _hackLinePrefab: {fileID: 0}
+  _hackLineDuration: 0.5
 --- !u!114 &4328385829411341047
 MonoBehaviour:
   m_ObjectHideFlags: 0
