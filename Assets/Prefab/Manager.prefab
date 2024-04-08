@@ -206,6 +206,11 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+  - name: Explosion
+    clip: {fileID: 8300000, guid: f9eb44b85c96be5429737d4dcadbfa3b, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1001 &4126386514455063634
 PrefabInstance:
   m_ObjectHideFlags: 0

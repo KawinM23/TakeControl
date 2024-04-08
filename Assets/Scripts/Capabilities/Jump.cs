@@ -41,7 +41,7 @@ namespace Assets.Scripts.Capabilities
         // Update is called once per frame
         void Update()
         {
-            _desiredJump |= _controller.input.IsJumpPressed() && _controller.input.GetVerticalMovement() >= 0f;
+            _desiredJump |= _controller.Input.IsJumpPressed() && _controller.Input.GetVerticalMovement() >= 0f;
         }
 
         // FixedUpdate is called every fixed framerate frame
@@ -80,11 +80,11 @@ namespace Assets.Scripts.Capabilities
             }
 
             // If the player is holding the jump button and is moving upwards, reduce gravity
-            if (_controller.input.IsJumpHeld() && _body.velocity.y > 0)
+            if (_controller.Input.IsJumpHeld() && _body.velocity.y > 0)
             {
                 _body.gravityScale = _upwardMovementMultiplier;
             }
-            else if (!_controller.input.IsJumpHeld() || _body.velocity.y < 0)
+            else if (!_controller.Input.IsJumpHeld() || _body.velocity.y < 0)
             {
                 _body.gravityScale = _downwardMovementMultiplier;
             }
