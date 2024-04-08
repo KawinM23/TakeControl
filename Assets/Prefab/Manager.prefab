@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2776039825943945354}
   - component: {fileID: 518158505080636077}
   - component: {fileID: 4740915998871761418}
+  - component: {fileID: 6985303427310886824}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -151,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea85a7421e6244b09a594c8eed33c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music_multiplier: 0
+  sfx_multiplier: 0
   sounds:
   - name: Jump
     clip: {fileID: 8300000, guid: f03abd5ad138445c280369733d3454d7, type: 3}
@@ -212,6 +215,19 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+--- !u!114 &6985303427310886824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376023059759919086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 080e7b12d9a545e4299d027c84a83f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenuUI: {fileID: 4603585023532207135}
 --- !u!1001 &4126386514455063634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -560,7 +576,7 @@ PrefabInstance:
     - target: {fileID: 2670651545680609689, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9206118171940635444}
+      objectReference: {fileID: 6985303427310886824}
     - target: {fileID: 2670651545680609689, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Restart
@@ -572,7 +588,7 @@ PrefabInstance:
     - target: {fileID: 5031044117555136229, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9206118171940635444}
+      objectReference: {fileID: 6985303427310886824}
     - target: {fileID: 5031044117555136229, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resume
@@ -580,6 +596,10 @@ PrefabInstance:
     - target: {fileID: 5683601679467419300, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_Name
       value: PauseCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683601679467419300, guid: f684894f33bd3004cbaec4548757b928, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6790633738729702116, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_Pivot.x
@@ -664,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 7340010184611323608, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9206118171940635444}
+      objectReference: {fileID: 6985303427310886824}
     - target: {fileID: 7340010184611323608, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Setting
@@ -672,7 +692,7 @@ PrefabInstance:
     - target: {fileID: 8177217902906530407, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9206118171940635444}
+      objectReference: {fileID: 6985303427310886824}
     - target: {fileID: 8177217902906530407, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Quit

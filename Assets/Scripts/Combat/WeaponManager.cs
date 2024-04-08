@@ -50,8 +50,16 @@ public class WeaponManager : MonoBehaviour
         Debug.Log(_weapons[_currentWeaponIndex]);
     }
 
-    public BaseWeapon CurrentWeapon()
+    public BaseWeapon? CurrentWeapon()
     {
-        return _weapons[_currentWeaponIndex];
+        if (_weapons.Count != 0)
+        {
+            return _weapons[_currentWeaponIndex];
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }
