@@ -29,13 +29,13 @@ public class HackEventManager : MonoBehaviour
         _hackEventCanvas.SetActive(false);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (IsHacking)
         {
             if (HackTimer >= 0)
             {
-                HackTimer -= Time.fixedUnscaledDeltaTime;
+                HackTimer -= Time.unscaledDeltaTime;
                 if (ButtonAmount == 0)
                 {
                     IsHacking = false;
