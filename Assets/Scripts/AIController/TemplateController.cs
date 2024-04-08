@@ -141,6 +141,7 @@ public class TemplateController : AIController, InputController
         return _state == State.RELOADING;
     }
 
+    // will jump when state is reloading
     public override bool IsJumpPressed()
     {
         return _state == State.RELOADING;
