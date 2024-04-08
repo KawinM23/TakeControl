@@ -11,6 +11,8 @@ namespace Assets.Scripts.Combat
         public UnityEvent OnAttack;
 
         [SerializeField] private int _swordDamage = 25;
+        [SerializeField] private float _attackCooldown = 0.5f;
+
         [SerializeField] private float _knockbackMultiplier = 1f;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
@@ -20,6 +22,8 @@ namespace Assets.Scripts.Combat
         [SerializeField] private AnimationCurve _radialCurve;
         [Tooltip("Duration of the slash animation")]
         [SerializeField] private float _animationDuration = 0.2f;
+
+        private double _lastAttackTime = -1;
 
         private SpriteRenderer _sprite;
 
@@ -39,10 +43,14 @@ namespace Assets.Scripts.Combat
 
         protected override void Update()
         {
-            if (_controller.Input.GetAttackDirection().HasValue)
+            if (
+                _controller.Input.GetAttackDirection().HasValue &&
+                Time.fixedTimeAsDouble - _lastAttackTime >= _attackCooldown
+            )
             {
                 AttackAction(_controller.Input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
+                _lastAttackTime = Time.fixedTimeAsDouble;
             }
         }
 
