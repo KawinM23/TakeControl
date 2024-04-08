@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototype2/Map2-2.unity
     guid: e7f56cf14bafa594aae12c59c3b53c02
+  - enabled: 1
+    path: Assets/Scenes/Prototype2/Map2-3.unity
+    guid: 520c2cf0dfcaba14dab8a5f3d51ec1aa
   m_configObjects: {}

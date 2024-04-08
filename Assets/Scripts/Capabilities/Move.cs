@@ -18,12 +18,12 @@ namespace Assets.Scripts.Capabilities
         [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
         [Header("Dash")]
-        [SerializeField] private bool _hasDash = true;
+        [SerializeField] public bool _hasDash = true;
         [SerializeField] private bool _canDash = true;
         [SerializeField, Range(0f, 100f)] private float _dashPower = 20f;
         [SerializeField, Range(0f, 10f)] private float _dashCooldown = 1f;
         [SerializeField, Range(0f, 1f)] private float _dashTime = 0.2f;
-        
+
         private float _dashDirection;
         private bool _isDashing;
         private float _dashTimer;
@@ -112,6 +112,7 @@ namespace Assets.Scripts.Capabilities
         private void DashAction(float x, bool isFacingRight)
         {
             Debug.Log("Dash");
+            SoundManager.Instance.PlayDash();
             _canDash = false;
             _isDashing = true;
             _dashTimer = _dashTime;

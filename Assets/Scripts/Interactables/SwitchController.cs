@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.SaveLoad;
+using System;
 
-public class SwitchController : MonoBehaviour
+public class SwitchController : MonoBehaviour, IDataPersist
 {
     public bool Clicked = false;
     [SerializeField] private bool _isActivable;
@@ -14,6 +16,15 @@ public class SwitchController : MonoBehaviour
     private Vector3 _switchDownPos;
     private readonly float _switchSpeed = 1f;
     private readonly float _switchDelay = 0.3f;
+
+    [SerializeField] string id;
+    void OnValidate()
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            id = Guid.NewGuid().ToString();
+        }
+    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -67,6 +78,7 @@ public class SwitchController : MonoBehaviour
             else if (_isDeactivatable && Clicked)
             {
                 Clicked = false;
+                SoundManager.Instance.PlayPressurePlateUp();
             }
 
         }
@@ -82,5 +94,27 @@ public class SwitchController : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _isBeingPressed = false;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.switches[id] = Clicked;
+    }
+
+    public void LoadData(in GameData data)
+    {
+        if (data.switches.TryGetValue(id, out bool val))
+        {
+            Clicked = val;
+        }
+    }
+
+    [ContextMenu("Reroll All Id")]
+    private void RerollAllId()
+    {
+        foreach (var x in FindObjectsOfType<SwitchController>())
+        {
+            x.id = Guid.NewGuid().ToString();
+        }
     }
 }

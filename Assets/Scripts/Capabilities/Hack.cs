@@ -15,6 +15,10 @@ namespace Assets.Scripts.Capabilities
 
         private Controller _controller;
 
+        [Header("Animation")]
+        [SerializeField] private GameObject _hackLinePrefab;
+        [SerializeField] private float _hackLineDuration = 0.5f;
+
         private void Awake()
         {
             _controller = GetComponent<Controller>();
@@ -32,13 +36,15 @@ namespace Assets.Scripts.Capabilities
         private void HackAction(Vector2 hackPoint)
         {
             Debug.Log("Hack");
+            SoundManager.Instance.PlayHack();
             // Find on hack point the enemy which is hackable 
             Collider2D? target = Physics2D.OverlapPoint(hackPoint, _hackableLayer);
             if (target == null)
             {
                 return;
             }
-            if (!(target.CompareTag("Enemy") && target.TryGetComponent<Health>(out var health) && health.IsHackable()))
+            target.TryGetComponent(out Health health);
+            if (!(target.CompareTag("Enemy") && health && health.IsHackable()))
             {
                 Debug.Log("Can't hack", target);
                 return;
@@ -62,8 +68,21 @@ namespace Assets.Scripts.Capabilities
             target.gameObject.tag = "Player";
             PlayerManager.Instance.Player = target.gameObject;
 
+            //Reset target robot's health
+            health.ResetHealth();
+
             // Destroy the previous body
             Destroy(gameObject);
+        }
+
+        IEnumerator HackLineAnimation(Vector2 from, Vector2 to)
+        {
+            var line = Instantiate(_hackLinePrefab, from, Quaternion.identity);
+            var lineRenderer = line.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, from);
+            lineRenderer.SetPosition(1, to);
+            yield return new WaitForSeconds(_hackLineDuration);
+            Destroy(line);
         }
     }
 }

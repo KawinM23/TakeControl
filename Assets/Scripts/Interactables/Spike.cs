@@ -6,6 +6,8 @@ using UnityEngine;
 public class Spike : MonoBehaviour
 {
     private Collider2D _collider;
+    [SerializeField] private int damagePerTick;
+    [SerializeField] private float _knockbackMultiplier = 1f;
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
@@ -14,10 +16,9 @@ public class Spike : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Debug.Log("Damage Spike");
-        collision.gameObject.TryGetComponent(out Health health);
-        if (health)
+        if (collision.gameObject.TryGetComponent(out Health health))
         {
-            health.TakeDamage(34); // TODO: hardcoded
+            health.TakeDamage(damagePerTick, Vector2.up, _knockbackMultiplier);
         }
     }
 
