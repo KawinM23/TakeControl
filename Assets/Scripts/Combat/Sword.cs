@@ -56,6 +56,10 @@ namespace Assets.Scripts.Combat
 
         private void AttackAction(Vector2 mousePosition)
         {
+            if (HackEventManager.Instance.IsHacking)
+            {
+                return;
+            }
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
             SoundManager.Instance.PlaySlash();

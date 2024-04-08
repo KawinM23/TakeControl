@@ -30,6 +30,7 @@ namespace Assets.Scripts.Combat
 
         protected override void Update()
         {
+            
             if (_lastReloadTime == -1)
             {
                 Vector2? pos = null;
@@ -46,8 +47,7 @@ namespace Assets.Scripts.Combat
                     if (Time.fixedTimeAsDouble - _lastFireTime >= _shootingDelay && _currentAmmo > 0)
                     {
                         Shoot(pos.Value);
-                        _lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
-                        _currentAmmo -= 1;
+                        
                     }
                 }
                 if (_controller.Input.IsReloadPressed())
@@ -64,7 +64,13 @@ namespace Assets.Scripts.Combat
 
         public void Shoot(Vector2 target)
         {
+            if (HackEventManager.Instance.IsHacking)
+            {
+                return;
+            }
             Debug.Log("Shoot");
+            _lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+            _currentAmmo -= 1;
             SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
