@@ -531,11 +531,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe8a6d828ee50c4d950ba1071ce0a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HackEventCanvas: {fileID: 6526874806861286128}
-  ButtonPrefab: {fileID: 4227497728122218756, guid: 78ca90ea9b0115e409e9b4d5a97da32c, type: 3}
+  _hackEventCanvas: {fileID: 6526874806861286128}
+  _buttonPrefab: {fileID: 4227497728122218756, guid: 78ca90ea9b0115e409e9b4d5a97da32c, type: 3}
   IsHacking: 0
+  HackButtons: []
   HackTimer: 0
-  buttonAmount: 0
+  ButtonAmount: 0
 --- !u!224 &457396577 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4852787348298170891, guid: 78ca90ea9b0115e409e9b4d5a97da32c, type: 3}

@@ -17,8 +17,8 @@ namespace Assets.Scripts.Capabilities
 
         [Header("Quick Time Event")]
         private bool _hackResult;
-        [SerializeField] private float hackDuration;
-        [SerializeField] private int buttonAmount;
+        [SerializeField] private float _hackDuration;
+        [SerializeField] private int _buttonAmount;
         private Coroutine _coroutine;
 
         [Header("Animation")]
@@ -57,14 +57,12 @@ namespace Assets.Scripts.Capabilities
             }
             Debug.Log("Hack "+target.name);
             _coroutine = StartCoroutine(HackQuickTimeEvent(target.gameObject));
-
-
         }
 
         IEnumerator HackQuickTimeEvent(GameObject target)
         {
             Hack enemyHack = target.GetComponent<Hack>();
-            HackEventManager.Instance.StartHack(enemyHack.hackDuration,enemyHack.buttonAmount);
+            HackEventManager.Instance.StartHack(enemyHack._hackDuration,enemyHack._buttonAmount);
             yield return new WaitUntil(HackEventManager.Instance.HackQuickTimeEvent);
             _hackResult = HackEventManager.Instance.EndHack();
             if (_hackResult)

@@ -7,29 +7,29 @@ public class HackButtonUI : MonoBehaviour
 {
     public bool Clicked;
 
-    private Image image;
-    private Button button;
+    private Image _image;
+    private Button _button;
 
     private void Awake()
     {
-        image = GetComponent<Image>();
-        button = GetComponent<Button>();
+        _image = GetComponent<Image>();
+        _button = GetComponent<Button>();
     }
 
     public void SetButton(bool clicked)
     {
         if (!Clicked && clicked)
         {
-            HackEventManager.Instance.buttonAmount -= 1;
+            HackEventManager.Instance.ButtonAmount -= 1;
         }
         Clicked = clicked;
         if (clicked)
         {
-            image.color = button.colors.pressedColor;
+            _image.color = _button.colors.pressedColor;
         }
         else
         {
-            image.color = button.colors.normalColor;
+            _image.color = _button.colors.normalColor;
         }
         
     }

@@ -5,13 +5,14 @@ using UnityEngine;
 public class HackEventManager : MonoBehaviour
 {
     public static HackEventManager Instance { get; private set; }
-    [SerializeField] private GameObject HackEventCanvas;
-    [SerializeField] private GameObject ButtonPrefab;
-    public List<HackButtonUI> HackButtons;
+
+    [SerializeField] private GameObject _hackEventCanvas;
+    [SerializeField] private GameObject _buttonPrefab;
 
     public bool IsHacking = false;
+    public List<HackButtonUI> HackButtons;
     public float HackTimer;
-    public int buttonAmount = 9999;
+    public int ButtonAmount;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class HackEventManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         IsHacking = false;
-        HackEventCanvas.SetActive(false);
+        _hackEventCanvas.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -35,7 +36,7 @@ public class HackEventManager : MonoBehaviour
             if (HackTimer >= 0)
             {
                 HackTimer -= Time.fixedUnscaledDeltaTime;
-                if (buttonAmount == 0)
+                if (ButtonAmount == 0)
                 {
                     IsHacking = false;
                 }
@@ -49,15 +50,15 @@ public class HackEventManager : MonoBehaviour
 
     public void StartHack(float hackDuration, int amount)
     {
-        HackEventCanvas.SetActive(true);
+        _hackEventCanvas.SetActive(true);
         IsHacking = true;
         HackTimer = hackDuration;
-        buttonAmount = amount;
+        ButtonAmount = amount;
         Time.timeScale = 0.01f;
         for (int i = 0; i < amount; i++)
         {
             Vector3 pos = new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), 0);
-            GameObject button = Instantiate(ButtonPrefab, pos, new Quaternion(), HackEventCanvas.transform);
+            GameObject button = Instantiate(_buttonPrefab, pos, new Quaternion(), _hackEventCanvas.transform);
             HackButtons.Add(button.GetComponent<HackButtonUI>());
         }
         
@@ -73,8 +74,8 @@ public class HackEventManager : MonoBehaviour
 
         IsHacking = false;
         Time.timeScale = 1f;
-        HackEventCanvas.SetActive(false);
-        return buttonAmount==0;
+        _hackEventCanvas.SetActive(false);
+        return ButtonAmount==0;
     }
 
     public bool HackQuickTimeEvent()
