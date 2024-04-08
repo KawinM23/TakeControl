@@ -211,6 +211,7 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _hackableHealth: 20
+  _defaultKnockbackForce: 200
   _iFrame: 0
   _iFrameDuration: 0.2
   _iFramableLayer:
@@ -232,6 +233,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  hackDuration: 3
+  buttonAmount: 3
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &5910027491072952197
@@ -276,6 +279,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _knockbackMultiplier: 1
   _swordCollider: {fileID: 8033630153628837990}
   _attackableLayer:
     serializedVersion: 2
