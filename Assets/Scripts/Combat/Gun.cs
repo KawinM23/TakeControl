@@ -13,7 +13,7 @@ namespace Assets.Scripts.Combat
         [SerializeField] private GameObject _bulletPrefab;
         private Controller _controller;
         private double _lastFireTime, _lastReloadTime = -1;
-        private readonly double _shootingDelay = 0.25, _reloadTime = 5;
+        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
         public uint CurrentAmmo => _currentAmmo;
         private readonly uint _maxAmmo = 20;
