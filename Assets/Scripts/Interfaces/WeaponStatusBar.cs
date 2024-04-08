@@ -24,7 +24,7 @@ public class WeaponStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BaseWeapon currentWeapon = _weaponManager.CurrentWeapon();
+        BaseWeapon? currentWeapon = _weaponManager.CurrentWeapon();
         if (currentWeapon is Gun gun)
         {
             statusText.text = $"{gun.CurrentAmmo} / {gun.MaxAmmo}";

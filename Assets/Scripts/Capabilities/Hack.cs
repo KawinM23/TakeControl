@@ -32,7 +32,7 @@ namespace Assets.Scripts.Capabilities
 
         private void Update()
         {
-            var hackPoint = _controller.input.GetHackInput();
+            var hackPoint = _controller.Input.GetHackInput();
             if (hackPoint.HasValue)
             {
                 HackAction(hackPoint.Value);
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Capabilities
 
         private void HackAction(Vector2 hackPoint)
         {
-            
+
             SoundManager.Instance.PlayHack();
             // Find on hack point the enemy which is hackable 
             Collider2D? target = Physics2D.OverlapPoint(hackPoint, _hackableLayer);
@@ -55,14 +55,14 @@ namespace Assets.Scripts.Capabilities
                 Debug.Log("Can't hack", target);
                 return;
             }
-            Debug.Log("Hack "+target.name);
+            Debug.Log("Hack " + target.name);
             _coroutine = StartCoroutine(HackQuickTimeEvent(target.gameObject));
         }
 
         IEnumerator HackQuickTimeEvent(GameObject target)
         {
             Hack enemyHack = target.GetComponent<Hack>();
-            HackEventManager.Instance.StartHack(enemyHack._hackDuration,enemyHack._buttonAmount);
+            HackEventManager.Instance.StartHack(enemyHack._hackDuration, enemyHack._buttonAmount);
             yield return new WaitUntil(HackEventManager.Instance.HackQuickTimeEvent);
             _hackResult = HackEventManager.Instance.EndHack();
             if (_hackResult)

@@ -13,17 +13,15 @@ namespace Assets.Scripts.Combat
         [SerializeField] private GameObject _bulletPrefab;
         private Controller _controller;
         private double _lastFireTime, _lastReloadTime = -1;
-        private readonly double _shootingDelay = 0.25, _reloadTime = 5;
+        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
-        public uint CurrentAmmo
-        {
-            get { return _currentAmmo; }
-        }
+        public uint CurrentAmmo => _currentAmmo;
         private readonly uint _maxAmmo = 20;
         public uint MaxAmmo
         {
             get { return _maxAmmo; }
         }
+        public bool Reloading => _lastReloadTime != -1;
 
         protected override void Awake()
         {
@@ -35,13 +33,13 @@ namespace Assets.Scripts.Combat
             if (_lastReloadTime == -1)
             {
                 Vector2? pos = null;
-                if (_controller.input.GetAttackDirection().HasValue)
+                if (_controller.Input.GetAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetAttackDirection().Value;
+                    pos = _controller.Input.GetAttackDirection().Value;
                 }
-                else if (_controller.input.GetContinuedAttackDirection().HasValue)
+                else if (_controller.Input.GetContinuedAttackDirection().HasValue)
                 {
-                    pos = _controller.input.GetContinuedAttackDirection().Value;
+                    pos = _controller.Input.GetContinuedAttackDirection().Value;
                 }
                 if (pos != null)
                 {
@@ -52,7 +50,7 @@ namespace Assets.Scripts.Combat
                         _currentAmmo -= 1;
                     }
                 }
-                if (_controller.input.IsReloadPressed())
+                if (_controller.Input.IsReloadPressed())
                 {
                     _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
                 }
@@ -80,6 +78,7 @@ namespace Assets.Scripts.Combat
                     bullet.IsEnemy = false;
                 }
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+                bullet.IsEnemy = gameObject.tag != "Player";
             }
         }
 

@@ -5,6 +5,8 @@ public class SoundManager : MonoBehaviour
 {
     // Singleton instance
     public static SoundManager Instance;
+    public float music_multiplier;
+    public float sfx_multiplier;
 
     // Sounds
     public Sound[] sounds;
@@ -12,6 +14,7 @@ public class SoundManager : MonoBehaviour
     // Initialize the singleton instance
     private void Awake()
     {
+
         if (Instance == null)
         {
             Instance = this;
@@ -22,6 +25,15 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (PlayerPrefs.HasKey("music_volume_multiplier"))
+        {
+
+            music_multiplier= PlayerPrefs.GetFloat("music_volume_multiplier");
+        }
+        if (PlayerPrefs.HasKey("sfx_volume_multiplier"))
+        {
+            sfx_multiplier = PlayerPrefs.GetFloat("sfx_volume_multiplier");
+        }
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -34,11 +46,14 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         // sleep for 1 second to allow the game to load
+       
         PlayBGM();
     }
 
     public void PlayJump()
     {
+        Debug.Log(music_multiplier);
+        Debug.Log(sfx_multiplier);
         Play("Jump");
     }
 
@@ -80,6 +95,11 @@ public class SoundManager : MonoBehaviour
     public void PlayPressurePlateUp()
     {
         Play("Pressure Plate Up");
+    }
+
+    public void PlayExplosion()
+    {
+        Play("Explosion");
     }
 
     private void Play(string name)
