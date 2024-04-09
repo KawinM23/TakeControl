@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,13 +54,14 @@ public class HackEventManager : MonoBehaviour
         HackTimer = hackDuration;
         ButtonAmount = amount;
         Time.timeScale = 0.01f;
+        Vector2 size = _buttonPrefab.GetComponent<RectTransform>().sizeDelta;
         for (int i = 0; i < amount; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), 0);
+            Vector3 pos = new Vector3(Random.Range(0 + size.x / 2, Screen.width - size.x / 2), Random.Range(0 + size.y / 2, Screen.height - size.y / 2), 0);
             GameObject button = Instantiate(_buttonPrefab, pos, new Quaternion(), _hackEventCanvas.transform);
             HackButtons.Add(button.GetComponent<HackButtonUI>());
         }
-        
+
     }
 
     public bool EndHack()
@@ -70,12 +70,12 @@ public class HackEventManager : MonoBehaviour
         {
             Destroy(hackButton.gameObject);
         }
-        HackButtons.Clear(); 
+        HackButtons.Clear();
 
         IsHacking = false;
         Time.timeScale = 1f;
         _hackEventCanvas.SetActive(false);
-        return ButtonAmount==0;
+        return ButtonAmount == 0;
     }
 
     public bool HackQuickTimeEvent()

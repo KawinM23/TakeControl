@@ -308,7 +308,6 @@ MonoBehaviour:
   _iFramableLayer:
     serializedVersion: 2
     m_Bits: 0
-  _playerManager: {fileID: 0}
   _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
 --- !u!114 &9017549952657372097
 MonoBehaviour:
@@ -341,7 +340,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
   _bulletSpread: 0
   _shootingDelay: 0.25
-  _reloadTime: 5
+  _reloadTime: 1.5
   Reloading: 0
 --- !u!114 &8086383678846937365
 MonoBehaviour:
