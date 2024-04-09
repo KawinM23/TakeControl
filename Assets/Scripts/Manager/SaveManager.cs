@@ -121,7 +121,7 @@ public class SaveManager : MonoBehaviour
             currentScene = defaultSceneName
         };
 
-        OnInitialLoad();
+        InitialLoad();
     }
 
     [ContextMenu("Save")]
@@ -151,8 +151,7 @@ public class SaveManager : MonoBehaviour
             NewGame();
             return;
         }
-        OnInitialLoad();
-        LoadData();
+        InitialLoad();
     }
 
     [ContextMenu("Delete")]
@@ -164,7 +163,7 @@ public class SaveManager : MonoBehaviour
     /// <summary>
     /// Initialize the game state on first load (eg. on new game or load from save)
     /// </summary>
-    private void OnInitialLoad()
+    private void InitialLoad()
     {
         // Prepare to remove old player and manager (except this one)
         var player = PlayerManager.Instance?.Player;
@@ -175,20 +174,39 @@ public class SaveManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
 
         // Prepare after loader to run after scene load
-        _afterLoader = (_) =>
+        _afterLoader = (newThis) =>
         {
-            Debug.Log("After loader");
-
-            var sp = FindObjectOfType<SavePoint>();
-            var player = PlayerManager.Instance != null ? PlayerManager.Instance.Player : null;
-            if (sp && player != null)
-            {
-                player.transform.position = sp.transform.position;
-            }
+            this.AfterInitialLoad(newThis);
         };
 
         SceneManager.LoadScene(_gameData.currentScene, LoadSceneMode.Single);
         InitialLoaded?.Invoke();
+    }
+
+    /// <summary>
+    /// Should run after the `InitialLoad` method finished loading the new scene.
+    ///  
+    /// Once the scene is loaded, new instance of SaveManager is created and this method is called
+    /// with the new instance as argument. 
+    /// </summary>
+    /// <param name="newThis">The new instance of SaveManager (on the new scene)</param>
+    void AfterInitialLoad(SaveManager newThis)
+    {
+        // Load using the data from the previous instance
+        newThis._gameData = this._gameData;
+        newThis.LoadData();
+
+        // Move player to save point in the scene (if exists)
+        var sp = FindObjectOfType<SavePoint>();
+        if (!sp)
+        {
+            Debug.LogWarning("No save point found in the scene.");
+        }
+        var player = PlayerManager.Instance != null ? PlayerManager.Instance.Player : null;
+        if (sp && player != null)
+        {
+            player.transform.position = sp.transform.position;
+        }
     }
 
     private List<IDataPersist> FindAllDataPersist()
