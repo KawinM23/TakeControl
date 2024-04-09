@@ -8,11 +8,13 @@ namespace Assets.Scripts.Combat
 
     public class Gun : BaseWeapon
     {
+        private Controller _controller;
+
         [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
         [SerializeField] private float _knockbackMultiplier = 0.7f;
         [SerializeField] private GameObject _bulletPrefab;
-        private Controller _controller;
-        private double _lastFireTime, _lastReloadTime = -1;
+
+        private double _shootTimer, _reloadTimer = 0;
         [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
         public uint CurrentAmmo => _currentAmmo;
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Combat
         {
             get { return _maxAmmo; }
         }
-        public bool Reloading => _lastReloadTime != -1;
+        public bool Reloading;
 
         protected override void Awake()
         {
@@ -30,35 +32,43 @@ namespace Assets.Scripts.Combat
 
         protected override void Update()
         {
-            
-            if (_lastReloadTime == -1)
+
+            if (_shootTimer >= 0)
             {
-                Vector2? pos = null;
-                if (_controller.Input.GetAttackDirection().HasValue)
+                _shootTimer -= Time.deltaTime;
+            }
+            Vector2? pos = null;
+            if (_controller.Input.GetAttackDirection().HasValue)
+            {
+                pos = _controller.Input.GetAttackDirection().Value;
+            }
+            else if (_controller.Input.GetContinuedAttackDirection().HasValue)
+            {
+                pos = _controller.Input.GetContinuedAttackDirection().Value;
+            }
+            if (pos != null)
+            {
+                if (_shootTimer <= 0 && _currentAmmo > 0)
                 {
-                    pos = _controller.Input.GetAttackDirection().Value;
-                }
-                else if (_controller.Input.GetContinuedAttackDirection().HasValue)
-                {
-                    pos = _controller.Input.GetContinuedAttackDirection().Value;
-                }
-                if (pos != null)
-                {
-                    if (Time.fixedTimeAsDouble - _lastFireTime >= _shootingDelay && _currentAmmo > 0)
-                    {
-                        Shoot(pos.Value);
-                        
-                    }
-                }
-                if (_controller.Input.IsReloadPressed())
-                {
-                    _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                    Shoot(pos.Value);
                 }
             }
-            else if (Time.fixedTimeAsDouble - _lastReloadTime >= _reloadTime)
+            if (!Reloading && (_controller.Input.IsReloadPressed() || CurrentAmmo == 0))
             {
-                _currentAmmo = _maxAmmo;
-                _lastReloadTime = -1;
+                Reloading = true; 
+                _reloadTimer = _reloadTime;
+            }
+
+
+            if (Reloading)
+            {
+                _reloadTimer -= Time.deltaTime;
+                if (_reloadTimer <= 0)
+                {
+                    Reloading = false;
+                    _currentAmmo = _maxAmmo;
+                    _shootTimer = 0;
+                }
             }
         }
 
@@ -69,8 +79,9 @@ namespace Assets.Scripts.Combat
                 return;
             }
             Debug.Log("Shoot");
-            _lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+            _shootTimer = _shootingDelay;
             _currentAmmo -= 1;
+            Reloading = false;
             SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
@@ -90,7 +101,7 @@ namespace Assets.Scripts.Combat
 
         public bool IsReloading()
         {
-            return _lastReloadTime != -1;
+            return Reloading;
         }
 
         public double GetCurrentReloadPercent()
@@ -101,7 +112,7 @@ namespace Assets.Scripts.Combat
             }
             else
             {
-                double reloadPercent = ((Time.fixedTimeAsDouble - _lastReloadTime) / _reloadTime) * 100;
+                double reloadPercent = ((_reloadTime - _reloadTimer) / _reloadTime) * 100;
                 reloadPercent = System.Math.Min(reloadPercent, 100);
                 reloadPercent = System.Math.Max(reloadPercent, 0);
                 return reloadPercent;
