@@ -41,7 +41,7 @@ namespace Assets.Scripts.Capabilities
         // Update is called once per frame
         void Update()
         {
-            _desiredJump |= _controller.input.IsJumpPressed() && _controller.input.GetVerticalMovement() >= 0f;
+            _desiredJump |= _controller.Input.IsJumpPressed() && _controller.Input.GetVerticalMovement() >= 0f;
         }
 
         // FixedUpdate is called every fixed framerate frame
@@ -80,11 +80,11 @@ namespace Assets.Scripts.Capabilities
             }
 
             // If the player is holding the jump button and is moving upwards, reduce gravity
-            if (_controller.input.IsJumpHeld() && _body.velocity.y > 0)
+            if (_controller.Input.IsJumpHeld() && _body.velocity.y > 0)
             {
                 _body.gravityScale = _upwardMovementMultiplier;
             }
-            else if (!_controller.input.IsJumpHeld() || _body.velocity.y < 0)
+            else if (!_controller.Input.IsJumpHeld() || _body.velocity.y < 0)
             {
                 _body.gravityScale = _downwardMovementMultiplier;
             }
@@ -98,11 +98,19 @@ namespace Assets.Scripts.Capabilities
         }
         private void JumpAction()
         {
+            // only play sfx at the start of the jump
+            if (!_isJumping)
+            {
+                SoundManager.Instance.PlayJump();
+            }
+
             if (_coyoteCounter > 0f || (_jumpPhase < _maxAirJumps && _isJumping))
             {
                 if (_isJumping)
                 {
                     _jumpPhase += 1;
+                    // sound for double jump
+                    SoundManager.Instance.PlayJump();
                 }
 
                 _jumpBufferCounter = 0;

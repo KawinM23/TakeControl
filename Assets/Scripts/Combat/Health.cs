@@ -9,9 +9,13 @@ namespace Assets.Scripts.Combat
     {
         public UnityEvent OnHackable;
 
+        [Header("Health")]
         [SerializeField] private int _maxHealth = 100;
         [SerializeField] private int _currentHealth;
         [SerializeField] private int _hackableHealth = 20;
+
+        [Header("Knockback")]
+        [SerializeField] private float _defaultKnockbackForce = 200f;
 
         [Header("iFrame")]
         [SerializeField] private bool _iFrame = false;
@@ -20,11 +24,18 @@ namespace Assets.Scripts.Combat
         [SerializeField] private LayerMask _iFramableLayer;
         [SerializeField] private PlayerManager _playerManager;
 
+
         private SpriteRenderer _spriteRenderer;
         private readonly Collider2D _collider;
-
+        private Rigidbody2D _rigidbody;
         private Coroutine _flashCoroutine;
         private Color _originalColor;
+
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
 
 
         // Use this for initialization
@@ -63,7 +74,9 @@ namespace Assets.Scripts.Combat
             _currentHealth = _maxHealth;
         }
 
-        public void TakeDamage(int damage)
+
+        // as the parameter grows larger, make a struct for damage inputs
+        public void TakeDamage(int damage, Vector2 hitDirection, float knockbackMultiplier)
         {
             if (_iFrame)
             {
@@ -76,6 +89,9 @@ namespace Assets.Scripts.Combat
                 AfterFlash();
             }
             _flashCoroutine = StartCoroutine(Flash(Color.red));
+
+
+            ApplyKnockback(hitDirection, knockbackMultiplier);
 
             _currentHealth -= damage;
             _iFrame = true;
@@ -119,5 +135,23 @@ namespace Assets.Scripts.Combat
         /// Does the health meet the requirements to be hacked
         /// </summary>
         public bool IsHackable() => _currentHealth <= _hackableHealth;
+
+        public void ApplyKnockback(Vector2 hitDirection, float multiplier)
+        {
+            // The more damage, the more knockback force is applied
+            float knockbackForce = _defaultKnockbackForce * multiplier;
+
+            _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
+        }
+
+        // Let other scripts trigger IFrame, for example, dashing
+        public void TriggerIFrame()
+        {
+            _iFrame = true;
+            _iFrameCounter = _iFrameDuration;
+        }
     }
+
+
 }

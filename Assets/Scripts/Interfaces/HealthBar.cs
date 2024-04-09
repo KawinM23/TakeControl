@@ -5,14 +5,15 @@ using UnityEngine.UI;
 using Assets.Scripts.Combat;
 public class HealthBar : MonoBehaviour
 {
-    public Slider slider;
+    private Slider _slider;
     public Gradient gradient;
     public Image fill;
 
-    [SerializeField] private Health _health;
+    private Health _health;
 
     void Awake()
     {
+        _slider = GetComponent<Slider>();
         PlayerManager.OnPlayerChanged += (player) => { if (player.TryGetComponent(out Health health)) { _health = health; } };
     }
 
@@ -35,8 +36,8 @@ public class HealthBar : MonoBehaviour
 
     public void SetHealthBar()
     {
-        slider.maxValue = _health.GetMaxHealth();
-        slider.value = _health.GetCurrentHealth();
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        _slider.maxValue = _health.GetMaxHealth();
+        _slider.value = _health.GetCurrentHealth();
+        fill.color = gradient.Evaluate(_slider.normalizedValue);
     }
 }

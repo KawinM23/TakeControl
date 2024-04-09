@@ -6,11 +6,14 @@ using UnityEngine.Events;
 namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
-    public class Sword : MonoBehaviour
+    public class Sword : BaseWeapon
     {
         public UnityEvent OnAttack;
 
         [SerializeField] private int _swordDamage = 25;
+        [SerializeField] private float _attackCooldown = 0.5f;
+
+        [SerializeField] private float _knockbackMultiplier = 1f;
         [SerializeField] private Collider2D _swordCollider;
         [SerializeField] private LayerMask _attackableLayer;
 
@@ -20,6 +23,8 @@ namespace Assets.Scripts.Combat
         [Tooltip("Duration of the slash animation")]
         [SerializeField] private float _animationDuration = 0.2f;
 
+        private double _lastAttackTime = -1;
+
         private SpriteRenderer _sprite;
 
         private Controller _controller;
@@ -27,7 +32,7 @@ namespace Assets.Scripts.Combat
 
         private readonly Collider2D[] _hitEnemies;
 
-        private void Awake()
+        protected override void Awake()
         {
             _controller = GetComponent<Controller>();
             _parentTransform = _swordCollider.transform.parent;
@@ -36,19 +41,28 @@ namespace Assets.Scripts.Combat
             _swordCollider.enabled = false;
         }
 
-        private void Update()
+        protected override void Update()
         {
-            if (_controller.input.GetAttackDirection().HasValue)
+            if (
+                _controller.Input.GetAttackDirection().HasValue &&
+                Time.fixedTimeAsDouble - _lastAttackTime >= _attackCooldown
+            )
             {
-                AttackAction(_controller.input.GetAttackDirection().Value);
+                AttackAction(_controller.Input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
+                _lastAttackTime = Time.fixedTimeAsDouble;
             }
         }
 
         private void AttackAction(Vector2 mousePosition)
         {
+            if (HackEventManager.Instance.IsHacking)
+            {
+                return;
+            }
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
+            SoundManager.Instance.PlaySlash();
             Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
             _swordCollider.transform.localPosition = direction * 1.2f;
@@ -86,7 +100,11 @@ namespace Assets.Scripts.Combat
             if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
                 Debug.Log(collision);
-                health.TakeDamage(_swordDamage);
+
+                Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
+                health.TakeDamage(_swordDamage, hitDirection, _knockbackMultiplier);
+                SoundManager.Instance.PlaySwordImpact();
+
             }
 
         }
