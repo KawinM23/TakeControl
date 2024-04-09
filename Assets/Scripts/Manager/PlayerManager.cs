@@ -69,8 +69,9 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Respawning...");
         _isDead = false; // Reset death flag
         Debug.Log("Reloading scene: " + _respawnScene);
-        SceneManager.LoadScene(_respawnScene); // Reload current scene
+        // SceneManager.LoadScene(_respawnScene); // Reload current scene
         _respawnCanvas.gameObject.SetActive(false); // Hide respawn canvas
+        SaveManager.Instance.LoadSave();
     }
 
     private void SetUp()

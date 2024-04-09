@@ -21,7 +21,6 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float _iFrameDuration;
         private float _iFrameCounter;
         [SerializeField] private LayerMask _iFramableLayer;
-        [SerializeField] private PlayerManager _playerManager;
 
         [Header("Effect")]
         [SerializeField] ParticleSystem _dieParticle;
@@ -39,7 +38,6 @@ namespace Assets.Scripts.Combat
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             _originalColor = _spriteRenderer.color;
-            _playerManager = PlayerManager.Instance;
         }
 
 
@@ -120,7 +118,7 @@ namespace Assets.Scripts.Combat
         {
             if (gameObject == PlayerManager.Instance.Player)
             {
-                _playerManager.Die();
+                PlayerManager.Instance.Die();
             }
             /*SoundManager.Instance;*/
             if (_dieParticle)

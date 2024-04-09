@@ -15,5 +15,7 @@ public class SavePoint : Interactable
     public override void Interact()
     {
         Debug.Log("SAVE POINT " + _sceneName);
+
+        SaveManager.Instance.PersistSave();
     }
 }
