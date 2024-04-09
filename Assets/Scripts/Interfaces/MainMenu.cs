@@ -9,6 +9,10 @@ public class MainMenu : MonoBehaviour
     {
         SaveManager.Instance.NewGame();
     }
+    public void LoadGame()
+    {
+        SaveManager.Instance.LoadSave();
+    }
     public void GoToOption()
     {
         SceneManager.LoadSceneAsync(1);
