@@ -18,7 +18,8 @@ public class PlayerManager : MonoBehaviour
         set
         {
             _player = value;
-            OnPlayerChanged?.Invoke(_player);
+            if (_player != null)
+                OnPlayerChanged?.Invoke(_player);
         }
     }
     private GameObject _player;
@@ -45,6 +46,15 @@ public class PlayerManager : MonoBehaviour
     {
         SetUp();
         _respawnCanvas.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            OnPlayerChanged = null;
+            OnPlayerDied = null;
+        }
     }
 
     public void Die()
