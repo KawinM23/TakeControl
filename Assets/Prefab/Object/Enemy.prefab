@@ -293,6 +293,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _attackCooldown: 0.5
   _knockbackMultiplier: 1
   _swordCollider: {fileID: 8033630153628837990}
   _attackableLayer:
@@ -425,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 517011557371429162}
+  _robot: {fileID: 517011557371429162}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}

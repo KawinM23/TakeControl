@@ -23,7 +23,7 @@ namespace Assets.Scripts.Combat
         [Tooltip("Duration of the slash animation")]
         [SerializeField] private float _animationDuration = 0.2f;
 
-        private double _lastAttackTime = -1;
+        private double _attackTimer = -1;
 
         private SpriteRenderer _sprite;
 
@@ -43,14 +43,17 @@ namespace Assets.Scripts.Combat
 
         protected override void Update()
         {
+            if (_attackTimer > 0)
+            {
+                _attackTimer -= Time.deltaTime;
+            }
             if (
                 _controller.Input.GetAttackDirection().HasValue &&
-                Time.fixedTimeAsDouble - _lastAttackTime >= _attackCooldown
+                _attackTimer <= 0
             )
             {
                 AttackAction(_controller.Input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
-                _lastAttackTime = Time.fixedTimeAsDouble;
             }
         }
 
@@ -62,6 +65,7 @@ namespace Assets.Scripts.Combat
             }
             StartCoroutine(SwordAnimation());
             Debug.Log("Sword Attack");
+            _attackTimer = _attackCooldown;
             SoundManager.Instance.PlaySlash();
             Vector2 direction = (mousePosition - (Vector2)_parentTransform.position).normalized;
 
@@ -96,15 +100,13 @@ namespace Assets.Scripts.Combat
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-
             if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
-                Debug.Log(collision);
+                Debug.Log("Sword hit "+collision);
 
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
                 health.TakeDamage(_swordDamage, hitDirection, _knockbackMultiplier);
                 SoundManager.Instance.PlaySwordImpact();
-
             }
 
         }
