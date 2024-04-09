@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Combat;
-using UnityEditor.EditorTools;
+using System.Collections;
 using UnityEngine;
 
 #nullable enable annotations
