@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Prototype3/Main Menu.unity
-    guid: 6b5d1354138c0bc4ab25364d1750a0a3
+    guid: d299a61533c78694ea1d4f2edebff9d8
   - enabled: 1
     path: Assets/Scenes/Prototype3/Option.unity
     guid: 0da6f448059996b46a9b4e0e6fa8616a
@@ -34,5 +34,11 @@ EditorBuildSettings:
     guid: 36fbf70f136917c42b0f0388547d409e
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-3.unity
+    guid: 21b097bc72a1ea44a8b955d3ca72425c
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-4.unity
+    guid: ae72fe5f2d4669341aff722dbe031c7e
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-5.unity
     guid: 2f78a315abda066458791f31e99b6a04
   m_configObjects: {}
