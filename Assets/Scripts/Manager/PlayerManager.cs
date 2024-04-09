@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
     public static event UnityAction<GameObject> OnPlayerChanged;
+    public static event UnityAction OnPlayerDied;
 
     public GameObject Player
     {
@@ -50,6 +51,8 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("Player is dead");
         _respawnCanvas.gameObject.SetActive(true); // Show respawn canvas
+
+        OnPlayerDied?.Invoke();
     }
     public void Respawn() // Called when respawn button is clicked
     {

@@ -21,6 +21,20 @@ public class EnemySkillBar : MonoBehaviour
         _doubleJumpSlot.gameObject.SetActive(_robot.TryGetComponent(out Jump jump) && jump.GetMaxAirJump() == 1);
         _dashSlot.gameObject.SetActive(_robot.TryGetComponent(out Move move) && move._hasDash);
 
-        PlayerManager.OnPlayerChanged += (player) => { gameObject.SetActive(_robot != player); };
+    }
+
+    private void Start()
+    {
+        PlayerManager.OnPlayerChanged += HandlePlayerChanged;
+    }
+
+    private void OnDisable()
+    {
+        PlayerManager.OnPlayerChanged -= HandlePlayerChanged;
+    }
+
+    private void HandlePlayerChanged(GameObject player)
+    {
+        gameObject.SetActive(_robot != player);
     }
 }
