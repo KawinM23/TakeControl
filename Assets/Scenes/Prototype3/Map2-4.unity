@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1108409
+      value: 1.1103524
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
@@ -432,6 +432,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4991775248315330771, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: _hackableHealth
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
