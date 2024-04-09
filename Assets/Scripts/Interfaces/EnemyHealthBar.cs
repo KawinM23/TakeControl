@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Combat;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Combat;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    [SerializeField] private GameObject _robot;
+    private GameObject _robot;
     private Slider _slider;
     public Gradient gradient;
     public Image fill;
@@ -15,6 +13,7 @@ public class EnemyHealthBar : MonoBehaviour
 
     void Awake()
     {
+        _robot = transform.parent.parent.gameObject;
         _health = _robot.GetComponent<Health>();
         _slider = GetComponent<Slider>();
         PlayerManager.OnPlayerChanged += (player) => { gameObject.SetActive(_robot != player); };

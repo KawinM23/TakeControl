@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Assets.Scripts.Combat;
 using Assets.Scripts.Capabilities;
+using Assets.Scripts.Combat;
+using UnityEngine;
 
 public class EnemySkillBar : MonoBehaviour
 {
-    [SerializeField] private GameObject _robot;
+    private GameObject _robot;
 
     [SerializeField] private EquipmentSlot _swordSlot;
     [SerializeField] private EquipmentSlot _gunSlot;
@@ -16,6 +14,7 @@ public class EnemySkillBar : MonoBehaviour
 
     private void Awake()
     {
+        _robot = transform.parent.parent.gameObject;
         _swordSlot.gameObject.SetActive(_robot.GetComponent<Sword>() != null);
         _gunSlot.gameObject.SetActive(_robot.GetComponent<Gun>() != null);
 
