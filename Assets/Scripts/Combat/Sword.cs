@@ -26,6 +26,7 @@ namespace Assets.Scripts.Combat
         private double _attackTimer = -1;
 
         private SpriteRenderer _sprite;
+        private SpriteMask _mask; // for radial slash animation
 
         private Controller _controller;
         private Transform _parentTransform;
@@ -37,8 +38,12 @@ namespace Assets.Scripts.Combat
             _controller = GetComponent<Controller>();
             _parentTransform = _swordCollider.transform.parent;
             _sprite = _swordCollider.GetComponent<SpriteRenderer>();
+            _mask = _swordCollider.GetComponentInChildren<SpriteMask>();
+
+            _sprite.gameObject.SetActive(false);
             _sprite.enabled = false;
             _swordCollider.enabled = false;
+            _mask.enabled = false;
         }
 
         protected override void Update()
@@ -74,20 +79,22 @@ namespace Assets.Scripts.Combat
         }
         private IEnumerator SwordAnimation()
         {
-            var mask = GetComponentInChildren<SpriteMask>();
-
+            _sprite.gameObject.SetActive(true);
+            _mask.enabled = true;
             _swordCollider.enabled = true;
             _sprite.enabled = true;
 
             for (float t = 0; t <= _animationDuration; t += Time.fixedDeltaTime)
             {
-                mask.alphaCutoff = _radialCurve.Evaluate(t / _animationDuration);
+                _mask.alphaCutoff = _radialCurve.Evaluate(t / _animationDuration);
                 yield return new WaitForFixedUpdate();
             }
 
             _swordCollider.enabled = false;
             _sprite.enabled = false;
-            mask.alphaCutoff = 0f;
+            _mask.alphaCutoff = 0f;
+            _mask.enabled = false;
+            _sprite.gameObject.SetActive(false);
 
 
             // _swordCollider.enabled = true;
@@ -102,7 +109,7 @@ namespace Assets.Scripts.Combat
         {
             if (collision.gameObject != gameObject && collision.TryGetComponent(out Health health))
             {
-                Debug.Log("Sword hit "+collision);
+                Debug.Log("Sword hit " + collision);
 
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
                 health.TakeDamage(_swordDamage, hitDirection, _knockbackMultiplier);

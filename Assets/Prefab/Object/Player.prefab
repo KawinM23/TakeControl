@@ -414,6 +414,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298145703290883797, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699603152590690769, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8704814733547641630, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.2
@@ -453,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 8704814733547641630, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159083728594493542, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
