@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7305e1b8f5554347919006a1d70425c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toScene: Map1-2
+  _toScene: Map1-3
   _direction: 1
 --- !u!61 &58923819
 BoxCollider2D:
@@ -460,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1111112
+      value: 1.1103524
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
