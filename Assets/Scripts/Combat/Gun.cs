@@ -65,7 +65,7 @@ namespace Assets.Scripts.Combat
             }
             if (!Reloading && (_controller.Input.IsReloadPressed() || CurrentAmmo == 0))
             {
-                Reloading = true; 
+                Reloading = true;
                 _reloadTimer = _reloadTime;
             }
 
@@ -103,12 +103,8 @@ namespace Assets.Scripts.Combat
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
             if (bullet)
             {
-                if (gameObject)
-                {
-                    bullet.IsEnemy = false;
-                }
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
-                bullet.IsEnemy = gameObject.tag != "Player";
+                bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
             }
         }
 

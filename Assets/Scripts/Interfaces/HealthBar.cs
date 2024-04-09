@@ -14,12 +14,25 @@ public class HealthBar : MonoBehaviour
     void Awake()
     {
         _slider = GetComponent<Slider>();
-        PlayerManager.OnPlayerChanged += (player) => { if (player.TryGetComponent(out Health health)) { _health = health; } };
     }
 
     private void Start()
     {
         PlayerManager.Instance.Player.TryGetComponent(out _health);
+        PlayerManager.OnPlayerChanged += HandlePlayerChanged;
+    }
+
+    private void OnDisable()
+    {
+        PlayerManager.OnPlayerChanged -= HandlePlayerChanged;
+    }
+
+    void HandlePlayerChanged(GameObject player)
+    {
+        if (player.TryGetComponent(out Health health))
+        {
+            _health = health;
+        }
     }
 
     private void Update()

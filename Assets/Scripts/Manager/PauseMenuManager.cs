@@ -37,6 +37,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f;
+        SaveManager.Instance.LoadSave();
+
         Debug.Log("Restart game ....");
     }
     public void Setting()

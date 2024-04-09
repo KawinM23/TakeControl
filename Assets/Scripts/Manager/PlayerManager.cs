@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
     public static event UnityAction<GameObject> OnPlayerChanged;
+    public static event UnityAction OnPlayerDied;
 
     public GameObject Player
     {
@@ -17,7 +18,8 @@ public class PlayerManager : MonoBehaviour
         set
         {
             _player = value;
-            OnPlayerChanged?.Invoke(_player);
+            if (_player != null)
+                OnPlayerChanged?.Invoke(_player);
         }
     }
     private GameObject _player;
@@ -46,18 +48,30 @@ public class PlayerManager : MonoBehaviour
         _respawnCanvas.gameObject.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            OnPlayerChanged = null;
+            OnPlayerDied = null;
+        }
+    }
+
     public void Die()
     {
         Debug.Log("Player is dead");
         _respawnCanvas.gameObject.SetActive(true); // Show respawn canvas
+
+        OnPlayerDied?.Invoke();
     }
     public void Respawn() // Called when respawn button is clicked
     {
         Debug.Log("Respawning...");
         _isDead = false; // Reset death flag
         Debug.Log("Reloading scene: " + _respawnScene);
-        SceneManager.LoadScene(_respawnScene); // Reload current scene
+        // SceneManager.LoadScene(_respawnScene); // Reload current scene
         _respawnCanvas.gameObject.SetActive(false); // Hide respawn canvas
+        SaveManager.Instance.LoadSave();
     }
 
     private void SetUp()

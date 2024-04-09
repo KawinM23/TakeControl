@@ -282,6 +282,7 @@ MonoBehaviour:
     switches:
       _serializedList: []
   defaultSaveName: default
+  defaultSceneName: Map1-1
 --- !u!114 &2776039825943945354
 MonoBehaviour:
   m_ObjectHideFlags: 0

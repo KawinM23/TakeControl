@@ -35,8 +35,15 @@ public class CameraManager : MonoBehaviour
 
         PlayerManager.OnPlayerChanged += (player) => _camera.Follow = player.transform;
 
+
         SceneManager.sceneLoaded += (_, _) =>
         {
+            var player = PlayerManager.Instance.Player;
+            if (!PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
             _camera = FindObjectsByType<CinemachineVirtualCamera>(FindObjectsSortMode.None).First(
                 obj => obj != _camera
             );

@@ -16,7 +16,21 @@ public class EnemyHealthBar : MonoBehaviour
         _robot = transform.parent.parent.gameObject;
         _health = _robot.GetComponent<Health>();
         _slider = GetComponent<Slider>();
-        PlayerManager.OnPlayerChanged += (player) => { gameObject.SetActive(_robot != player); };
+    }
+
+    void Start()
+    {
+        PlayerManager.OnPlayerChanged += HandlePlayerChanged;
+    }
+
+    void OnDisable()
+    {
+        PlayerManager.OnPlayerChanged -= HandlePlayerChanged;
+    }
+
+    void HandlePlayerChanged(GameObject player)
+    {
+        gameObject.SetActive(_robot != player);
     }
 
     private void Update()

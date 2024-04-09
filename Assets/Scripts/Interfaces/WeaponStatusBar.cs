@@ -19,6 +19,12 @@ public class WeaponStatusBar : MonoBehaviour
         PlayerManager.OnPlayerChanged += (player) => { if (player.TryGetComponent(out WeaponManager weaponManager)) { _weaponManager = weaponManager; } };
         statusText.color = Color.white;
         statusBar.gameObject.SetActive(false);
+
+        PlayerManager.OnPlayerDied += () =>
+        {
+            // statusText.text = "";
+            statusBar.gameObject.SetActive(false);
+        };
     }
 
     // Update is called once per frame
