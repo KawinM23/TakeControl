@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 7740698587368872121}
+  _robot: {fileID: 0}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}
@@ -571,6 +571,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _playerManager: {fileID: 0}
+  _dieParticle: {fileID: 5425198399417718633, guid: e9d88595a1de0ec49a6382b5bc14fa24, type: 3}
 --- !u!114 &8592266432460933116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,6 +587,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  _hackDuration: 0
+  _buttonAmount: 0
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &7801555874802598118
@@ -603,6 +606,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
+  _explosionTriggerRadius: 0
   _explosionRadius: 0
   _explosionDamage: 0
 --- !u!114 &188439846607496246

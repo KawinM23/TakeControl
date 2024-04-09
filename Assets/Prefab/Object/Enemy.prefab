@@ -232,7 +232,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _playerManager: {fileID: 0}
-  _dieParticle: {fileID: 0}
+  _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
 --- !u!114 &2294779569602634007
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -124,10 +123,13 @@ namespace Assets.Scripts.Combat
                 _playerManager.Die();
             }
             /*SoundManager.Instance;*/
-            var main = _dieParticle.main;
-            main.startColor = _originalColor;
-            GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
-            Destroy(go, 2f);
+            if (_dieParticle)
+            {
+                var main = _dieParticle.main;
+                main.startColor = _originalColor;
+                GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
+                Destroy(go, 2f);
+            }
             Destroy(gameObject);
         }
 
