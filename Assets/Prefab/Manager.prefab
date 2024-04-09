@@ -389,7 +389,7 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
   - name: Explosion
-    clip: {fileID: 8300000, guid: f9eb44b85c96be5429737d4dcadbfa3b, type: 3}
+    clip: {fileID: 8300000, guid: ebe0f0e43af634b6bab086a588b180f4, type: 3}
     volume: 0.48
     pitch: 1
     source: {fileID: 0}

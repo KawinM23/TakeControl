@@ -11,6 +11,10 @@ public class SoundManager : MonoBehaviour
     // Sounds
     public Sound[] sounds;
 
+    // BGMs
+    public Sound[] bgms;
+    [SerializeField] public string loopingBGM;
+
     // Initialize the singleton instance
     private void Awake()
     {
@@ -28,7 +32,7 @@ public class SoundManager : MonoBehaviour
         if (PlayerPrefs.HasKey("music_volume_multiplier"))
         {
 
-            music_multiplier= PlayerPrefs.GetFloat("music_volume_multiplier");
+            music_multiplier = PlayerPrefs.GetFloat("music_volume_multiplier");
         }
         if (PlayerPrefs.HasKey("sfx_volume_multiplier"))
         {
@@ -41,19 +45,31 @@ public class SoundManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
         }
+        foreach (Sound s in bgms)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+        }
     }
 
     private void Start()
     {
         // sleep for 1 second to allow the game to load
-       
-        PlayBGM();
+
+        if (loopingBGM != null)
+        {
+            LoopBGM(loopingBGM);
+        }
+        else
+        {
+            LoopBGM("BGM Isolation"); // default
+        }
     }
 
     public void PlayJump()
     {
-        Debug.Log(music_multiplier);
-        Debug.Log(sfx_multiplier);
         Play("Jump");
     }
 
@@ -77,11 +93,6 @@ public class SoundManager : MonoBehaviour
         Play("Shoot Single");
     }
 
-    public void PlayBGM()
-    {
-        Play("BGM Isolation");
-    }
-
     public void PlayBulletImpact()
     {
         PlayOneOf(new string[] { "Bullet Impact 1", "Bullet Impact 2" });
@@ -100,6 +111,32 @@ public class SoundManager : MonoBehaviour
     public void PlayExplosion()
     {
         Play("Explosion");
+    }
+
+    public void StopBGM()
+    {
+        Debug.Log("Stopping BGM");
+        foreach (Sound s in bgms)
+        {
+            s.source.Stop();
+            s.source.loop = false;
+        }
+        Debug.Log("Stopping BGM");
+    }
+
+    public void LoopBGM(string name)
+    {
+        StopBGM(); // Stop current BGM
+        Debug.Log("Trying to Loop BGM: " + name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+        s.source.loop = true;
+        s.source.Play();
+        Debug.Log("Playing bgm: " + name);
     }
 
     private void Play(string name)
