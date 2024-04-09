@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +23,9 @@ namespace Assets.Scripts.Combat
         [SerializeField] private LayerMask _iFramableLayer;
         [SerializeField] private PlayerManager _playerManager;
 
+        [Header("Effect")]
+        [SerializeField] ParticleSystem _dieParticle;
+
 
         private SpriteRenderer _spriteRenderer;
         private readonly Collider2D _collider;
@@ -35,6 +37,9 @@ namespace Assets.Scripts.Combat
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            _originalColor = _spriteRenderer.color;
+            _playerManager = PlayerManager.Instance;
         }
 
 
@@ -44,8 +49,6 @@ namespace Assets.Scripts.Combat
             _currentHealth = _maxHealth;
             _iFrame = false;
             _iFrameCounter = 0f;
-            _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _playerManager = PlayerManager.Instance;
         }
 
         // Update is called once per frame
@@ -100,7 +103,6 @@ namespace Assets.Scripts.Combat
 
         IEnumerator Flash(Color targetColor)
         {
-            _originalColor = _spriteRenderer.color;
             _spriteRenderer.color = targetColor;
             yield return new WaitForSeconds(0.1f);
             _spriteRenderer.color = _originalColor;
@@ -119,6 +121,14 @@ namespace Assets.Scripts.Combat
             if (gameObject == PlayerManager.Instance.Player)
             {
                 _playerManager.Die();
+            }
+            /*SoundManager.Instance;*/
+            if (_dieParticle)
+            {
+                var main = _dieParticle.main;
+                main.startColor = _originalColor;
+                GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
+                Destroy(go, 2f);
             }
             Destroy(gameObject);
         }

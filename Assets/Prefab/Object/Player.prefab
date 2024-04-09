@@ -309,6 +309,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _playerManager: {fileID: 0}
+  _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
 --- !u!114 &9017549952657372097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +339,10 @@ MonoBehaviour:
   _bulletSpeed: 40
   _knockbackMultiplier: 0.7
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
+  _bulletSpread: 0
+  _shootingDelay: 0.25
+  _reloadTime: 5
+  Reloading: 0
 --- !u!114 &8086383678846937365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +371,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _attackCooldown: 0.5
   _knockbackMultiplier: 1
   _swordCollider: {fileID: 9016796033066577932}
   _attackableLayer:
