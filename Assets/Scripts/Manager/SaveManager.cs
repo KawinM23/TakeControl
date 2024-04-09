@@ -167,7 +167,7 @@ public class SaveManager : MonoBehaviour
     private void OnInitialLoad()
     {
         // Prepare to remove old player and manager (except this one)
-        var player = PlayerManager.Instance.Player;
+        var player = PlayerManager.Instance?.Player;
         if (player != null)
         {
             SceneManager.MoveGameObjectToScene(player, SceneManager.GetActiveScene());
@@ -180,9 +180,10 @@ public class SaveManager : MonoBehaviour
             Debug.Log("After loader");
 
             var sp = FindObjectOfType<SavePoint>();
-            if (sp)
+            var player = PlayerManager.Instance != null ? PlayerManager.Instance.Player : null;
+            if (sp && player != null)
             {
-                PlayerManager.Instance.Player.transform.position = sp.transform.position;
+                player.transform.position = sp.transform.position;
             }
         };
 
