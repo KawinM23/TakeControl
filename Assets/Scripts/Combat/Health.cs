@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Effect;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,6 +33,7 @@ namespace Assets.Scripts.Combat
         private Rigidbody2D _rigidbody;
         private Coroutine _flashCoroutine;
         private Color _originalColor;
+        private bool _mortal = true;
 
 
         private void Awake()
@@ -130,20 +132,23 @@ namespace Assets.Scripts.Combat
 
         private void Die()
         {
-            if (gameObject == PlayerManager.Instance.Player)
+            if (_mortal)
             {
-                PlayerManager.Instance.Die();
+                if (gameObject == PlayerManager.Instance.Player)
+                {
+                    PlayerManager.Instance.Die();
+                }
+                /*SoundManager.Instance;*/
+                if (_dieParticle)
+                {
+                    var main = _dieParticle.main;
+                    main.startColor = _originalColor;
+                    GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
+                    Destroy(go, 2f);
+                }
+                if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
+                Destroy(gameObject);
             }
-            /*SoundManager.Instance;*/
-            if (_dieParticle)
-            {
-                var main = _dieParticle.main;
-                main.startColor = _originalColor;
-                GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
-                Destroy(go, 2f);
-            }
-            if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
-            Destroy(gameObject);
         }
 
         public int GetMaxHealth()
@@ -153,6 +158,10 @@ namespace Assets.Scripts.Combat
         public int GetCurrentHealth()
         {
             return this._currentHealth;
+        }
+        public void SetCurrentHealth(int health)
+        {
+            _currentHealth = Math.Max(0, Math.Min(_maxHealth, health));
         }
         /// <summary>
         /// Does the health meet the requirements to be hacked
@@ -173,6 +182,26 @@ namespace Assets.Scripts.Combat
         {
             _iFrame = true;
             _iFrameCounter = _iFrameDuration;
+        }
+
+        public void Heal(int health)
+        {
+            _currentHealth = Math.Max(_maxHealth, _currentHealth + health);
+        }
+
+        public void HealPercent(double percent)
+        {
+            SetCurrentHealth(_currentHealth + (int)(percent / 100 * _maxHealth));
+        }
+
+        public bool GetMortality()
+        {
+            return _mortal;
+        }
+
+        public void SetMortality(bool mortal)
+        {
+            _mortal = mortal;
         }
     }
 
