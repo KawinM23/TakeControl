@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6364037091130081137}
   - component: {fileID: 2931772153519994161}
   - component: {fileID: 6351728114883395347}
+  - component: {fileID: 3155970961467761503}
   - component: {fileID: 1801290139455799429}
   - component: {fileID: 3416730720523339364}
   - component: {fileID: 7315772924322691058}
@@ -141,7 +142,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18e049ec8210ee43afa33ffc2d04320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: d05ee43f458876d4785aa6f48f89bc9a, type: 2}
+  input:
+    _underlyingValue: {fileID: 3155970961467761503}
+--- !u!114 &3155970961467761503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517011557371429162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbdd01c6acb56e84da16b713830bb2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1801290139455799429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +225,7 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _hackableHealth: 20
+  _defaultKnockbackForce: 200
   _iFrame: 0
   _iFrameDuration: 0.2
   _iFramableLayer:
@@ -232,6 +247,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  _hackDuration: 3
+  _buttonAmount: 3
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &5910027491072952197
@@ -276,6 +293,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _attackCooldown: 0.5
+  _knockbackMultiplier: 1
   _swordCollider: {fileID: 8033630153628837990}
   _attackableLayer:
     serializedVersion: 2
@@ -407,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 517011557371429162}
+  _robot: {fileID: 517011557371429162}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}

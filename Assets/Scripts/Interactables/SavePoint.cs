@@ -1,33 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SavePoint : MonoBehaviour
+public class SavePoint : Interactable
 {
-    private bool _isInTrigger;
-    private readonly bool _isInteractable = true;
+    private string _sceneName;
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.F) && _isInTrigger && _isInteractable)
-        {
-            Debug.Log("Save");
-        }
+        _sceneName = gameObject.scene.name;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void Interact()
     {
-        if (collision.gameObject == PlayerManager.Instance.Player)
-        {
-            _isInTrigger = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject == PlayerManager.Instance.Player)
-        {
-            _isInTrigger = false;
-        }
+        Debug.Log("SAVE POINT " + _sceneName);
     }
 }

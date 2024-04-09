@@ -6,7 +6,7 @@ using Assets.Scripts.Combat;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private GameObject _robot;
     private Slider _slider;
     public Gradient gradient;
     public Image fill;
@@ -15,8 +15,9 @@ public class EnemyHealthBar : MonoBehaviour
 
     void Awake()
     {
-        _health = _gameObject.GetComponent<Health>();
+        _health = _robot.GetComponent<Health>();
         _slider = GetComponent<Slider>();
+        PlayerManager.OnPlayerChanged += (player) => { gameObject.SetActive(_robot != player); };
     }
 
     private void Update()
@@ -25,7 +26,6 @@ public class EnemyHealthBar : MonoBehaviour
         {
             SetHealthBar();
         }
-        gameObject.SetActive(_gameObject != PlayerManager.Instance.Player);
     }
 
     public void SetHealthBar()

@@ -6,61 +6,98 @@ namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
 
-    public class Gun : MonoBehaviour
+    public class Gun : BaseWeapon
     {
-        [SerializeField] private float _bulletSpeed = 10f; //TODO: confirm design with team
-        [SerializeField] private GameObject _bulletPrefab;
         private Controller _controller;
-        private double _lastFireTime, _lastReloadTime = -1;
-        private readonly double _shootingDelay = 0.25, _reloadTime = 5;
-        private uint _currentAmmo = 20;
-        private readonly uint _maxAmmo = 20;
 
-        private void Awake()
+        [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
+        [SerializeField] private float _knockbackMultiplier = 0.7f;
+        [SerializeField] private GameObject _bulletPrefab;
+
+        /// <summary>
+        /// bullet spread in degrees
+        /// 1: you drunk fuck
+        /// 0.5: skill issue
+        /// 0.2: balanced
+        /// 0.1: accurate
+        /// 0.05 - 0: sniper
+        /// </summary>
+        [SerializeField] private float _bulletSpread;
+
+        private double _shootTimer, _reloadTimer = 0;
+        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
+        private uint _currentAmmo = 20;
+        public uint CurrentAmmo => _currentAmmo;
+        private readonly uint _maxAmmo = 20;
+        public uint MaxAmmo
+        {
+            get { return _maxAmmo; }
+        }
+        public bool Reloading;
+
+        protected override void Awake()
         {
             _controller = GetComponent<Controller>();
         }
 
-        private void Update()
+        protected override void Update()
         {
-            if (_lastReloadTime == -1)
+
+            if (_shootTimer >= 0)
             {
-                Vector2? pos = null;
-                if (_controller.input.GetAttackDirection().HasValue)
+                _shootTimer -= Time.deltaTime;
+            }
+            Vector2? pos = null;
+            if (_controller.Input.GetAttackDirection().HasValue)
+            {
+                pos = _controller.Input.GetAttackDirection().Value;
+            }
+            else if (_controller.Input.GetContinuedAttackDirection().HasValue)
+            {
+                pos = _controller.Input.GetContinuedAttackDirection().Value;
+            }
+            if (pos != null)
+            {
+                if (_shootTimer <= 0 && _currentAmmo > 0)
                 {
-                    pos = _controller.input.GetAttackDirection().Value;
-                }
-                else if (_controller.input.GetContinuedAttackDirection().HasValue)
-                {
-                    pos = _controller.input.GetContinuedAttackDirection().Value;
-                }
-                if (pos != null)
-                {
-                    if (Time.fixedTimeAsDouble - _lastFireTime >= _shootingDelay && _currentAmmo > 0)
-                    {
-                        Shoot(pos.Value);
-                        _lastFireTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
-                        _currentAmmo -= 1;
-                    }
-                }
-                if (_controller.input.IsReloadPressed())
-                {
-                    _lastReloadTime = Time.fixedTimeAsDouble; //TODO: beware when pausing game, should have global time control
+                    Shoot(pos.Value);
                 }
             }
-            else if (Time.fixedTimeAsDouble - _lastReloadTime >= _reloadTime)
+            if (!Reloading && (_controller.Input.IsReloadPressed() || CurrentAmmo == 0))
             {
-                _currentAmmo = _maxAmmo;
-                _lastReloadTime = -1;
+                Reloading = true; 
+                _reloadTimer = _reloadTime;
+            }
+
+
+            if (Reloading)
+            {
+                _reloadTimer -= Time.deltaTime;
+                if (_reloadTimer <= 0)
+                {
+                    Reloading = false;
+                    _currentAmmo = _maxAmmo;
+                    _shootTimer = 0;
+                }
             }
         }
 
         public void Shoot(Vector2 target)
         {
+            if (HackEventManager.Instance.IsHacking)
+            {
+                return;
+            }
             Debug.Log("Shoot");
-
+            _shootTimer = _shootingDelay;
+            _currentAmmo -= 1;
+            Reloading = false;
+            SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
+
+            // add spread to bullet direction
+            bulletDirection = new Vector2(bulletDirection.x + Random.Range(-_bulletSpread, _bulletSpread), bulletDirection.y + Random.Range(-_bulletSpread, _bulletSpread));
 
             GameObject bulletInstance = Instantiate(_bulletPrefab, firePoint, Quaternion.identity);
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
@@ -70,7 +107,28 @@ namespace Assets.Scripts.Combat
                 {
                     bullet.IsEnemy = false;
                 }
-                bullet.Fire(bulletDirection.normalized * _bulletSpeed);
+                bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+                bullet.IsEnemy = gameObject.tag != "Player";
+            }
+        }
+
+        public bool IsReloading()
+        {
+            return Reloading;
+        }
+
+        public double GetCurrentReloadPercent()
+        {
+            if (!IsReloading())
+            {
+                return 100;
+            }
+            else
+            {
+                double reloadPercent = ((_reloadTime - _reloadTimer) / _reloadTime) * 100;
+                reloadPercent = System.Math.Min(reloadPercent, 100);
+                reloadPercent = System.Math.Max(reloadPercent, 0);
+                return reloadPercent;
             }
         }
     }
