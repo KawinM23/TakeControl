@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 8823777921655399904}
+  _robot: {fileID: 8823777921655399904}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}
@@ -815,6 +815,8 @@ MonoBehaviour:
   _hackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  _hackDuration: 0
+  _buttonAmount: 0
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &6896292043246879620
@@ -859,6 +861,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _swordDamage: 25
+  _attackCooldown: 0.5
   _knockbackMultiplier: 1
   _swordCollider: {fileID: 5776358962255130910}
   _attackableLayer:
@@ -904,8 +907,10 @@ MonoBehaviour:
   _bulletSpeed: 10
   _knockbackMultiplier: 0.7
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
+  _bulletSpread: 0
   _shootingDelay: 0.25
   _reloadTime: 5
+  Reloading: 0
 --- !u!114 &7136873644874277834
 MonoBehaviour:
   m_ObjectHideFlags: 0
