@@ -14,6 +14,16 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float _knockbackMultiplier = 0.7f;
         [SerializeField] private GameObject _bulletPrefab;
 
+        /// <summary>
+        /// bullet spread in degrees
+        /// 1: you drunk fuck
+        /// 0.5: skill issue
+        /// 0.2: balanced
+        /// 0.1: accurate
+        /// 0.05 - 0: sniper
+        /// </summary>
+        [SerializeField] private float _bulletSpread;
+
         private double _shootTimer, _reloadTimer = 0;
         [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
         private uint _currentAmmo = 20;
@@ -85,6 +95,9 @@ namespace Assets.Scripts.Combat
             SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
+
+            // add spread to bullet direction
+            bulletDirection = new Vector2(bulletDirection.x + Random.Range(-_bulletSpread, _bulletSpread), bulletDirection.y + Random.Range(-_bulletSpread, _bulletSpread));
 
             GameObject bulletInstance = Instantiate(_bulletPrefab, firePoint, Quaternion.identity);
             Bullet bullet = bulletInstance.GetComponent<Bullet>();
