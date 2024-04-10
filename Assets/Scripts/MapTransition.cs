@@ -30,7 +30,8 @@ public class MapTransition : MonoBehaviour
 
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(1);
+        _collider.isTrigger = false;
+        yield return new WaitForSeconds(0.5f);
         _collider.isTrigger = true;
         yield return null;
     }
@@ -38,7 +39,7 @@ public class MapTransition : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         collision.gameObject.TryGetComponent(out Controller controller);
-        if (controller && controller.Input is PlayerController)
+        if (controller && controller.Input is PlayerController && MapManager.Instance.CanChangeScene)
         {
             float distanceFromSpawn = 0f;
             /*if (_direction == Direction.Left || _direction == Direction.Right)

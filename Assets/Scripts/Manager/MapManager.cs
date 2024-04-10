@@ -16,6 +16,8 @@ public class MapManager : MonoBehaviour
     private GameObject _player;
 
     [SerializeField] private float _mapChangeCooldown;
+    private float _mapChangeCooldownTimer;
+    public bool CanChangeScene => _mapChangeCooldownTimer <= 0 && SceneManager.loadedSceneCount <= 1;
 
     private void Awake()
     {
@@ -30,6 +32,15 @@ public class MapManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        if (_mapChangeCooldownTimer > 0)
+        {
+            _mapChangeCooldownTimer -= Time.deltaTime;
+        }
+
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -50,7 +61,6 @@ public class MapManager : MonoBehaviour
                 }
             }
 
-
             if (_player.TryGetComponent(out TrailRenderer tr))
             {
                 tr.Clear();
@@ -62,7 +72,7 @@ public class MapManager : MonoBehaviour
 
     public IEnumerator ChangeScene(string fromSceneName, string toSceneName, Direction direction, float distanceFromSpawn)
     {
-        if (IsChangingScene)
+        if (IsChangingScene && _mapChangeCooldownTimer > 0)
         {
             yield break;
         }
@@ -71,6 +81,7 @@ public class MapManager : MonoBehaviour
         ToScene = toSceneName;
         DistanceFromSpawn = distanceFromSpawn;
         Direction = direction;
+        _mapChangeCooldownTimer = _mapChangeCooldown;
 
         _player = PlayerManager.Instance.Player;
         if (_player.TryGetComponent(out Rigidbody2D rb))
@@ -83,6 +94,7 @@ public class MapManager : MonoBehaviour
         _player.SetActive(false);
 
         SaveManager.Instance.SaveData();
+        
         yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
         SceneManager.UnloadSceneAsync(fromSceneName);

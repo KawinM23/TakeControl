@@ -236,7 +236,7 @@ MonoBehaviour:
   ToScene: 
   DistanceFromSpawn: 0
   Direction: 0
-  _mapChangeCooldown: 1
+  _mapChangeCooldown: 0.5
 --- !u!114 &8389585372730492381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea85a7421e6244b09a594c8eed33c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music_multiplier: 0
-  sfx_multiplier: 0
+  music_multiplier: 0.5
+  sfx_multiplier: 0.5
   sounds:
   - name: Jump
     clip: {fileID: 8300000, guid: f03abd5ad138445c280369733d3454d7, type: 3}
@@ -393,6 +393,13 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+  bgms:
+  - name: BGM Isolation
+    clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
+    volume: 0.5
+    pitch: 0
+    source: {fileID: 0}
+  loopingBGM: BGM Isolation
 --- !u!114 &6985303427310886824
 MonoBehaviour:
   m_ObjectHideFlags: 0
