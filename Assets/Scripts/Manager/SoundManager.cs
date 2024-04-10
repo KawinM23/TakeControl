@@ -134,6 +134,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+        s.source.volume = music_multiplier;
         s.source.loop = true;
         s.source.Play();
         Debug.Log("Playing bgm: " + name);
@@ -147,6 +148,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+        s.source.volume = sfx_multiplier;
         s.source.Play();
         Debug.Log("Playing sound: " + name);
     }

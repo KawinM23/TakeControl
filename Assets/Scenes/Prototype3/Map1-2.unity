@@ -564,6 +564,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5054241403580399, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054241403580399, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 297430109198317380, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -649,6 +657,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2737802023187205043, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758976221677014280, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1297,6 +1309,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 183297712629305082, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: MaxAmmo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 183297712629305082, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: CurrentAmmo
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 183297712629305082, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: _reloadTime
       value: 8

@@ -26,13 +26,9 @@ namespace Assets.Scripts.Combat
 
         private double _shootTimer, _reloadTimer = 0;
         [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
-        private uint _currentAmmo = 20;
-        public uint CurrentAmmo => _currentAmmo;
-        private readonly uint _maxAmmo = 20;
-        public uint MaxAmmo
-        {
-            get { return _maxAmmo; }
-        }
+        public uint MaxAmmo = 20;
+        public uint CurrentAmmo = 20;
+
         public bool Reloading;
 
         protected override void Awake()
@@ -58,7 +54,7 @@ namespace Assets.Scripts.Combat
             }
             if (pos != null)
             {
-                if (_shootTimer <= 0 && _currentAmmo > 0)
+                if (_shootTimer <= 0 && CurrentAmmo > 0)
                 {
                     Shoot(pos.Value);
                 }
@@ -76,7 +72,7 @@ namespace Assets.Scripts.Combat
                 if (_reloadTimer <= 0)
                 {
                     Reloading = false;
-                    _currentAmmo = _maxAmmo;
+                    CurrentAmmo = MaxAmmo;
                     _shootTimer = 0;
                 }
             }
@@ -90,7 +86,7 @@ namespace Assets.Scripts.Combat
             }
             Debug.Log("Shoot");
             _shootTimer = _shootingDelay;
-            _currentAmmo -= 1;
+            CurrentAmmo -= 1;
             Reloading = false;
             SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
