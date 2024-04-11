@@ -1,7 +1,4 @@
-﻿using System.Collections;
-
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Capabilities
 {
@@ -15,6 +12,7 @@ namespace Assets.Scripts.Capabilities
         private Rigidbody2D _body;
         private Ground _ground;
         private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
 
         [SerializeField, Range(0f, 100f)] private float _maxSpeed = 4.2f;
 
@@ -48,7 +46,16 @@ namespace Assets.Scripts.Capabilities
 
             // TODO: Someone fix this, smelly code
             _spriteRenderer = transform.Find("Sprite")?.GetComponent<SpriteRenderer>();
+            _animator = _spriteRenderer.gameObject.GetComponent<Animator>();
             _isFollowingMovement = true;
+        }
+
+        private void Start()
+        {
+            if (_maxSpeed <= 0)
+            {
+                _animator.SetBool("IsStill", true);
+            }
         }
 
         private void Update()
@@ -103,6 +110,7 @@ namespace Assets.Scripts.Capabilities
             {
                 _velocity = _body.velocity;
                 _velocity.x = _desiredVelocity.x;
+                _animator?.SetBool("IsWalking", _desiredVelocity.x != 0f);
             }
 
             _body.velocity = _velocity;

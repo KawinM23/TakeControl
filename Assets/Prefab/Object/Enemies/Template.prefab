@@ -54,7 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbce82251d74a44458fe33d3e2f2564c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _robot: {fileID: 8823777921655399904}
   _swordSlot: {fileID: 1546712228216488351}
   _gunSlot: {fileID: 3981897439189338145}
   _doubleJumpSlot: {fileID: 6017464804968408989}
@@ -262,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _robot: {fileID: 8823777921655399904}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}
@@ -505,6 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3127540967567709432}
   - component: {fileID: 5076367569471474110}
+  - component: {fileID: 5055886053850069250}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -521,9 +520,9 @@ Transform:
   m_GameObject: {fileID: 7977012219237184250}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.9, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1211996486245310072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -567,18 +566,39 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9098039, g: 0.3019608, b: 0.39215687, a: 1}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 1856991055, guid: 32c4d5b50ed63cb498ccab291947bc90, type: 3}
+  m_Color: {r: 1, g: 0.44308314, b: 0.3215686, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5055886053850069250
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977012219237184250}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1c3863711ccf0c948975ba3ee14c9567, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8823777921655399904
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +819,6 @@ MonoBehaviour:
   _iFramableLayer:
     serializedVersion: 2
     m_Bits: 576
-  _playerManager: {fileID: 0}
   _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
 --- !u!114 &8400403841476335786
 MonoBehaviour:
@@ -911,6 +930,8 @@ MonoBehaviour:
   _bulletSpread: 0
   _shootingDelay: 0.25
   _reloadTime: 5
+  MaxAmmo: 20
+  CurrentAmmo: 20
   Reloading: 0
 --- !u!114 &7136873644874277834
 MonoBehaviour:
