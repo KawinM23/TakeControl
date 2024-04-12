@@ -1,4 +1,3 @@
-using UnityEngine.Audio;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -115,19 +114,17 @@ public class SoundManager : MonoBehaviour
 
     public void StopBGM()
     {
-        Debug.Log("Stopping BGM");
         foreach (Sound s in bgms)
         {
             s.source.Stop();
             s.source.loop = false;
         }
-        Debug.Log("Stopping BGM");
     }
 
     public void LoopBGM(string name)
     {
         StopBGM(); // Stop current BGM
-        Debug.Log("Trying to Loop BGM: " + name);
+        /*Debug.Log("Trying to Loop BGM: " + name);*/
         Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
         if (s == null)
         {
@@ -137,7 +134,7 @@ public class SoundManager : MonoBehaviour
         s.source.volume = music_multiplier;
         s.source.loop = true;
         s.source.Play();
-        Debug.Log("Playing bgm: " + name);
+        /*Debug.Log("Playing bgm: " + name);*/
     }
 
     private void Play(string name)
@@ -150,7 +147,7 @@ public class SoundManager : MonoBehaviour
         }
         s.source.volume = sfx_multiplier;
         s.source.Play();
-        Debug.Log("Playing sound: " + name);
+        /*Debug.Log("Playing sound: " + name);*/
     }
 
     private void PlayOneOf(string[] names)
@@ -164,13 +161,13 @@ public class SoundManager : MonoBehaviour
                 return;
             }
             s.source.Play();
-            Debug.Log("Playing sound: " + name);
+            /*Debug.Log("Playing sound: " + name);*/
         }
 
         // Random number between 0 to n-1
         int randomIndex = Random.Range(0, names.Length);
         sounds[randomIndex].source.Play();
-        Debug.Log("Playing sound: " + names[randomIndex]);
+        /*Debug.Log("Playing sound: " + names[randomIndex]);*/
     }
 
 

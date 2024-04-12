@@ -46,7 +46,7 @@ namespace Assets.Scripts.Capabilities
 
             // TODO: Someone fix this, smelly code
             _spriteRenderer = transform.Find("Sprite")?.GetComponent<SpriteRenderer>();
-            _animator = _spriteRenderer.gameObject.GetComponent<Animator>();
+            _animator = _spriteRenderer?.gameObject.GetComponent<Animator>();
             _isFollowingMovement = true;
         }
 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Capabilities
         {
             if (_maxSpeed <= 0)
             {
-                _animator.SetBool("IsStill", true);
+                if (_animator) _animator?.SetBool("IsStill", true);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Assets.Scripts.Capabilities
             {
                 _velocity = _body.velocity;
                 _velocity.x = _desiredVelocity.x;
-                _animator?.SetBool("IsWalking", _desiredVelocity.x != 0f);
+                if (_animator) _animator.SetBool("IsWalking", _desiredVelocity.x != 0f);
             }
 
             _body.velocity = _velocity;
