@@ -217,11 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4505067
+      value: 0.111111164
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7534103
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8675497350606610742, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Name
@@ -1301,7 +1301,7 @@ MonoBehaviour:
     The first
     boss fight will come in Final Version!
 
-    Please look forward it!'
+    Please look forward to it!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
