@@ -19,7 +19,15 @@ public class SaveManager : MonoBehaviour
     [SerializeField] private string defaultSaveName = "default";
     [SerializeField] private string defaultSceneName;
 
-    private static Action<SaveManager>? _afterLoader; // Action to run after loading
+    /// <summary>
+    /// Action to run one time, once the SaveManage instance is created.
+    /// 
+    /// It's somewhat hacky way to continue running script from old instance across scene load, 
+    /// which would destroy the old instance, but since this is static it will persist.
+    /// 
+    /// <seealso cref="AfterInitialLoad(SaveManager)"/>
+    /// </summary> 
+    private static Action<SaveManager>? _afterLoader;
     private List<IDataPersist> _dataPersists;
     private ISaver _saver;
 
@@ -50,7 +58,7 @@ public class SaveManager : MonoBehaviour
         {
             Debug.LogError("Default scene name is not set.");
         }
-        else if (SceneManager.GetSceneByName(defaultSceneName).buildIndex == -1)
+        else if (SceneUtility.GetBuildIndexByScenePath(defaultSceneName) == -1)
         {
             Debug.LogError("Scene with name " + defaultSceneName + " not found.");
         }
@@ -187,7 +195,9 @@ public class SaveManager : MonoBehaviour
     /// Should run after the `InitialLoad` method finished loading the new scene.
     ///  
     /// Once the scene is loaded, new instance of SaveManager is created and this method is called
-    /// with the new instance as argument. 
+    /// with the new instance as argument.
+    /// 
+    /// See <see cref="_afterLoader"/> for mechanism which run this method.
     /// </summary>
     /// <param name="newThis">The new instance of SaveManager (on the new scene)</param>
     void AfterInitialLoad(SaveManager newThis)
