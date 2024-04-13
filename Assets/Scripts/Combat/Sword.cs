@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Effect;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -68,7 +69,10 @@ namespace Assets.Scripts.Combat
             {
                 return;
             }
+
+            ScreenShake.Shake(ScreenShake.ShakeType.Attack);
             StartCoroutine(SwordAnimation());
+
             Debug.Log("Sword Attack");
             _attackTimer = _attackCooldown;
             SoundManager.Instance.PlaySlash();

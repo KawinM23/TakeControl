@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts.Effect;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -91,6 +92,16 @@ namespace Assets.Scripts.Combat
             }
             _flashCoroutine = StartCoroutine(Flash(Color.red));
 
+            // maybe too hacky?
+            if (PlayerManager.Instance.Player.gameObject == gameObject)
+            {
+                ScreenShake.Shake(ScreenShake.ShakeType.TakeDamage);
+            }
+            else
+            {
+                // currently no way to check if dmg is actually from player
+                ScreenShake.Shake(ScreenShake.ShakeType.HitEnemy);
+            }
 
             ApplyKnockback(hitDirection, knockbackMultiplier);
 
