@@ -168,6 +168,11 @@ public class SaveManager : MonoBehaviour
         _saver.DeleteSave(defaultSaveName);
     }
 
+    public IEnumerable<string> ListSave()
+    {
+        return _saver.ListSaves();
+    }
+
     /// <summary>
     /// Initialize the game state on first load (eg. on new game or load from save)
     /// </summary>
