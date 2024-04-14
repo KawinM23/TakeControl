@@ -6,7 +6,11 @@ public class LaserShooter : MonoBehaviour
     [SerializeField] private bool _active = true;
 
     [SerializeField] private int _damagePerTick;
+    [Tooltip("Time till first laser shoot")]
+    [SerializeField] private float _firstDelay;
+    [Tooltip("Time till laser shoot again")]
     [SerializeField] private float _delay;
+    [Tooltip("Time the laser stay on")]
     [SerializeField] private float _duration;
     private float _timer;
 
@@ -16,6 +20,11 @@ public class LaserShooter : MonoBehaviour
     [SerializeField] Color _normalColor;
     [SerializeField] Color _shootColor;
 
+    private void Start()
+    {
+        _timer = _firstDelay;
+        _collider.gameObject.SetActive(false);
+    }
 
     private void Update()
     {
