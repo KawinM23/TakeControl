@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Effect;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
