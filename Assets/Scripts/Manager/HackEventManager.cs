@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HackEventManager : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class HackEventManager : MonoBehaviour
 
     [SerializeField] private GameObject _hackEventCanvas;
     [SerializeField] private GameObject _buttonPrefab;
+    [SerializeField] private Slider _slider;
+    [SerializeField] private Image _sliderFillImage;
 
     public bool IsHacking = false;
     public List<HackButtonUI> HackButtons;
+    private float _hackDuration;
     public float HackTimer;
     public int ButtonAmount;
 
@@ -39,6 +43,9 @@ public class HackEventManager : MonoBehaviour
                 {
                     IsHacking = false;
                 }
+
+                _slider.value = (HackTimer) / _hackDuration;
+                _sliderFillImage.color = Color.Lerp(_slider.colors.pressedColor, _slider.colors.normalColor, _slider.value);
             }
             else
             {
@@ -52,6 +59,7 @@ public class HackEventManager : MonoBehaviour
         _hackEventCanvas.SetActive(true);
         IsHacking = true;
         HackTimer = hackDuration;
+        _hackDuration = hackDuration;
         ButtonAmount = amount;
         Time.timeScale = 0.01f;
         Vector2 size = _buttonPrefab.GetComponent<RectTransform>().sizeDelta;
