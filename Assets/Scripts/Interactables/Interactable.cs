@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
     private bool _isInTrigger;
     public bool _isInteractable = true;
+    public UnityEvent OnEnter;
+    public UnityEvent OnExit;
 
     private void Update()
     {
@@ -25,6 +26,7 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject == PlayerManager.Instance.Player)
         {
             _isInTrigger = true;
+            OnEnter?.Invoke();
         }
     }
 
@@ -33,8 +35,9 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject == PlayerManager.Instance.Player)
         {
             _isInTrigger = false;
+            OnExit?.Invoke();
         }
     }
 
-    
+
 }
