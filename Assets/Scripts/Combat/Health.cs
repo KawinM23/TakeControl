@@ -139,6 +139,7 @@ namespace Assets.Scripts.Combat
                 GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
                 Destroy(go, 2f);
             }
+            if (gameObject.TryGetComponent(out OnDeath onDeath)) onDeath.Activate();
             Destroy(gameObject);
         }
 
