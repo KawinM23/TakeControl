@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour
         Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
-            if (c.input is PlayerController && c.gameObject.activeSelf)
+            if (c.Input is PlayerController && c.gameObject.activeSelf)
             {
                 return c.gameObject;
             }
@@ -96,7 +96,7 @@ public class PlayerManager : MonoBehaviour
         Controller[] controllers = FindObjectsByType<Controller>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Controller c in controllers)
         {
-            if (c.input is PlayerController && !ReferenceEquals(c.gameObject, Instance.Player))
+            if (c.Input is PlayerController && !ReferenceEquals(c.gameObject, Instance.Player))
             {
                 Destroy(c.gameObject);
             }
