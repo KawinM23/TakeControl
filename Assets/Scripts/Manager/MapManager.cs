@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static MapTransition;
@@ -14,6 +12,7 @@ public class MapManager : MonoBehaviour
     public float DistanceFromSpawn;
     public Direction Direction;
     private GameObject _player;
+    private Vector2 _oldVelocity;
 
     [SerializeField] private float _mapChangeCooldown;
     private float _mapChangeCooldownTimer;
@@ -53,12 +52,7 @@ public class MapManager : MonoBehaviour
             _player.SetActive(true);
             if (_player.TryGetComponent(out Rigidbody2D rb))
             {
-                /*Debug.Log(PlayerPrefs.GetFloat("velocityX") + " " + PlayerPrefs.GetFloat("velocityY"));*/
-                rb.velocity = new Vector2(PlayerPrefs.GetFloat("velocityX"), PlayerPrefs.GetFloat("velocityY"));
-                if (Direction == Direction.Up)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 2f);
-                }
+                rb.velocity = new Vector2(_oldVelocity.x, (Direction == Direction.Up ? 7f : _oldVelocity.y));
             }
 
             if (_player.TryGetComponent(out TrailRenderer tr))
@@ -86,15 +80,15 @@ public class MapManager : MonoBehaviour
         _player = PlayerManager.Instance.Player;
         if (_player.TryGetComponent(out Rigidbody2D rb))
         {
-            PlayerPrefs.SetFloat("velocityX", rb.velocity.x);
-            PlayerPrefs.SetFloat("velocityY", rb.velocity.y);
+            _oldVelocity = rb.velocity;
         }
 
         DontDestroyOnLoad(_player);
         _player.SetActive(false);
 
         SaveManager.Instance.SaveData();
-        
+
+        yield return new WaitForEndOfFrame();
         yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
         SceneManager.UnloadSceneAsync(fromSceneName);
