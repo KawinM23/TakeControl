@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 
 namespace Assets.Scripts.SaveLoad
@@ -9,5 +8,6 @@ namespace Assets.Scripts.SaveLoad
         public string name;
         public string currentScene;
         public SerializedDictionary<string, bool> switches = new SerializedDictionary<string, bool>();
+        public int currency;
     }
 }
