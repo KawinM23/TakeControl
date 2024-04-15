@@ -505,6 +505,11 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+  - name: Ding
+    clip: {fileID: 8300000, guid: b20171f50ed539d4b8758e5b4f0db820, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
   bgms:
   - name: BGM Isolation
     clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
