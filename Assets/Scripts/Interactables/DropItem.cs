@@ -1,14 +1,14 @@
 using Assets.Scripts.Interactables;
 using UnityEngine;
 
-public class OnDeath : MonoBehaviour
+public class DropItem : MonoBehaviour
 {
     public GameObject CurrencyPrefab;
     public int ValuePerCurrency;
     public int CurrencyAmount;
     public float velocity;
 
-    public void Activate()
+    public void DropCurrency()
     {
         for (int i = 0; i < CurrencyAmount; i++)
         {
