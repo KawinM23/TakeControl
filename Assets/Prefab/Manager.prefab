@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 670746112461489887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -509,6 +509,11 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Ding
     clip: {fileID: 8300000, guid: b20171f50ed539d4b8758e5b4f0db820, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: MagicCoin
+    clip: {fileID: 8300000, guid: cd56566eadd20294684e6cad000d3082, type: 3}
     volume: 0.48
     pitch: 1
     source: {fileID: 0}

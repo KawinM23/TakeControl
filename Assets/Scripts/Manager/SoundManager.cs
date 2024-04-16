@@ -91,6 +91,11 @@ public class SoundManager : MonoBehaviour
         Play("Ding");
     }
 
+    public void PlayMagicCoin()
+    {
+        Play("MagicCoin");
+    }
+
     public void PlaySlash()
     {
         Play("Slash");
