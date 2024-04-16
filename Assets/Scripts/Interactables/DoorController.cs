@@ -6,6 +6,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [SerializeField] private List<SwitchController> _switchController;
+    [SerializeField] private List<SwitchController> _switchOppositeController;
 
     private bool _isOpened = false;
     private Vector3 position;
@@ -19,21 +20,33 @@ public class DoorController : MonoBehaviour
 
     void Update()
     {
+        
         CheckSwitches();
+       
     }
 
     void CheckSwitches()
     {
-        bool isOpenable = true;
+        bool _isOpenable = true; //all button in this list must active
         foreach (var item in _switchController)
         {
             if (!item.Clicked)
             {
-                isOpenable = false;
+                _isOpenable = false;
                 break;
             }
         }
-        if (isOpenable)
+
+        // all button in this list must not active
+        foreach (var item in _switchOppositeController)
+        {
+            if (item.Clicked)
+            {
+                _isOpenable = false;
+                break;
+            }
+        }
+        if (_isOpenable)
         {
             OpenDoor();
         }
@@ -41,7 +54,9 @@ public class DoorController : MonoBehaviour
         {
             CloseDoor();
         }
+    
     }
+    
     void OpenDoor()
     {
         _isOpened = true;
