@@ -8,7 +8,7 @@ public class Interactable : MonoBehaviour
     public UnityEvent OnEnter;
     public UnityEvent OnExit;
 
-    private void Update()
+    public virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && _isInTrigger && _isInteractable)
         {
