@@ -517,6 +517,8 @@ MonoBehaviour:
     pitch: 0
     source: {fileID: 0}
   loopingBGM: BGM Isolation
+  DingPitchMin: 0.5
+  DingPitchMax: 3
 --- !u!114 &6985303427310886824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +552,7 @@ MonoBehaviour:
   HackButtons: []
   HackTimer: 0
   ButtonAmount: 0
+  TotalButtonAmount: 0
 --- !u!1 &3866549758718279787
 GameObject:
   m_ObjectHideFlags: 0
