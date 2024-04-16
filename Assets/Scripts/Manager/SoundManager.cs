@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -46,14 +47,14 @@ public class SoundManager : MonoBehaviour
         {
             sfx_multiplier = PlayerPrefs.GetFloat("sfx_volume_multiplier");
         }
-        foreach (Sound s in sounds)
+        foreach (Sound s in bgms)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
         }
-        foreach (Sound s in bgms)
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -64,39 +65,35 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        // sleep for 1 second to allow the game to load
-
-        if (playingBGM != null && playingBGM != "")
+        // Get Current Scene Name
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        // Play BGM based on scene name
+        if (sceneName.Contains("Menu"))
         {
-            PlayBGM(playingBGM);
+            PlayBGM("MEN NeoCityDive");
+        }
+        else if (sceneName.Contains("Map"))
+        {
+            PlayBGM("EXP BlueTwilight");
         }
         else
         {
-            PlayBGM("BGM Isolation"); // default
+            PlayBGM("EXP Isolation"); // default
         }
+
     }
 
-    public void Update()
+    private void Update()
     {
-        // Update volume
-        Sound playingSound = System.Array.Find(bgms, bgm => bgm.name == playingBGM);
-        if (playingSound != null)
+        if (nextBGM != null && nextBGM != "" && nextBGM != playingBGM)
         {
-            playingBGMVolume = playingSound.source.volume.ToString();
-        }
-
-
-        // If nextBGM not found, do nothing
-        Sound nextSound = System.Array.Find(bgms, bgm => bgm.name == nextBGM);
-        if (nextSound != null)
-        {
-            if (nextBGM != playingBGM)
+            Sound s = System.Array.Find(bgms, bgm => bgm.name == nextBGM);
+            if (s != null)
             {
                 PlayBGM(nextBGM);
-                nextBGM = null;
+                nextBGM = "";
             }
         }
-
     }
 
     public void PlayJump()
@@ -190,6 +187,7 @@ public class SoundManager : MonoBehaviour
         while (s.source.volume > 0f)
         {
             s.source.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return new WaitForEndOfFrame();
         }
 
         s.source.Stop(); // Stop the audio after fade out
@@ -213,6 +211,7 @@ public class SoundManager : MonoBehaviour
         {
             s.source.volume = Mathf.Lerp(startVolume, s.volume, elapsedTime / fadeTime);
             elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
 
         s.source.volume = s.volume; // Ensure final volume is set
@@ -221,20 +220,29 @@ public class SoundManager : MonoBehaviour
         yield return null;
     }
 
-    public void PlayBGM(string name)
+    public void PlayBGMCombatRandom()
     {
-        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
-        if (s == null)
+        Sound[] combatBGMs = new Sound[] { };
+        foreach (Sound s in bgms)
         {
-            Debug.LogWarning("Sound: " + name + " not found!");
+            // if name has "CMB" as substring
+            if (s.name.Contains("CMB"))
+            {
+                combatBGMs.Append(s);
+            }
+        }
+        if (combatBGMs.Length == 0)
+        {
+            Debug.LogWarning("No combat BGMs found!");
             return;
         }
-        s.source.Play();
-        playingBGM = name;
-        Debug.Log("Playing BGM: " + name);
-        return;
+        PlayBGM(combatBGMs[Random.Range(0, bgms.Length)].name);
+    }
+
+    public void PlayBGM(string name)
+    {
         StopBGM(); // Stop current BGM
-        s = System.Array.Find(bgms, bgm => bgm.name == name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found!");
