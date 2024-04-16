@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        bool hasSave = !string.IsNullOrEmpty(SaveManager.Instance.ListSave().FirstOrDefault());
+        bool hasSave =   !string.IsNullOrEmpty(SaveManager.Instance.ListSave().FirstOrDefault());
         _continueButton.interactable = hasSave;
 
         _circuitTexture = new Texture2D(_baseCircuitTexture.width, _baseCircuitTexture.height);
