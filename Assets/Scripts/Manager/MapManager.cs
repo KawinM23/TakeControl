@@ -23,7 +23,7 @@ public class MapManager : MonoBehaviour
 
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
@@ -64,11 +64,11 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ChangeScene(string fromSceneName, string toSceneName, Direction direction, float distanceFromSpawn)
+    public void ChangeScene(string fromSceneName, string toSceneName, Direction direction, float distanceFromSpawn)
     {
         if (IsChangingScene && _mapChangeCooldownTimer > 0)
         {
-            yield break;
+            return;
         }
         IsChangingScene = true;
         FromScene = fromSceneName;
@@ -88,10 +88,7 @@ public class MapManager : MonoBehaviour
 
         SaveManager.Instance.SaveData();
 
-        yield return new WaitForEndOfFrame();
-        yield return SceneManager.LoadSceneAsync(toSceneName, LoadSceneMode.Additive);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(toSceneName));
-        SceneManager.UnloadSceneAsync(fromSceneName);
+        StartCoroutine(LoadScene());
 
         /*SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(toSceneName));*//*
         player.SetActive(true);
@@ -107,6 +104,14 @@ public class MapManager : MonoBehaviour
         *//*SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(fromSceneName));*//*
         changingScene = false;
         yield return null;*/
+    }
+
+    private IEnumerator LoadScene()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return SceneManager.LoadSceneAsync(ToScene, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(ToScene));
+        SceneManager.UnloadSceneAsync(FromScene);
     }
 
 }

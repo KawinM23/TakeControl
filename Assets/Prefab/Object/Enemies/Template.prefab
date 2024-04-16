@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 7987937095661913674}
   - component: {fileID: 41926162091019343}
   - component: {fileID: 8505732470146276416}
+  - component: {fileID: 7136873644874277834}
   - component: {fileID: 7078540853097211418}
   - component: {fileID: 5884164704649394166}
   - component: {fileID: 1009252956147524123}
@@ -619,7 +620,7 @@ GameObject:
   - component: {fileID: 6896292043246879620}
   - component: {fileID: 1441850197237625471}
   - component: {fileID: 183297712629305082}
-  - component: {fileID: 7136873644874277834}
+  - component: {fileID: 8103120480394319659}
   m_Layer: 6
   m_Name: Template
   m_TagString: Enemy
@@ -744,6 +745,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input:
     _underlyingValue: {fileID: 0}
+--- !u!114 &7136873644874277834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823777921655399904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69a9fec78beb544b8267fbe46ee0581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &7078540853097211418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,6 +853,7 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 0
   _buttonAmount: 0
+  _pulsePrefab: {fileID: 1100861198135996722, guid: e96f0c2397cd52849a60717a3a9b56a0, type: 3}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &6896292043246879620
@@ -933,7 +950,7 @@ MonoBehaviour:
   MaxAmmo: 20
   CurrentAmmo: 20
   Reloading: 0
---- !u!114 &7136873644874277834
+--- !u!114 &8103120480394319659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -942,12 +959,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8823777921655399904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c69a9fec78beb544b8267fbe46ee0581, type: 3}
+  m_Script: {fileID: 11500000, guid: 78c9e024aab047341964a21746065b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 64
+  CurrencyPrefab: {fileID: 7353197279878802468, guid: fb55716a6518b9245b11be8b1bbc0fa0, type: 3}
+  ValuePerCurrency: 3
+  CurrencyAmount: 3
+  velocity: 2
 --- !u!1 &8995199653490504584
 GameObject:
   m_ObjectHideFlags: 0

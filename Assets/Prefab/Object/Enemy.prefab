@@ -249,6 +249,7 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 3
   _buttonAmount: 3
+  _pulsePrefab: {fileID: 1100861198135996722, guid: e96f0c2397cd52849a60717a3a9b56a0, type: 3}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &5910027491072952197

@@ -1,3 +1,4 @@
+using Assets.Scripts.Combat;
 using UnityEngine;
 
 public class SavePoint : Interactable
@@ -14,5 +15,6 @@ public class SavePoint : Interactable
         Debug.Log("SAVE POINT " + _sceneName);
 
         SaveManager.Instance.PersistSave();
+        if (PlayerManager.Instance.Player.TryGetComponent(out Health health)) health.ResetHealth();
     }
 }

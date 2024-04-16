@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using Assets.Scripts.Effect;
+﻿using Assets.Scripts.Effect;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -139,6 +139,7 @@ namespace Assets.Scripts.Combat
                 GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
                 Destroy(go, 2f);
             }
+            if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
             Destroy(gameObject);
         }
 

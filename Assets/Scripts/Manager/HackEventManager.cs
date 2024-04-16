@@ -16,6 +16,7 @@ public class HackEventManager : MonoBehaviour
     private float _hackDuration;
     public float HackTimer;
     public int ButtonAmount;
+    public int TotalButtonAmount;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class HackEventManager : MonoBehaviour
         HackTimer = hackDuration;
         _hackDuration = hackDuration;
         ButtonAmount = amount;
+        TotalButtonAmount = amount;
         Time.timeScale = 0.01f;
         Vector2 size = _buttonPrefab.GetComponent<RectTransform>().sizeDelta;
         for (int i = 0; i < amount; i++)

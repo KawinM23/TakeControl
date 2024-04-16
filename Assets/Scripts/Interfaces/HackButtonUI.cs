@@ -25,12 +25,13 @@ public class HackButtonUI : MonoBehaviour
         Clicked = clicked;
         if (clicked)
         {
+            SoundManager.Instance.PlayDing(HackEventManager.Instance.ButtonAmount, HackEventManager.Instance.TotalButtonAmount);
             _image.color = _button.colors.pressedColor;
         }
         else
         {
             _image.color = _button.colors.normalColor;
         }
-        
+
     }
 }

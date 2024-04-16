@@ -1147,7 +1147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7315772924322691058, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
       propertyPath: _maxHealth
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7315772924322691058, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
       propertyPath: hackableHealth
@@ -1159,7 +1159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7315772924322691058, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
       propertyPath: _hackableHealth
-      value: 40
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7548896584135099049, guid: 3e6b421e5bcb4f24586bcc556d1ded12, type: 3}
       propertyPath: m_AnchorMax.y
