@@ -1,0 +1,16 @@
+@startuml
+class ResourceManager {
+    + {static}  <<event>> OnCurrenyChange : UnityAction<int> 
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+    + GetCurrency() : int
+    + SetCurrency(value:int) : void
+    + AddCurrency(value:int) : void
+    + GetBombCount() : int
+    + UseBomb() : bool
+    + GetCurrencyPercentage() : float
+}
+MonoBehaviour <|-- ResourceManager
+IDataPersist <|-- ResourceManager
+ResourceManager --> "Instance" ResourceManager
+@enduml

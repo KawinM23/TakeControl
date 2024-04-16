@@ -1,0 +1,12 @@
+@startuml
+class FieldOfView {
+    + radius : float
+    + spanAngle : float
+    + CanSeePlayer : bool <<get>>
+    + FieldOfViewCheck() : bool
+}
+MonoBehaviour <|-- FieldOfView
+FieldOfView --> "facingDir" Vector2
+FieldOfView --> "targetMask" LayerMask
+FieldOfView --> "obstructionMask" LayerMask
+@enduml

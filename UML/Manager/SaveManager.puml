@@ -1,0 +1,14 @@
+@startuml
+class SaveManager {
+    +  <<event>> InitialLoaded : Action? 
+    + SaveData() : void
+    + LoadData() : void
+    + NewGame() : void
+    + PersistSave() : void
+    + LoadSave() : void
+    + DeleteSave() : void
+    + ListSave() : IEnumerable<string>
+}
+MonoBehaviour <|-- SaveManager
+SaveManager --> "Instance" SaveManager
+@enduml

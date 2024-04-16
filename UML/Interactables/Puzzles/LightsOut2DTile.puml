@@ -1,0 +1,6 @@
+@startuml
+class LightsOut2DTile {
+    + SetIndex(index:int) : void
+}
+MonoBehaviour <|-- LightsOut2DTile
+@enduml

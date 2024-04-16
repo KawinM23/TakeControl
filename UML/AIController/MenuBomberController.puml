@@ -1,0 +1,13 @@
+@startuml
+class MenuBomberController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+}
+AIController <|-- MenuBomberController
+InputController <|-- MenuBomberController
+MenuBomberController +-- State
+@enduml

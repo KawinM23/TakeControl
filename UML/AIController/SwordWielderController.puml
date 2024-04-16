@@ -1,0 +1,19 @@
+@startuml
+class SwordWielderController {
+    + dashingDistance : float
+    + preferredDistance : float
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    NOTICED,
+    ATTACKING,
+}
+AIController <|-- SwordWielderController
+InputController <|-- SwordWielderController
+SwordWielderController +-- State
+@enduml

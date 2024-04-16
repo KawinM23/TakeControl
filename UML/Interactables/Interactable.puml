@@ -1,0 +1,10 @@
+@startuml
+class Interactable {
+    + _isInteractable : bool = true
+    + <<virtual>> Update() : void
+    + <<virtual>> Interact() : void
+}
+MonoBehaviour <|-- Interactable
+Interactable --> "OnEnter" UnityEvent
+Interactable --> "OnExit" UnityEvent
+@enduml

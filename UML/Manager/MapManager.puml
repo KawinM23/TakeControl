@@ -1,0 +1,13 @@
+@startuml
+class MapManager {
+    + IsChangingScene : bool
+    + FromScene : string
+    + ToScene : string
+    + DistanceFromSpawn : float
+    + CanChangeScene : bool <<get>>
+    + ChangeScene(fromSceneName:string, toSceneName:string, direction:Direction, distanceFromSpawn:float) : void
+}
+MonoBehaviour <|-- MapManager
+MapManager --> "Instance" MapManager
+MapManager --> "Direction" Direction
+@enduml

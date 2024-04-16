@@ -1,0 +1,7 @@
+@startuml
+class WeaponStatusBar {
+}
+MonoBehaviour <|-- WeaponStatusBar
+WeaponStatusBar --> "statusText" TMP_Text
+WeaponStatusBar --> "statusBar" Slider
+@enduml

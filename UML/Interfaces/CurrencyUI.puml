@@ -1,0 +1,6 @@
+@startuml
+class CurrencyUI {
+    + UpdateUI(currency:int) : void
+}
+MonoBehaviour <|-- CurrencyUI
+@enduml

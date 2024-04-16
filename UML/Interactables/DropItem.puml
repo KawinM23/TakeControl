@@ -1,0 +1,10 @@
+@startuml
+class DropItem {
+    + ValuePerCurrency : int
+    + CurrencyAmount : int
+    + velocity : float
+    + DropCurrency() : void
+}
+MonoBehaviour <|-- DropItem
+DropItem --> "CurrencyPrefab" GameObject
+@enduml

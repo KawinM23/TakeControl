@@ -1,0 +1,14 @@
+@startuml
+class MapTransition {
+    + {static} FindDestinationPosition(fromScene:string, toScene:string, distanceFromSpawn:float) : Vector2
+}
+enum Direction {
+    None,
+    Left,
+    Right,
+    Up,
+    Down,
+}
+MonoBehaviour <|-- MapTransition
+MapTransition +-- Direction
+@enduml

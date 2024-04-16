@@ -1,0 +1,20 @@
+@startuml
+class ScreenShake {
+    + {static} Shake(shakeParams:ShakeParams) : void
+    + {static} Shake(shakeType:ShakeType) : void
+}
+struct ShakeParams {
+    + intensity : float
+    + seconds : float
+    + {static} QuickShake(shakeLevel:float) : ShakeParams
+}
+enum ShakeType {
+    Attack,
+    HitEnemy,
+    TakeDamage,
+}
+MonoBehaviour <|-- ScreenShake
+ScreenShake --> "Instance" ScreenShake
+ScreenShake +-- ShakeParams
+ScreenShake +-- ShakeType
+@enduml

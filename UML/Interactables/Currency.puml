@@ -1,0 +1,6 @@
+@startuml
+class Currency {
+    + SetValue(value:int) : void
+}
+MonoBehaviour <|-- Currency
+@enduml
