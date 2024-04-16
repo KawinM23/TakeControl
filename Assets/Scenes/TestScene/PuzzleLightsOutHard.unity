@@ -442,6 +442,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: sounds.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: sounds.Array.data[13].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: cd56566eadd20294684e6cad000d3082, type: 3}
+    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: sounds.Array.data[13].name
+      value: MagicCoin
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: sounds.Array.data[13].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740915998871761418, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: sounds.Array.data[13].volume
+      value: 0.48
+      objectReference: {fileID: 0}
     - target: {fileID: 5692816951723743413, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

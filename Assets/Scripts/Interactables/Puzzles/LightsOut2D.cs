@@ -60,6 +60,8 @@ public class LightsOut2D : MonoBehaviour
         {
             return;
         }
+        SoundManager.Instance.PlayDing(2, 5); // hardcode for unchanging pitch
+
         lights[index] = !lights[index];
         SpriteRenderer renderer = tiles[index].GetComponent<SpriteRenderer>();
         renderer.color = lights[index] ? _onColor : _offColor;
@@ -101,6 +103,7 @@ public class LightsOut2D : MonoBehaviour
         {
             if (!rewardEarned)
             {
+                SoundManager.Instance.PlayMagicCoin();
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
             }
             rewardEarned = true;
