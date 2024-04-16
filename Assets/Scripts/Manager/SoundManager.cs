@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -12,7 +13,11 @@ public class SoundManager : MonoBehaviour
 
     // BGMs
     public Sound[] bgms;
-    [SerializeField] public string loopingBGM;
+    private float _defaultBGMVolume = 0.5f;
+    [SerializeField] public string playingBGM;
+    [SerializeField] private string playingBGMVolume; // only for debugging
+
+    [SerializeField] private string nextBGM; // only for debugging
 
     // Ding SFX Pitch
     public float DingPitchMin = 0.5f;
@@ -61,14 +66,37 @@ public class SoundManager : MonoBehaviour
     {
         // sleep for 1 second to allow the game to load
 
-        if (loopingBGM != null)
+        if (playingBGM != null && playingBGM != "")
         {
-            LoopBGM(loopingBGM);
+            PlayBGM(playingBGM);
         }
         else
         {
-            LoopBGM("BGM Isolation"); // default
+            PlayBGM("BGM Isolation"); // default
         }
+    }
+
+    public void Update()
+    {
+        // Update volume
+        Sound playingSound = System.Array.Find(bgms, bgm => bgm.name == playingBGM);
+        if (playingSound != null)
+        {
+            playingBGMVolume = playingSound.source.volume.ToString();
+        }
+
+
+        // If nextBGM not found, do nothing
+        Sound nextSound = System.Array.Find(bgms, bgm => bgm.name == nextBGM);
+        if (nextSound != null)
+        {
+            if (nextBGM != playingBGM)
+            {
+                PlayBGM(nextBGM);
+                nextBGM = null;
+            }
+        }
+
     }
 
     public void PlayJump()
@@ -140,25 +168,82 @@ public class SoundManager : MonoBehaviour
     {
         foreach (Sound s in bgms)
         {
-            s.source.Stop();
-            s.source.loop = false;
+            if (s.source.isPlaying)
+            {
+                // Fade out BGM
+                StartCoroutine(FadeOut(playingBGM, 2.0f));
+            }
         }
     }
 
-    public void LoopBGM(string name)
+    IEnumerator FadeOut(string name, float fadeTime)
     {
-        StopBGM(); // Stop current BGM
-        /*Debug.Log("Trying to Loop BGM: " + name);*/
+        Debug.Log("Fading out " + name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            yield break;
+        }
+        float startVolume = s.source.volume;
+
+        while (s.source.volume > 0f)
+        {
+            s.source.volume -= startVolume * Time.deltaTime / fadeTime;
+        }
+
+        s.source.Stop(); // Stop the audio after fade out
+        s.source.loop = false;
+        Debug.Log("Stopped " + name);
+        yield return null;
+    }
+    IEnumerator FadeIn(string name, float fadeTime)
+    {
+        Debug.Log("Fading in " + name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            yield break;
+        }
+        float startVolume = 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeTime)
+        {
+            s.source.volume = Mathf.Lerp(startVolume, s.volume, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+        }
+
+        s.source.volume = s.volume; // Ensure final volume is set
+        s.source.loop = true;
+        Debug.Log("Playing " + name);
+        yield return null;
+    }
+
+    public void PlayBGM(string name)
+    {
         Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-        s.source.volume = music_multiplier;
-        s.source.loop = true;
         s.source.Play();
-        /*Debug.Log("Playing bgm: " + name);*/
+        playingBGM = name;
+        Debug.Log("Playing BGM: " + name);
+        return;
+        StopBGM(); // Stop current BGM
+        s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+        s.source.volume = music_multiplier;
+        playingBGM = name;
+        s.source.Play();
+        StartCoroutine(FadeIn(name, 2.0f));
     }
 
     private void Play(string name)
