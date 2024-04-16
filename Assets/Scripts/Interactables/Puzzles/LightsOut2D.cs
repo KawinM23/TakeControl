@@ -1,6 +1,9 @@
+using System;
+using System.Collections;
+using Assets.Scripts.SaveLoad;
 using UnityEngine;
 
-public class LightsOut2D : MonoBehaviour
+public class LightsOut2D : MonoBehaviour, IDataPersist
 {
 
     [SerializeField] private int _gridSize = 5; // Adjust this value to change the grid size
@@ -12,9 +15,15 @@ public class LightsOut2D : MonoBehaviour
     private LightsOut2DTile[] tiles;
     [SerializeField] private bool[] lights;
     private bool rewardEarned;
+    private string _sceneName;
 
+    void Awake()
+    {
+        _sceneName = gameObject.scene.name;
+    }
     private void Start()
     {
+        Debug.Log("LightsOut2D Start");
         InitializeGrid();
     }
 
@@ -31,10 +40,18 @@ public class LightsOut2D : MonoBehaviour
             LightsOut2DTile tile = Instantiate(_tilePrefab, new Vector3(startX + i, yOffset, 0), Quaternion.identity);
             tile.SetIndex(i);
             tiles[i] = tile;
-            lights = RandomInitialLights(_gridSize);
+            if (rewardEarned)
+            {
+                lights[i] = true;
+            }
+            else
+            {
+                lights = RandomInitialLights(_gridSize);
+            }
+
         }
 
-        // The representative file should not be in game
+        // The representative tile should not be in game
         _tilePrefab.gameObject.SetActive(false);
     }
 
@@ -49,6 +66,11 @@ public class LightsOut2D : MonoBehaviour
         for (int i = 0; i < _gridSize; i++)
         {
             SpriteRenderer renderer = tiles[i].GetComponent<SpriteRenderer>();
+            if (rewardEarned)
+            {
+                renderer.color = _rewardColor;
+                continue;
+            }
             renderer.color = lights[i] ? _onColor : _offColor;
         }
     }
@@ -84,6 +106,10 @@ public class LightsOut2D : MonoBehaviour
 
     private void CheckWinCondition()
     {
+        if (rewardEarned)
+        {
+            return;
+        }
         bool allLightsOn = true;
         bool allLightsOff = true;
 
@@ -104,6 +130,7 @@ public class LightsOut2D : MonoBehaviour
             if (!rewardEarned)
             {
                 SoundManager.Instance.PlayMagicCoin();
+
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
             }
             rewardEarned = true;
@@ -129,7 +156,7 @@ public class LightsOut2D : MonoBehaviour
         // Randomly toggle lights
         for (int i = 0; i < length; i++)
         {
-            if (Random.value < 0.5f)
+            if (UnityEngine.Random.value < 0.5f)
             {
                 ToggleInitialLights(i, lights);
             }
@@ -150,6 +177,21 @@ public class LightsOut2D : MonoBehaviour
         {
             lights[index + 1] = !lights[index + 1];
         }
+    }
+
+    public void LoadData(in GameData data)
+    {
+        Debug.Log("Loading puzzle data");
+        if (data.puzzles.TryGetValue(_sceneName, out bool solved))
+        {
+            rewardEarned = solved;
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        Debug.Log("Saving puzzle data");
+        data.puzzles[_sceneName] = rewardEarned;
     }
 }
 
