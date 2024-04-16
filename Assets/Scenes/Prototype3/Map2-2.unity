@@ -1866,6 +1866,8 @@ MonoBehaviour:
   _bulletSpread: 0
   _shootingDelay: 0.25
   _reloadTime: 1.5
+  MaxAmmo: 20
+  CurrentAmmo: 20
   Reloading: 0
 --- !u!1 &640931497
 GameObject:
@@ -3251,6 +3253,8 @@ MonoBehaviour:
   _bulletSpread: 0
   _shootingDelay: 0.25
   _reloadTime: 1.5
+  MaxAmmo: 20
+  CurrentAmmo: 20
   Reloading: 0
 --- !u!1 &844505347
 GameObject:
@@ -5952,7 +5956,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
