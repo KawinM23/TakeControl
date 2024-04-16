@@ -7,6 +7,8 @@ on:
 
 jobs:
   generate-uml:
+    permissions:
+      contents: write
     name: "Generate UML"
     runs-on: ubuntu-latest
     env:
@@ -39,7 +41,7 @@ jobs:
         run: mkdir ${{ env.UML_OUTPUT_PATH }}
       - name: Generate PlantUML files
         if: ${{ steps.check_for_code.outputs.CODE_EXISTS == 'true' }}
-        run: /root/.dotnet/tools/puml-gen ${{ env.CODE_PATH }} ${{ env.UML_OUTPUT_PATH }} -dir ${{ env.UMP_GENERATION_PARAMETERS }}
+        run: puml-gen ${{ env.CODE_PATH }} ${{ env.UML_OUTPUT_PATH }} -dir ${{ env.UMP_GENERATION_PARAMETERS }}
 
       - name: Get File names
         if: ${{ steps.check_for_code.outputs.CODE_EXISTS == 'true' }}
@@ -48,11 +50,11 @@ jobs:
         id: get_file_names
       - name: Generate SVG Diagrams
         if: ${{ steps.check_for_code.outputs.CODE_EXISTS == 'true' }}
-        uses: holowinski/plantuml-github-action@main
+        uses: Timmy/plantuml-action@v1
         with:
           args: -v -tsvg ${{ steps.get_file_names.outputs.UML_FILES }}
 
       - uses: EndBug/add-and-commit@v7.0.0
         with:
           author_name: "UML Bot"
-          message: "Generate UML (${{ github.workflow }})"
+          message: "ci: generate uml (${{ github.workflow }})"
