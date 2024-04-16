@@ -4935,8 +4935,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _track: {fileID: 6303686045724016278}
-  speed: 2
+  _speed: 2
   _torelance: 0.1
+  _snapToStart: 1
 --- !u!114 &7786580524683461188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4949,7 +4950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cee5c6724516f10eaf61b4dded0f037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerTick: 15
+  _damagePerTick: 10
   _knockbackFactor: {x: 5, y: 0.2}
   _useTrigger: 1
   _damagePlayer: 1
