@@ -1,0 +1,16 @@
+@startuml
+class AIController {
+    + <<virtual>> GetHorizontalMovement() : float
+    + <<virtual>> GetVerticalMovement() : float
+    + <<virtual>> IsJumpPressed() : bool
+    + <<virtual>> IsJumpHeld() : bool
+    + <<virtual>> GetAttackDirection() : Vector2?
+    + <<virtual>> GetContinuedAttackDirection() : Vector2?
+    + <<virtual>> IsReloadPressed() : bool
+    + <<virtual>> IsDashPressed() : bool
+    + <<virtual>> IsSwapWeaponPressed() : bool
+    + <<virtual>> GetHackInput() : Vector2?
+}
+MonoBehaviour <|-- AIController
+InputController <|-- AIController
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class FightArenaManager {
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+    + StartFight() : void
+    + EndFight() : void
+}
+class EnemiesList {
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- FightArenaManager
+IDataPersist <|-- FightArenaManager
+FightArenaManager o-> "enemiesWave<EnemiesList>" "List`1"
+FightArenaManager +-- EnemiesList
+EnemiesList --> "enemies<GameObject>" "List`1"
+@enduml

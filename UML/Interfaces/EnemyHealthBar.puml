@@ -1,0 +1,8 @@
+@startuml
+class EnemyHealthBar {
+    + SetHealthBar() : void
+}
+MonoBehaviour <|-- EnemyHealthBar
+EnemyHealthBar --> "gradient" Gradient
+EnemyHealthBar --> "fill" Image
+@enduml

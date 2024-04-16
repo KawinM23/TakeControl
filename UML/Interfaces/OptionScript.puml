@@ -1,0 +1,8 @@
+@startuml
+class VolumeSetting {
+    + SetMusicVolume() : void
+    + SetSFXVolume() : void
+    + BackToMainMenu() : void
+}
+MonoBehaviour <|-- VolumeSetting
+@enduml

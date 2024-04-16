@@ -1,0 +1,8 @@
+@startuml
+class EquipmentUIManager {
+    + CheckEquipment() : void
+    + Select(mono:MonoBehaviour) : void
+}
+MonoBehaviour <|-- EquipmentUIManager
+EquipmentUIManager --> "Instance" EquipmentUIManager
+@enduml

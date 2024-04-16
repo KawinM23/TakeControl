@@ -1,0 +1,9 @@
+@startuml
+class JsonSerializer {
+    + JsonSerializer(pretty:bool)
+    + Serialize(writer:Stream, obj:T) : void
+    + Deserialize(reader:Stream) : T
+    + {static} SerializeString(data:string) : string
+}
+ISerializer <|-- JsonSerializer
+@enduml

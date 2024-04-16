@@ -1,0 +1,13 @@
+@startuml
+class GameData {
+    + name : string
+    + currentScene : string
+    + currency : int
+}
+class "SerializedDictionary`2"<T1,T2> {
+}
+GameData o-> "switches<string,bool>" "SerializedDictionary`2"
+GameData o-> "fightArenas<string,bool>" "SerializedDictionary`2"
+GameData o-> "collectTrials<string,bool>" "SerializedDictionary`2"
+GameData o-> "puzzles<string,bool>" "SerializedDictionary`2"
+@enduml

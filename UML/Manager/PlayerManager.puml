@@ -1,0 +1,14 @@
+@startuml
+class PlayerManager {
+    + {static}  <<event>> OnPlayerChanged : UnityAction<GameObject> 
+    + {static}  <<event>> OnPlayerDied : UnityAction 
+    + Die() : void
+    + Respawn() : void
+    + {static} FindActivePlayer() : GameObject
+    + {static} DestroyOtherActivePlayers() : void
+    + {static} SetRespawnScene(sceneName:string) : void
+}
+MonoBehaviour <|-- PlayerManager
+PlayerManager --> "Instance" PlayerManager
+PlayerManager --> "Player" GameObject
+@enduml

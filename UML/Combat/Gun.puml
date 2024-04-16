@@ -1,0 +1,17 @@
+@startuml
+class Gun {
+    + MaxAmmo : uint = 20
+    + CurrentAmmo : uint = 20
+    + Reloading : bool
+    + Shoot(target:Vector2) : void
+    + IsReloading() : bool
+    + GetCurrentReloadPercent() : double
+    + GetUnlimitedAmmo() : bool
+    + SetUnlimitedAmmo(unlimitedAmmo:bool) : void
+    + GetBulletSpeed() : float
+    + SetBulletSpeed(bulletSpeed:float) : void
+    + GetShootingDelay() : double
+    + SetShootingDelay(shootingDelay:double) : void
+}
+BaseWeapon <|-- Gun
+@enduml

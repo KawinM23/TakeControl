@@ -1,0 +1,13 @@
+@startuml
+class CollectTrial {
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+    + <<override>> Update() : void
+    + <<override>> Interact() : void
+    + StartTrial() : void
+    + CancelTrial() : void
+    + Collect() : void
+}
+Interactable <|-- CollectTrial
+IDataPersist <|-- CollectTrial
+@enduml

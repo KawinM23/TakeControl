@@ -1,0 +1,17 @@
+@startuml
+class MenuDemoController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+}
+enum State {
+    INITAL,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- MenuDemoController
+InputController <|-- MenuDemoController
+MenuDemoController +-- State
+@enduml
