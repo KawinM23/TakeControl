@@ -523,7 +523,13 @@ MonoBehaviour:
     volume: 0.5
     pitch: 0
     source: {fileID: 0}
-  loopingBGM: BGM Isolation
+  - name: BGM Crossfire
+    clip: {fileID: 8300000, guid: 82df862da23397f4ea2b8dc638b80d7b, type: 3}
+    volume: 0.5
+    pitch: 0
+    source: {fileID: 0}
+  playingBGM: 
+  nextBGM: 
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!114 &6985303427310886824
