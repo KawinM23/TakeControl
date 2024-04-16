@@ -12,14 +12,17 @@ public class CollectTrial : Interactable, IDataPersist
     [SerializeField] private List<GameObject> _collectList;
     private int _collectCount;
 
-    public void LoadData(in GameData data)
-    {
-
-    }
-
     public void SaveData(ref GameData data)
     {
+        data.collectTrials[id] = _completed;
+    }
 
+    public void LoadData(in GameData data)
+    {
+        if (data.collectTrials.TryGetValue(id, out bool val))
+        {
+            _completed = val;
+        }
     }
 
     private void Awake()
