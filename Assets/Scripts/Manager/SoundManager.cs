@@ -14,6 +14,10 @@ public class SoundManager : MonoBehaviour
     public Sound[] bgms;
     [SerializeField] public string loopingBGM;
 
+    // Ding SFX Pitch
+    public float DingPitchMin = 0.5f;
+    public float DingPitchMax = 3.0f;
+
     // Initialize the singleton instance
     private void Awake()
     {
@@ -70,6 +74,21 @@ public class SoundManager : MonoBehaviour
     public void PlayJump()
     {
         Play("Jump");
+    }
+
+    // Calculate pitch based on current count and total count
+    // Designed such that pitch increases as the current count approaches the total count
+    public void PlayDing(int currentCount, int totalCount)
+    {
+        Sound s = System.Array.Find(sounds, sound => sound.name == "Ding");
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: Ding not found!");
+            return;
+        }
+        s.source.pitch = Mathf.Lerp(DingPitchMin, DingPitchMax, (float)(totalCount - currentCount) / totalCount);
+        /*Debug.Log("Ding pitch: " + s.source.pitch + " (currentCount: " + currentCount + ", totalCount: " + totalCount + ")");*/
+        Play("Ding");
     }
 
     public void PlaySlash()
@@ -147,7 +166,6 @@ public class SoundManager : MonoBehaviour
         }
         s.source.volume = sfx_multiplier;
         s.source.Play();
-        /*Debug.Log("Playing sound: " + name);*/
     }
 
     private void PlayOneOf(string[] names)
