@@ -507,6 +507,11 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+  - name: Ding
+    clip: {fileID: 8300000, guid: b20171f50ed539d4b8758e5b4f0db820, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
   bgms:
   - name: BGM Isolation
     clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
@@ -514,6 +519,8 @@ MonoBehaviour:
     pitch: 0
     source: {fileID: 0}
   loopingBGM: BGM Isolation
+  DingPitchMin: 0.5
+  DingPitchMax: 3
 --- !u!114 &6985303427310886824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +554,7 @@ MonoBehaviour:
   HackButtons: []
   HackTimer: 0
   ButtonAmount: 0
+  TotalButtonAmount: 0
 --- !u!114 &6895288219654541975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea8044dc0cc9de4ba59e0bdb7a88614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currency: 0
   _bombCurrencyCost: 30
 --- !u!1 &3866549758718279787
 GameObject:

@@ -16,8 +16,6 @@ namespace Assets.Scripts.Interfaces
         [SerializeField] private TMP_Text _bombCount;
         [SerializeField] private TMP_Text _currency;
 
-
-
         private void Awake()
         {
             ResourceManager.OnCurrenyChange += UpdateUI;
@@ -42,7 +40,6 @@ namespace Assets.Scripts.Interfaces
             }
             _currency.text = ResourceManager.Instance.GetCurrency().ToString();
             _outerCircleImage.fillClockwise = true;
-            Debug.Log(ResourceManager.Instance.GetCurrencyPercentage());
             _outerCircleImage.fillAmount = ResourceManager.Instance.GetCurrencyPercentage();
         }
 
