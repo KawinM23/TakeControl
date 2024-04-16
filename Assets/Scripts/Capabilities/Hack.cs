@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using Assets.Scripts.Combat;
-using Assets.Scripts.Effect;
+﻿using Assets.Scripts.Combat;
+using Assets.Scripts.Manager;
+using System.Collections;
 using UnityEngine;
 
 #nullable enable
@@ -21,6 +21,9 @@ namespace Assets.Scripts.Capabilities
         [SerializeField] private int _buttonAmount;
         private Coroutine _coroutine;
 
+        [Header("Pulse Bomb")]
+        [SerializeField] private GameObject _pulsePrefab;
+
         [Header("Animation")]
         [SerializeField] private GameObject _hackLinePrefab;
         [SerializeField] private float _hackLineDuration = 0.5f;
@@ -36,6 +39,14 @@ namespace Assets.Scripts.Capabilities
             if (hackPoint.HasValue)
             {
                 HackAction(hackPoint.Value);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && gameObject == PlayerManager.Instance.Player && ResourceManager.Instance.UseBomb())
+            {
+                if (_pulsePrefab)
+                {
+                    GameObject go = Instantiate(_pulsePrefab, gameObject.transform.position, Quaternion.identity);
+                }
             }
         }
 
