@@ -26,7 +26,7 @@ public class Pulse : MonoBehaviour
                 /*Destroy(collision.gameObject);*/
                 health.TakeDamage(30, collision.transform.position - transform.position, 1f);
             }
-            else if (collision.TryGetComponent(out Bullet bullet))
+            else if (collision.TryGetComponent(out Bullet bullet) && bullet.IsEnemy)
             {
                 Destroy(collision.gameObject);
             }
