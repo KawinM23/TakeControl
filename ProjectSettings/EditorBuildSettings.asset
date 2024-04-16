@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Prototype3/Map1-5.unity
     guid: a1ba398effce1394ba6d4d77f469cfe1
   - enabled: 1
+    path: Assets/Scenes/Prototype3/Map1-7.unity
+    guid: 4f1ca88df998a7247890b0609ab9dc06
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map1-8.unity
+    guid: ff187f672a469d24aa019afcedf9f21a
+  - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-1.unity
     guid: eceda19996fc36b41bc81eefaf303841
   - enabled: 1
