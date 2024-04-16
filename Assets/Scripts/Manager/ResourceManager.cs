@@ -46,6 +46,16 @@ namespace Assets.Scripts.Manager
             return _currency / _bombCurrencyCost;
         }
 
+        public bool UseBomb()
+        {
+            bool canUse = _currency > _bombCurrencyCost;
+            if (canUse)
+            {
+                SetCurrency(_currency - _bombCurrencyCost);
+            }
+            return canUse;
+        }
+
         public float GetCurrencyPercentage()
         {
             return ((((_currency % _bombCurrencyCost) + _bombCurrencyCost) % _bombCurrencyCost)) / (float)_bombCurrencyCost;
