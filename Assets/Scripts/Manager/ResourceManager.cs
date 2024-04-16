@@ -12,10 +12,12 @@ namespace Assets.Scripts.Manager
         public static event UnityAction<int> OnCurrenyChange;
 
         [SerializeField] private int _bombCurrencyCost;
+        [SerializeField] private float _bombCooldown;
+        private float _bombCooldownTimer;
 
         public void LoadData(in GameData data)
         {
-            _currency = data.currency;
+            SetCurrency(data.currency);
         }
 
         public void SaveData(ref GameData data)
@@ -36,6 +38,19 @@ namespace Assets.Scripts.Manager
             }
         }
 
+        private void Start()
+        {
+            _bombCooldownTimer = 0;
+        }
+
+        private void Update()
+        {
+            if (_bombCooldownTimer > 0)
+            {
+                _bombCooldownTimer -= Time.deltaTime;
+            }
+        }
+
         public int GetCurrency() { return _currency; }
         public void SetCurrency(int value) { _currency = value; OnCurrenyChange?.Invoke(value); }
 
@@ -48,10 +63,11 @@ namespace Assets.Scripts.Manager
 
         public bool UseBomb()
         {
-            bool canUse = _currency > _bombCurrencyCost;
+            bool canUse = _currency > _bombCurrencyCost && _bombCooldownTimer <= 0;
             if (canUse)
             {
                 SetCurrency(_currency - _bombCurrencyCost);
+                _bombCooldownTimer = _bombCooldown;
             }
             return canUse;
         }

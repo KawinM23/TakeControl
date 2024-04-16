@@ -569,6 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currency: 0
   _bombCurrencyCost: 30
+  _bombCooldown: 3
 --- !u!1 &3866549758718279787
 GameObject:
   m_ObjectHideFlags: 0
