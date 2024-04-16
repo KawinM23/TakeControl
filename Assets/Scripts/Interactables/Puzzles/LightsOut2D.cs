@@ -3,14 +3,14 @@ using UnityEngine;
 public class LightsOut2D : MonoBehaviour
 {
 
-    public int gridSize = 5; // Adjust this value to change the grid size
-    public LightsOut2DTile tilePrefab;
-    public Color onColor;
-    public Color offColor;
-    public Color rewardColor;
+    [SerializeField] private int _gridSize = 5; // Adjust this value to change the grid size
+    [SerializeField] private LightsOut2DTile _tilePrefab;
+    [SerializeField] private Color _onColor;
+    [SerializeField] private Color _offColor;
+    [SerializeField] private Color _rewardColor;
 
     private LightsOut2DTile[] tiles;
-    private bool[] lights;
+    [SerializeField] private bool[] lights;
     private bool rewardEarned;
 
     private void Start()
@@ -20,30 +20,37 @@ public class LightsOut2D : MonoBehaviour
 
     private void InitializeGrid()
     {
-        tiles = new LightsOut2DTile[gridSize];
-        lights = new bool[gridSize];
+        tiles = new LightsOut2DTile[_gridSize];
+        lights = new bool[_gridSize];
 
-        float startX = -(gridSize - 1) / 2f;
-        float yOffset = 0.5f;
+        float startX = -(_gridSize - 1) / 2f;
+        float yOffset = _tilePrefab.transform.position.y;
 
-        for (int i = 0; i < gridSize; i++)
+        for (int i = 0; i < _gridSize; i++)
         {
-            LightsOut2DTile tile = Instantiate(tilePrefab, new Vector3(startX + i, yOffset, 0), Quaternion.identity);
+            LightsOut2DTile tile = Instantiate(_tilePrefab, new Vector3(startX + i, yOffset, 0), Quaternion.identity);
             tile.SetIndex(i);
             tiles[i] = tile;
-            lights = RandomInitialLights(gridSize);
-
-            SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
-            renderer.color = lights[i] ? onColor : offColor;
+            lights = RandomInitialLights(_gridSize);
         }
 
         // The representative file should not be in game
-        tilePrefab.gameObject.SetActive(false);
+        _tilePrefab.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        UpdateTilesColor();
         CheckWinCondition();
+    }
+
+    private void UpdateTilesColor()
+    {
+        for (int i = 0; i < _gridSize; i++)
+        {
+            SpriteRenderer renderer = tiles[i].GetComponent<SpriteRenderer>();
+            renderer.color = lights[i] ? _onColor : _offColor;
+        }
     }
 
     public void ToggleLights(int index)
@@ -55,20 +62,20 @@ public class LightsOut2D : MonoBehaviour
         }
         lights[index] = !lights[index];
         SpriteRenderer renderer = tiles[index].GetComponent<SpriteRenderer>();
-        renderer.color = lights[index] ? onColor : offColor;
+        renderer.color = lights[index] ? _onColor : _offColor;
 
         if (index > 0)
         {
             lights[index - 1] = !lights[index - 1];
             SpriteRenderer prevRenderer = tiles[index - 1].GetComponent<SpriteRenderer>();
-            prevRenderer.color = lights[index - 1] ? onColor : offColor;
+            prevRenderer.color = lights[index - 1] ? _onColor : _offColor;
         }
 
-        if (index < gridSize - 1)
+        if (index < _gridSize - 1)
         {
             lights[index + 1] = !lights[index + 1];
             SpriteRenderer nextRenderer = tiles[index + 1].GetComponent<SpriteRenderer>();
-            nextRenderer.color = lights[index + 1] ? onColor : offColor;
+            nextRenderer.color = lights[index + 1] ? _onColor : _offColor;
 
         }
     }
@@ -92,12 +99,17 @@ public class LightsOut2D : MonoBehaviour
 
         if (allLightsOn)
         {
+            if (!rewardEarned)
+            {
+                if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
+            }
             rewardEarned = true;
             foreach (LightsOut2DTile tile in tiles)
             {
                 SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
-                renderer.color = rewardColor;
+                renderer.color = _rewardColor;
             }
+
         }
     }
 
@@ -131,7 +143,7 @@ public class LightsOut2D : MonoBehaviour
             lights[index - 1] = !lights[index - 1];
         }
 
-        if (index < gridSize - 1)
+        if (index < _gridSize - 1)
         {
             lights[index + 1] = !lights[index + 1];
         }
