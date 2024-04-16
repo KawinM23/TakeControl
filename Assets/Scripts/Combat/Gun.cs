@@ -46,6 +46,7 @@ namespace Assets.Scripts.Combat
             Vector2? pos = null;
             if (_controller.Input.GetAttackDirection().HasValue)
             {
+               
                 pos = _controller.Input.GetAttackDirection().Value;
             }
             else if (_controller.Input.GetContinuedAttackDirection().HasValue)
@@ -80,7 +81,7 @@ namespace Assets.Scripts.Combat
 
         public void Shoot(Vector2 target)
         {
-            if (HackEventManager.Instance.IsHacking)
+            if (HackEventManager.Instance!= null && HackEventManager.Instance.IsHacking)
             {
                 return;
             }
@@ -88,7 +89,7 @@ namespace Assets.Scripts.Combat
             _shootTimer = _shootingDelay;
             CurrentAmmo -= 1;
             Reloading = false;
-            SoundManager.Instance.PlayShoot();
+            if (SoundManager.Instance!=null) SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
 
@@ -100,7 +101,7 @@ namespace Assets.Scripts.Combat
             if (bullet)
             {
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
-                bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
+               if(PlayerManager.Instance) bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
             }
         }
 

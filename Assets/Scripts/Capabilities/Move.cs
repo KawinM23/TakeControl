@@ -121,7 +121,7 @@ namespace Assets.Scripts.Capabilities
         private void DashAction(float x, bool isFacingRight)
         {
             Debug.Log("Dash");
-            SoundManager.Instance.PlayDash();
+            if(SoundManager.Instance) SoundManager.Instance.PlayDash();
             _canDash = false;
             _isDashing = true;
             _dashTimer = _dashTime;

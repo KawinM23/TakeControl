@@ -8,10 +8,9 @@ using UnityEngine;
 // IDLE util found player -> SHOOT -> RELOAD (while jumping) -> IDLE
 
 #nullable enable annotations
-public class TemplateController : AIController, InputController
+public class MenuDemoController : AIController, InputController
 {
-
-    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private Vector3 _shootingTarget;
     private Gun _gun;
 
 
@@ -26,15 +25,20 @@ public class TemplateController : AIController, InputController
     enum State
     {
         INITAL,
-        IDLE,
+      
         SHOOTING,
         RELOADING
     }
-    private State _state = State.IDLE;
+    private State _state = State.SHOOTING;
     private State _prev_state = State.INITAL;
     private Coroutine? _state_coroutine = null;
+    private Vector2 _home;
 
 #nullable enable
+    void Start()
+    {
+        _home = transform.position;
+    }
 
     void FixedUpdate()
     {
@@ -56,7 +60,7 @@ public class TemplateController : AIController, InputController
         // if state CHANGED, start new coroutine depending on current state
         _state_coroutine = _state switch
         {
-            State.IDLE => StartCoroutine(IdleState()),
+           
             State.SHOOTING => StartCoroutine(ShootingState()),
             State.RELOADING => StartCoroutine(ReloadingState()),
             _ => throw new System.Exception("Invalid state")
@@ -66,55 +70,33 @@ public class TemplateController : AIController, InputController
         _prev_state = _state;
     }
 
-    IEnumerator IdleState()
-    {
-        while (true)
-        {
-            var player = PlayerManager.Instance.Player;
-            if (player == null)
-            {
-                yield return new WaitForSeconds(0.5f);
-                continue;
-            }
 
-            // TODO: optimize
-
-            // does it see the player?
-            var casts = Physics2D.LinecastAll(transform.position, player.transform.position, _layerMask);
-            var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            Debug.DrawLine(transform.position, player.transform.position, Color.red, 0.5f);
-            Debug.DrawLine(transform.position, cast.point, Color.green, 0.5f);
-
-            if (cast.transform.CompareTag("Player"))
-            {
-                yield return new WaitForFixedUpdate();
-                _state = State.SHOOTING;
-                yield break;
-            }
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
+    private float _idleMovement;
     IEnumerator ShootingState()
     {
+       
         while (true)
         {
+            
             if (_gun.CurrentAmmo == 0)
             {
+               
                 yield return new WaitForFixedUpdate();
                 _state = State.RELOADING;
                 yield break;
             }
-
-            // TODO: optimize
-            var casts = Physics2D.LinecastAll(transform.position, PlayerManager.Instance.Player.transform.position, _layerMask);
-            var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            if (!cast.transform.CompareTag("Player"))
+            var distFromHome = Vector2.Distance(transform.position, _home);
+            if (distFromHome <= 5f)
             {
-                yield return new WaitForFixedUpdate();
-                _state = State.IDLE;
-                yield break;
+                _idleMovement = Random.Range(0.5f, 1f);
+                _idleMovement *= Random.value < 0.5 ? 1 : -1;
             }
+            else
+            {
+                _idleMovement = Mathf.Clamp(_home.x - transform.position.x, -0.5f, 0.5f);
+            }
+
+
 
             yield return new WaitForSeconds(0.5f);
         }
@@ -127,14 +109,24 @@ public class TemplateController : AIController, InputController
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForFixedUpdate();
-        _state = State.IDLE;
+        _state = State.SHOOTING;
         yield break;
     }
 
 
     public override Vector2? GetAttackDirection()
     {
-        return _state == State.SHOOTING ? PlayerManager.Instance.Player.transform.position : null;
+        return _state == State.SHOOTING ? _shootingTarget : null;
+    }
+
+    public override float GetHorizontalMovement()
+    {
+        return _state switch
+        {
+            State.SHOOTING => _idleMovement,
+            State.RELOADING => 0,
+            _ => base.GetHorizontalMovement()
+        };
     }
 
     public override bool IsReloadPressed()
@@ -145,7 +137,34 @@ public class TemplateController : AIController, InputController
     // will jump when state is reloading
     public override bool IsJumpPressed()
     {
-        return _state == State.RELOADING;
+
+        if (_state == State.RELOADING)
+        {
+            return true; // If reloading, always return true
+        }
+
+        else
+        {
+      
+            float randomValue = Random.value;
+
+           
+            if (randomValue <= 0.0025f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public override bool IsDashPressed()
+    {
+
+
+        return true;
     }
 }
 
