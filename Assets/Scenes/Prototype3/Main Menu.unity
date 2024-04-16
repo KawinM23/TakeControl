@@ -1193,6 +1193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1081286498}
   - component: {fileID: 1081286497}
+  - component: {fileID: 1081286499}
   m_Layer: 0
   m_Name: Manager for MainMenu
   m_TagString: Untagged
@@ -1217,6 +1218,7 @@ MonoBehaviour:
     currentScene: 
     switches:
       _serializedList: []
+    currency: 0
   defaultSaveName: default
   defaultSceneName: Map1-1
 --- !u!4 &1081286498
@@ -1234,6 +1236,122 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1081286499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081286496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea85a7421e6244b09a594c8eed33c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music_multiplier: 0.5
+  sfx_multiplier: 0.5
+  sounds:
+  - name: Jump
+    clip: {fileID: 8300000, guid: f03abd5ad138445c280369733d3454d7, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Slash
+    clip: {fileID: 8300000, guid: b7914b9b5de5942e292fbf0a7bb7b1f4, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Hack
+    clip: {fileID: 8300000, guid: 23270394686a14d90a145c4c1a2d3731, type: 3}
+    volume: 0.7
+    pitch: 1
+    source: {fileID: 0}
+  - name: Shoot Single
+    clip: {fileID: 8300000, guid: 4f30e08e3524e4ab7911bdde6f70b9e8, type: 3}
+    volume: 0.51
+    pitch: 1
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: b96b54138704e4d1488a1faa00e4ac14, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Bullet Impact 1
+    clip: {fileID: 8300000, guid: 95fad3ab005a0485880774889f340f41, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Bullet Impact 2
+    clip: {fileID: 8300000, guid: f731895130c0848cb984473813a77bcb, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: BGM Isolation
+    clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
+    volume: 0.07
+    pitch: 1
+    source: {fileID: 0}
+  - name: Sword Impact 1
+    clip: {fileID: 8300000, guid: 3a4e0b38ac6f4439c9d09fef2df11026, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pressure Plate Up
+    clip: {fileID: 8300000, guid: a2e4223a5f3024ac7bb8afb7baf7580a, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pressure Plate Down
+    clip: {fileID: 8300000, guid: 712eed3608a3f49faa44086c330e9dba, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Explosion
+    clip: {fileID: 8300000, guid: ebe0f0e43af634b6bab086a588b180f4, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Ding
+    clip: {fileID: 8300000, guid: b20171f50ed539d4b8758e5b4f0db820, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  bgms:
+  - name: EXP Isolation
+    clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: EXP BlueTwilight
+    clip: {fileID: 8300000, guid: 1daf497230c863e4282f041dd326021a, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB Crossfire
+    clip: {fileID: 8300000, guid: 82df862da23397f4ea2b8dc638b80d7b, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB TechNTech
+    clip: {fileID: 8300000, guid: 8fc50d1d55224a04da67c1106a4a6fb5, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB VirtualStorm
+    clip: {fileID: 8300000, guid: 8e33513fb457d97419676952b0f0f584, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: MEN NeoCityDive
+    clip: {fileID: 8300000, guid: 3dab73af16805f349ba9517ca013793d, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  playingBGM: 
+  playingBGMVolume: 
+  nextBGM: 
+  DingPitchMin: 0.5
+  DingPitchMax: 3
 --- !u!1 &1087684580
 GameObject:
   m_ObjectHideFlags: 0

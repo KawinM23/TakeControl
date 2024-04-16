@@ -518,17 +518,38 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
   bgms:
-  - name: BGM Isolation
+  - name: EXP Isolation
     clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
     volume: 0.5
-    pitch: 0
+    pitch: 1
     source: {fileID: 0}
-  - name: BGM Crossfire
+  - name: EXP BlueTwilight
+    clip: {fileID: 8300000, guid: 1daf497230c863e4282f041dd326021a, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB Crossfire
     clip: {fileID: 8300000, guid: 82df862da23397f4ea2b8dc638b80d7b, type: 3}
     volume: 0.5
-    pitch: 0
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB TechNTech
+    clip: {fileID: 8300000, guid: 8fc50d1d55224a04da67c1106a4a6fb5, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: CMB VirtualStorm
+    clip: {fileID: 8300000, guid: 8e33513fb457d97419676952b0f0f584, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: MEN NeoCityDive
+    clip: {fileID: 8300000, guid: 3dab73af16805f349ba9517ca013793d, type: 3}
+    volume: 0.5
+    pitch: 1
     source: {fileID: 0}
   playingBGM: 
+  playingBGMVolume: 
   nextBGM: 
   DingPitchMin: 0.5
   DingPitchMax: 3
