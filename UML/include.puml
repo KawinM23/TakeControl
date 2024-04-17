@@ -176,6 +176,16 @@ class Controller {
 }
 MonoBehaviour <|-- Controller
 Controller --> "Input" InputController
+class DoorController {
+}
+MonoBehaviour <|-- DoorController
+class SwitchController {
+    + Clicked : bool = false
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+}
+MonoBehaviour <|-- SwitchController
+IDataPersist <|-- SwitchController
 interface IDataPersist {
 }
 class FileSaver {
@@ -270,16 +280,6 @@ IDataPersist <|-- CollectTrial
 class CollsionDamage {
 }
 MonoBehaviour <|-- CollsionDamage
-class DoorController {
-}
-MonoBehaviour <|-- DoorController
-class SwitchController {
-    + Clicked : bool = false
-    + SaveData(data:GameData) : void
-    + LoadData(data:GameData) : void
-}
-MonoBehaviour <|-- SwitchController
-IDataPersist <|-- SwitchController
 class Jump {
     + GetMaxAirJump() : int
 }
@@ -292,6 +292,130 @@ class Move {
     + SetFollowMovement(followMovement:bool) : void
 }
 MonoBehaviour <|-- Move
+class Slash {
+}
+MonoBehaviour <|-- Slash
+class ScreenShake {
+    + {static} Shake(shakeParams:ShakeParams) : void
+    + {static} Shake(shakeType:ShakeType) : void
+}
+struct ShakeParams {
+    + intensity : float
+    + seconds : float
+    + {static} QuickShake(shakeLevel:float) : ShakeParams
+}
+enum ShakeType {
+    Attack,
+    HitEnemy,
+    TakeDamage,
+}
+MonoBehaviour <|-- ScreenShake
+ScreenShake --> "Instance" ScreenShake
+ScreenShake +-- ShakeParams
+ScreenShake +-- ShakeType
+class Hack {
+}
+MonoBehaviour <|-- Hack
+class Bullet {
+    + Fire(velocity:Vector2, knockbackMultiplier:float) : void
+}
+BaseProjectile <|-- Bullet
+class Gun {
+    + MaxAmmo : uint = 20
+    + CurrentAmmo : uint = 20
+    + Reloading : bool
+    + Shoot(target:Vector2) : void
+    + IsReloading() : bool
+    + GetCurrentReloadPercent() : double
+    + GetUnlimitedAmmo() : bool
+    + SetUnlimitedAmmo(unlimitedAmmo:bool) : void
+    + GetBulletSpeed() : float
+    + SetBulletSpeed(bulletSpeed:float) : void
+    + GetShootingDelay() : double
+    + SetShootingDelay(shootingDelay:double) : void
+}
+BaseWeapon <|-- Gun
+class Health {
+    + ResetHealth() : void
+    + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
+    + GetMaxHealth() : int
+    + GetCurrentHealth() : int
+    + SetCurrentHealth(health:int) : void
+    + IsHackable() : bool
+    + ApplyKnockback(hitDirection:Vector2, multiplier:float) : void
+    + TriggerIFrame() : void
+    + Heal(health:int) : void
+    + HealPercent(percent:double) : void
+    + GetMortality() : bool
+    + SetMortality(mortal:bool) : void
+}
+MonoBehaviour <|-- Health
+Health --> "OnHackable" UnityEvent
+class Pulse {
+}
+MonoBehaviour <|-- Pulse
+class WeaponManager {
+    + CurrentWeapon() : BaseWeapon?
+}
+MonoBehaviour <|-- WeaponManager
+class Sword {
+}
+BaseWeapon <|-- Sword
+Sword --> "OnAttack" UnityEvent
+class EnemyHealthBar {
+}
+BaseHealthBar <|-- EnemyHealthBar
+class HackButtonUI {
+    + Clicked : bool
+    + SetButton(clicked:bool) : void
+}
+MonoBehaviour <|-- HackButtonUI
+class EnemySkillBar {
+}
+MonoBehaviour <|-- EnemySkillBar
+class EquipmentUIManager {
+    + CheckEquipment() : void
+    + Select(mono:MonoBehaviour) : void
+}
+MonoBehaviour <|-- EquipmentUIManager
+EquipmentUIManager --> "Instance" EquipmentUIManager
+class HealthBar {
+}
+BaseHealthBar <|-- HealthBar
+class CurrencyUI {
+    + UpdateUI(currency:int) : void
+}
+MonoBehaviour <|-- CurrencyUI
+class EquipmentSlot {
+    + Select() : void
+    + Deselect() : void
+}
+MonoBehaviour <|-- EquipmentSlot
+EquipmentSlot --> "selectedColor" Color
+EquipmentSlot --> "notSelectedColor" Color
+class MainMenu {
+    + PlayGame() : void
+    + LoadGame() : void
+    + GoToOption() : void
+    + QuitGame() : void
+}
+MonoBehaviour <|-- MainMenu
+class VolumeSetting {
+    + SetMusicVolume() : void
+    + SetSFXVolume() : void
+    + BackToMainMenu() : void
+}
+MonoBehaviour <|-- VolumeSetting
+class WeaponStatusBar {
+}
+MonoBehaviour <|-- WeaponStatusBar
+WeaponStatusBar --> "statusText" TMP_Text
+WeaponStatusBar --> "statusBar" Slider
+class SkillUIManager {
+    + CheckSkill() : void
+}
+MonoBehaviour <|-- SkillUIManager
+SkillUIManager --> "Instance" SkillUIManager
 class SwordWielderController {
     + dashingDistance : float
     + preferredDistance : float
@@ -395,136 +519,6 @@ enum State {
 AIController <|-- SwordChargerController
 InputController <|-- SwordChargerController
 SwordChargerController +-- State
-class Slash {
-}
-MonoBehaviour <|-- Slash
-class ScreenShake {
-    + {static} Shake(shakeParams:ShakeParams) : void
-    + {static} Shake(shakeType:ShakeType) : void
-}
-struct ShakeParams {
-    + intensity : float
-    + seconds : float
-    + {static} QuickShake(shakeLevel:float) : ShakeParams
-}
-enum ShakeType {
-    Attack,
-    HitEnemy,
-    TakeDamage,
-}
-MonoBehaviour <|-- ScreenShake
-ScreenShake --> "Instance" ScreenShake
-ScreenShake +-- ShakeParams
-ScreenShake +-- ShakeType
-class Hack {
-}
-MonoBehaviour <|-- Hack
-class Bullet {
-    + Fire(velocity:Vector2, knockbackMultiplier:float) : void
-}
-BaseProjectile <|-- Bullet
-class Gun {
-    + MaxAmmo : uint = 20
-    + CurrentAmmo : uint = 20
-    + Reloading : bool
-    + Shoot(target:Vector2) : void
-    + IsReloading() : bool
-    + GetCurrentReloadPercent() : double
-    + GetUnlimitedAmmo() : bool
-    + SetUnlimitedAmmo(unlimitedAmmo:bool) : void
-    + GetBulletSpeed() : float
-    + SetBulletSpeed(bulletSpeed:float) : void
-    + GetShootingDelay() : double
-    + SetShootingDelay(shootingDelay:double) : void
-}
-BaseWeapon <|-- Gun
-class Health {
-    + ResetHealth() : void
-    + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
-    + GetMaxHealth() : int
-    + GetCurrentHealth() : int
-    + SetCurrentHealth(health:int) : void
-    + IsHackable() : bool
-    + ApplyKnockback(hitDirection:Vector2, multiplier:float) : void
-    + TriggerIFrame() : void
-    + Heal(health:int) : void
-    + HealPercent(percent:double) : void
-    + GetMortality() : bool
-    + SetMortality(mortal:bool) : void
-}
-MonoBehaviour <|-- Health
-Health --> "OnHackable" UnityEvent
-class Pulse {
-}
-MonoBehaviour <|-- Pulse
-class WeaponManager {
-    + CurrentWeapon() : BaseWeapon?
-}
-MonoBehaviour <|-- WeaponManager
-class Sword {
-}
-BaseWeapon <|-- Sword
-Sword --> "OnAttack" UnityEvent
-class EnemyHealthBar {
-    + SetHealthBar() : void
-}
-MonoBehaviour <|-- EnemyHealthBar
-EnemyHealthBar --> "gradient" Gradient
-EnemyHealthBar --> "fill" Image
-class HackButtonUI {
-    + Clicked : bool
-    + SetButton(clicked:bool) : void
-}
-MonoBehaviour <|-- HackButtonUI
-class EnemySkillBar {
-}
-MonoBehaviour <|-- EnemySkillBar
-class EquipmentUIManager {
-    + CheckEquipment() : void
-    + Select(mono:MonoBehaviour) : void
-}
-MonoBehaviour <|-- EquipmentUIManager
-EquipmentUIManager --> "Instance" EquipmentUIManager
-class HealthBar {
-    + SetHealthBar() : void
-}
-MonoBehaviour <|-- HealthBar
-HealthBar --> "gradient" Gradient
-HealthBar --> "fill" Image
-class CurrencyUI {
-    + UpdateUI(currency:int) : void
-}
-MonoBehaviour <|-- CurrencyUI
-class EquipmentSlot {
-    + Select() : void
-    + Deselect() : void
-}
-MonoBehaviour <|-- EquipmentSlot
-EquipmentSlot --> "selectedColor" Color
-EquipmentSlot --> "notSelectedColor" Color
-class MainMenu {
-    + PlayGame() : void
-    + LoadGame() : void
-    + GoToOption() : void
-    + QuitGame() : void
-}
-MonoBehaviour <|-- MainMenu
-class VolumeSetting {
-    + SetMusicVolume() : void
-    + SetSFXVolume() : void
-    + BackToMainMenu() : void
-}
-MonoBehaviour <|-- VolumeSetting
-class WeaponStatusBar {
-}
-MonoBehaviour <|-- WeaponStatusBar
-WeaponStatusBar --> "statusText" TMP_Text
-WeaponStatusBar --> "statusBar" Slider
-class SkillUIManager {
-    + CheckSkill() : void
-}
-MonoBehaviour <|-- SkillUIManager
-SkillUIManager --> "Instance" SkillUIManager
 class LightsOut2D {
     + ToggleLights(index:int) : void
     + LoadData(data:GameData) : void
@@ -543,6 +537,12 @@ abstract class BaseProjectile {
     + IsEnemy : bool
 }
 MonoBehaviour <|-- BaseProjectile
+abstract class BaseHealthBar {
+    + SetHealthBar() : void
+}
+MonoBehaviour <|-- BaseHealthBar
+BaseHealthBar --> "gradient" Gradient
+BaseHealthBar --> "fill" Image
 class EquipmentsManager {
 }
 MonoBehaviour <|-- EquipmentsManager
