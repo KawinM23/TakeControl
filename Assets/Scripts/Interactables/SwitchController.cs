@@ -15,7 +15,7 @@ public class SwitchController : MonoBehaviour, IDataPersist
     private Vector3 _switchUpPos;
     private Vector3 _switchDownPos;
     private readonly float _switchSpeed = 1f;
-    private readonly float _switchDelay = 0.3f;
+    private readonly float _switchDelay = 1f;
 
     [SerializeField] string id;
     void OnValidate()
