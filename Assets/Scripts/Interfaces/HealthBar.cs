@@ -1,33 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Assets.Scripts.Combat;
-public class HealthBar : MonoBehaviour
+
+public class HealthBar : BaseHealthBar
 {
-    private Slider _slider;
-    public Gradient gradient;
-    public Image fill;
-
-    private Health _health;
-
-    void Awake()
+    protected override void Start()
     {
-        _slider = GetComponent<Slider>();
-    }
-
-    private void Start()
-    {
+        base.Start();
         PlayerManager.Instance.Player.TryGetComponent(out _health);
-        PlayerManager.OnPlayerChanged += HandlePlayerChanged;
     }
 
-    private void OnDisable()
-    {
-        PlayerManager.OnPlayerChanged -= HandlePlayerChanged;
-    }
-
-    void HandlePlayerChanged(GameObject player)
+    protected override void HandlePlayerChanged(GameObject player)
     {
         if (player.TryGetComponent(out Health health))
         {
@@ -35,22 +17,12 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (!_health)
+        if (!_health && PlayerManager.Instance.Player)
         {
-            if (PlayerManager.Instance.Player) PlayerManager.Instance.Player.TryGetComponent(out _health);
+            PlayerManager.Instance.Player.TryGetComponent(out _health);
         }
-        else
-        {
-            SetHealthBar();
-        }
-    }
-
-    public void SetHealthBar()
-    {
-        _slider.maxValue = _health.GetMaxHealth();
-        _slider.value = _health.GetCurrentHealth();
-        fill.color = gradient.Evaluate(_slider.normalizedValue);
+        base.Update();
     }
 }
