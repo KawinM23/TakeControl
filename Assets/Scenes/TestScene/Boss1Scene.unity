@@ -282,8 +282,8 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 192
-  _gun: {fileID: 273204054}
   _health: {fileID: 273204053}
+  _gun: {fileID: 273204054}
   _healDelay: 0.5
   _healPercent: 2.5
 --- !u!50 &273204057
@@ -2517,8 +2517,8 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 192
-  _gun: {fileID: 1944420982}
   _health: {fileID: 1944420981}
+  _gun: {fileID: 1944420982}
   _healDelay: 0.5
   _healPercent: 2.5
 --- !u!50 &1944420985
@@ -2729,10 +2729,10 @@ MonoBehaviour:
     m_Bits: 192
   _health: {fileID: 2101334038}
   _gun: {fileID: 2101334039}
-  components:
-  - {fileID: 0}
-  - {fileID: 0}
   _healDelay: 0.25
+  components:
+  - {fileID: 1944420984}
+  - {fileID: 273204056}
   _baseHealPercent: 2.5
 --- !u!50 &2101334042
 Rigidbody2D:
