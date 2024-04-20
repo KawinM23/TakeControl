@@ -8,7 +8,20 @@ using UnityEngine;
 public class BossPuppeteerController : AIController, InputController
 {
     [SerializeField] private LayerMask _layerMask;
+
+    // platforms to activate and deactivate + kills to enable platform
     [SerializeField] private GameObject _platforms;
+    [SerializeField] private int _killsToEnablePlatform = 5;
+    private Coroutine? _disablePlatformCountdown = null; // save coroutine as a field to cancel it anytime
+
+    // These are spawners that this boss can control and should change spawning behavior in each phase
+    [SerializeField] private GameObject _spawnerLeft;
+    [SerializeField] private GameObject _spawnerRight;
+
+    // Health values realtime fetched from Health component
+    private int _prev_health;
+    private int _current_health;
+
     private Gun _gun;
 
 
@@ -53,20 +66,16 @@ public class BossPuppeteerController : AIController, InputController
     {
         UpdateShootingState();
         UpdateBossPhase();
+        UpdateHealth();
 
-        // if 3 enemies killed, enable platform for a moment
-        if (BossManager.Instance.GetEnemyKillCount() >= 3) // todo: use variable
+        // if 3 enemies killed, enable platform until boss is hit
+        if (!_platforms.activeInHierarchy && BossManager.Instance.GetEnemyKillCount() >= _killsToEnablePlatform) // todo: use variable
         {
-            StartCoroutine(EnablePlatform(20));
-            BossManager.Instance.ResetKillCount();
+            _platforms.SetActive(true);
+            // disable platform after a certain amount of time
+            Coroutine c = StartCoroutine(DisablePlatformsCountDown(15));
+            _disablePlatformCountdown = c;
         }
-
-        // if HP less than 50%, change to dynamic and set gravity to 1
-        // if (TryGetComponent<Health>(out Health health) && health.GetCurrentHealth() < health.GetMaxHealth() / 2)
-        // {
-        //     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        //     GetComponent<Rigidbody2D>().gravityScale = 1;
-        // }
     }
 
     void UpdateShootingState()
@@ -129,13 +138,28 @@ public class BossPuppeteerController : AIController, InputController
         _prev_phase = _phase;
     }
 
-    IEnumerator EnablePlatform(float seconds)
+    void UpdateHealth()
     {
-        if (_platforms == null)
+        if (TryGetComponent<Health>(out Health health))
         {
-            yield break;
+            _current_health = health.GetCurrentHealth();
+            // If boss takes damage, disable platforms
+            if (_current_health < _prev_health)
+            {
+                _platforms.SetActive(false);
+                if (_disablePlatformCountdown != null)
+                {
+                    StopCoroutine(_disablePlatformCountdown);
+                    _disablePlatformCountdown = null;
+                }
+                BossManager.Instance.ResetKillCount();
+            }
+            _prev_health = _current_health;
         }
-        _platforms.SetActive(true);
+    }
+
+    IEnumerator DisablePlatformsCountDown(float seconds)
+    {
         yield return new WaitForSeconds(seconds);
         _platforms.SetActive(false);
     }
@@ -207,6 +231,36 @@ public class BossPuppeteerController : AIController, InputController
 
     IEnumerator Phase1()
     {
+        // set spawner left
+        SpawnerController.SpawnerSettings spawnerLeftSettings = new SpawnerController.SpawnerSettings
+        {
+            delayedStart = 0f,
+            spawnCountMax = 2,
+            spawnCountMin = 1,
+            spawnIntervalMax = 1f,
+            spawnIntervalMin = 0f,
+            waveCount = 99, // endless
+            waveInterval = 5f,
+            currentWave = 0,
+            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER
+        };
+        _spawnerLeft.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerLeftSettings);
+
+        // set spawner right
+        SpawnerController.SpawnerSettings spawnerRightSettings = new SpawnerController.SpawnerSettings
+        {
+            delayedStart = 0f,
+            spawnCountMax = 2,
+            spawnCountMin = 1,
+            spawnIntervalMax = 1f,
+            spawnIntervalMin = 0f,
+            waveCount = 99, // endless
+            waveInterval = 5f,
+            currentWave = 0,
+            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER
+        };
+        _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
+
         // wait until health is less than 50%
         Health health = GetComponent<Health>();
         if (health == null)
@@ -225,6 +279,26 @@ public class BossPuppeteerController : AIController, InputController
 
     IEnumerator Phase2()
     {
+        // keep spawner left settings
+
+        // set spawner right
+        // we only have sword charger for player to hack, so they will surely take damage from bombers
+        // spawn bombers at a rate that player have chance to hack another sword charger to heal
+        // bomber prefab currently has 30 damage, let's give player 10 seconds to hack another sword charger
+        SpawnerController.SpawnerSettings spawnerRightSettings = new SpawnerController.SpawnerSettings
+        {
+            delayedStart = 0f,
+            spawnCountMax = 3,
+            spawnCountMin = 1,
+            spawnIntervalMax = 2f,
+            spawnIntervalMin = 0f,
+            waveCount = 99, // endless
+            waveInterval = 10f,
+            currentWave = 0,
+            spawningGameObject = SpawnerController.SpawningGameObject.BOMBER
+        };
+        _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
+
         // set gun stats
         // heavy knockback
         // shoot slowly

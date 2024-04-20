@@ -115,9 +115,9 @@ namespace Assets.Scripts.Combat
 
             ApplyKnockback(hitDirection, knockbackMultiplier);
 
+
             _currentHealth -= damage;
-            _iFrame = true;
-            _iFrameCounter = _iFrameDuration;
+            TriggerIFrame();
         }
 
         IEnumerator Flash(Color targetColor)
