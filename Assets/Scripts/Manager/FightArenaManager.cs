@@ -48,12 +48,13 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
             if (enemiesWave[_waveIndex].enemies.Count == 0)
             {
                 _waveIndex++;
+                if (_waveIndex > enemiesWave.Count - 1)
+                {
+                    EndFight();
+                }
                 enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
             }
-            if (_waveIndex > enemiesWave.Count - 1)
-            {
-                EndFight();
-            }
+            
         }
 
     }
