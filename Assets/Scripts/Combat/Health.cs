@@ -137,7 +137,7 @@ namespace Assets.Scripts.Combat
 
         private void Die()
         {
-            if (_mortal)
+            if (_mortal) // todo: whoever wrote this line, write some comments please
             {
                 if (gameObject == PlayerManager.Instance.Player)
                 {
@@ -152,6 +152,7 @@ namespace Assets.Scripts.Combat
                     Destroy(go, 2f);
                 }
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
+                BossManager.Instance.IncrementEnemyKillCount();
                 Destroy(gameObject);
             }
         }
@@ -179,7 +180,6 @@ namespace Assets.Scripts.Combat
             float knockbackForce = _defaultKnockbackForce * multiplier;
 
             _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
-            _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
         }
 
         // Let other scripts trigger IFrame, for example, dashing

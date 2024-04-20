@@ -103,6 +103,9 @@ namespace Assets.Scripts.Capabilities
                 target.TryGetComponent(out Health health);
                 health.ResetHealth();
 
+                // Add count to enemy kill for BossManager
+                BossManager.Instance.IncrementEnemyKillCount();
+
                 // Destroy the previous body
                 Destroy(gameObject);
             }

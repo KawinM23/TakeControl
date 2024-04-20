@@ -8,6 +8,7 @@ using UnityEngine;
 public class BossPuppeteerController : AIController, InputController
 {
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private GameObject _platforms;
     private Gun _gun;
 
 
@@ -15,6 +16,22 @@ public class BossPuppeteerController : AIController, InputController
     {
         _gun = GetComponent<Gun>();
     }
+
+    void Start()
+    {
+        BossManager.Instance.ResetKillCount();
+    }
+
+    enum BossPhase
+    {
+        PHASE_1,
+        PHASE_2,
+        PHASE_3
+    }
+    private BossPhase _phase = BossPhase.PHASE_1;
+    private BossPhase? _prev_phase = null;
+    private Coroutine? _phase_coroutine = null;
+
 
     // TODO: proper abstraction later (sealed class + pattern match?)
     // detect transition via functional callback?
@@ -34,16 +51,25 @@ public class BossPuppeteerController : AIController, InputController
 
     void FixedUpdate()
     {
-        UpdateState();
+        UpdateShootingState();
+        UpdateBossPhase();
 
-        // if HP less than 50%, enable gravity
-        if (TryGetComponent<Health>(out Health health) && health.GetCurrentHealth() < health.GetMaxHealth() / 2)
+        // if 3 enemies killed, enable platform for a moment
+        if (BossManager.Instance.GetEnemyKillCount() >= 3) // todo: use variable
         {
-            GetComponent<Rigidbody2D>().gravityScale = 1;
+            StartCoroutine(EnablePlatform(20));
+            BossManager.Instance.ResetKillCount();
         }
+
+        // if HP less than 50%, change to dynamic and set gravity to 1
+        // if (TryGetComponent<Health>(out Health health) && health.GetCurrentHealth() < health.GetMaxHealth() / 2)
+        // {
+        //     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        //     GetComponent<Rigidbody2D>().gravityScale = 1;
+        // }
     }
 
-    void UpdateState()
+    void UpdateShootingState()
     {
         // if state unchanged, nothing to do
         if (_prev_state == _state)
@@ -71,6 +97,47 @@ public class BossPuppeteerController : AIController, InputController
 
         // Update previous state to check for state changes in the future
         _prev_state = _state;
+    }
+
+    void UpdateBossPhase()
+    {
+        // if phase unchanged, nothing to do
+        if (_prev_phase == _phase)
+        {
+            return;
+        }
+
+        // if phase CHANGED, stop current coroutine
+        if (_phase_coroutine != null)
+        {
+            Coroutine c = _phase_coroutine;
+            _phase_coroutine = null;
+            StopCoroutine(c);
+            return;
+        }
+
+        // if phase CHANGED, start new coroutine depending on current phase
+        _phase_coroutine = _phase switch
+        {
+            BossPhase.PHASE_1 => StartCoroutine(Phase1()),
+            BossPhase.PHASE_2 => StartCoroutine(Phase2()),
+            BossPhase.PHASE_3 => StartCoroutine(Phase3()),
+            _ => throw new System.Exception("Invalid phase")
+        };
+
+        // Update previous phase to check for phase changes in the future
+        _prev_phase = _phase;
+    }
+
+    IEnumerator EnablePlatform(float seconds)
+    {
+        if (_platforms == null)
+        {
+            yield break;
+        }
+        _platforms.SetActive(true);
+        yield return new WaitForSeconds(seconds);
+        _platforms.SetActive(false);
     }
 
     IEnumerator IdleState()
@@ -135,6 +202,93 @@ public class BossPuppeteerController : AIController, InputController
         }
         yield return new WaitForFixedUpdate();
         _state = State.IDLE;
+        yield break;
+    }
+
+    IEnumerator Phase1()
+    {
+        // wait until health is less than 50%
+        Health health = GetComponent<Health>();
+        if (health == null)
+        {
+            yield break;
+        }
+        while (health.GetCurrentHealth() > health.GetMaxHealth() / 2)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        // change to phase 2
+        yield return new WaitForFixedUpdate();
+        _phase = BossPhase.PHASE_2;
+        yield break;
+    }
+
+    IEnumerator Phase2()
+    {
+        // set gun stats
+        // heavy knockback
+        // shoot slowly
+        if (TryGetComponent<Gun>(out Gun _gun))
+        {
+            _gun.MaxAmmo = 10;
+            _gun.CurrentAmmo = 10;
+            _gun.SetShootingDelay(2);
+            _gun.SetKnockbackMultiplier(30);
+            _gun.SetBulletSpeed(40);
+        }
+
+        // recover to full hp
+        Health health = GetComponent<Health>();
+        if (health == null)
+        {
+            yield break;
+        }
+        health.ResetHealth();
+
+        // wait until health is less than 50%
+        while (health.GetCurrentHealth() > health.GetMaxHealth() / 2)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        // change to phase 3
+        yield return new WaitForFixedUpdate();
+        _phase = BossPhase.PHASE_3;
+        yield break;
+    }
+
+    IEnumerator Phase3()
+    {
+        // set gun stats
+        // shoot in bursts
+        // slow reload
+        if (TryGetComponent<Gun>(out Gun _gun))
+        {
+            _gun.MaxAmmo = 10;
+            _gun.CurrentAmmo = 10;
+            _gun.SetShootingDelay(0.2);
+            _gun.SetKnockbackMultiplier(3);
+            _gun.SetBulletSpeed(10);
+            _gun.SetReloadTime(3);
+        }
+
+        // recover to full hp
+        Health health = GetComponent<Health>();
+        if (health == null)
+        {
+            yield break;
+        }
+        health.ResetHealth();
+
+        // wait until health is less than 50%
+        while (health.GetCurrentHealth() > health.GetMaxHealth() / 2)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        // change to phase 3
+        yield return new WaitForFixedUpdate();
+        _phase = BossPhase.PHASE_3;
         yield break;
     }
 
