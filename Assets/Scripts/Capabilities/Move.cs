@@ -60,7 +60,9 @@ namespace Assets.Scripts.Capabilities
 
         private void Update()
         {
-            _direction.x = _controller.Input.GetHorizontalMovement();
+            float h = _controller.Input.GetHorizontalMovement();
+            h = Mathf.Approximately(h, 0f) ? 0f : h;
+            _direction.x = h;
             _desiredVelocity = new Vector2(_direction.x, 0f) * Mathf.Max(_maxSpeed - _ground.Friction, 0f);
             if (_isFollowingMovement)
             {
@@ -121,7 +123,7 @@ namespace Assets.Scripts.Capabilities
         private void DashAction(float x, bool isFacingRight)
         {
             Debug.Log("Dash");
-            if(SoundManager.Instance) SoundManager.Instance.PlayDash();
+            if (SoundManager.Instance) SoundManager.Instance.PlayDash();
             _canDash = false;
             _isDashing = true;
             _dashTimer = _dashTime;

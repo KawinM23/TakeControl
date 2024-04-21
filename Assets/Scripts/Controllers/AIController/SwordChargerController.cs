@@ -84,19 +84,12 @@ public class SwordChargerController : AIController, InputController
     private float _idleMovement;
     private IEnumerator IdleState()
     {
-        _idleMovement = _idleSpeed;
+        var player = PlayerManager.Instance.Player;
+        _idleMovement = player.transform.position.x > transform.position.x ? _idleSpeed : -_idleSpeed;
         float lastPatrolTime = Time.time;
 
         while (true)
         {
-            // Patrol around home
-            var distFromHome = Vector2.Distance(transform.position, _home);
-            if (distFromHome >= _patrolRadius || Time.time - lastPatrolTime > 5f)
-            {
-                _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
-                lastPatrolTime = Time.time;
-            }
-
             // Check for player
             var canSeePlayer = _fov.FieldOfViewCheck();
             if (canSeePlayer)
@@ -104,6 +97,14 @@ public class SwordChargerController : AIController, InputController
                 yield return new WaitForFixedUpdate();
                 _state = State.NOTICED;
                 yield break;
+            }
+
+            // Patrol around home
+            var distFromHome = Vector2.Distance(transform.position, _home);
+            if (distFromHome >= _patrolRadius || Time.time - lastPatrolTime > 5f)
+            {
+                _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
+                lastPatrolTime = Time.time;
             }
 
             yield return new WaitForSeconds(0.5f);
