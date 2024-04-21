@@ -493,6 +493,22 @@ enum State {
 AIController <|-- MenuBomberController
 InputController <|-- MenuBomberController
 MenuBomberController +-- State
+class GunnerController {
+    + preferredDistance : float = 5f
+    + _jumpChance : float = 0.2f
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    ATTACKING,
+    RELOADING,
+}
+AIController <|-- GunnerController
+InputController <|-- GunnerController
+GunnerController +-- State
 class MenuDemoController {
     + <<override>> GetAttackDirection() : Vector2?
     + <<override>> GetHorizontalMovement() : float
