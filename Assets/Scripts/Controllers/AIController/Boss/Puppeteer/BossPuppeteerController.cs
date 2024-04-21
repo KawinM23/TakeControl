@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Combat;
+using Assets.Scripts.Effect;
 using UnityEngine;
 
 #nullable enable annotations
@@ -17,6 +18,9 @@ public class BossPuppeteerController : AIController, InputController
     // These are spawners that this boss can control and should change spawning behavior in each phase
     [SerializeField] private GameObject _spawnerLeft;
     [SerializeField] private GameObject _spawnerRight;
+
+    [SerializeField] private GameObject _spawnerSpecialLeft;
+    [SerializeField] private GameObject _spawnerSpecialRight;
 
     // Health values realtime fetched from Health component
     private int _prev_health;
@@ -37,9 +41,10 @@ public class BossPuppeteerController : AIController, InputController
 
     enum BossPhase
     {
-        PHASE_1,
-        PHASE_2,
-        PHASE_3
+        PHASE_1, // normal
+        PHASE_2, // sniper knockback
+        PHASE_3, // burst fire
+        PHASE_4 // fall to ground, spawn turrets, burst fire but faster + more ammo
     }
     private BossPhase _phase = BossPhase.PHASE_1;
     private BossPhase? _prev_phase = null;
@@ -131,6 +136,8 @@ public class BossPuppeteerController : AIController, InputController
             BossPhase.PHASE_1 => StartCoroutine(Phase1()),
             BossPhase.PHASE_2 => StartCoroutine(Phase2()),
             BossPhase.PHASE_3 => StartCoroutine(Phase3()),
+            BossPhase.PHASE_4 => StartCoroutine(Phase4()),
+
             _ => throw new System.Exception("Invalid phase")
         };
 
@@ -364,6 +371,58 @@ public class BossPuppeteerController : AIController, InputController
         yield return new WaitForFixedUpdate();
         _phase = BossPhase.PHASE_3;
         yield break;
+    }
+
+    IEnumerator Phase4()
+    {
+        // set gun stats
+        // shoot in bursts
+        // slow reload
+        // but on steroids
+        if (TryGetComponent<Gun>(out Gun _gun))
+        {
+            _gun.MaxAmmo = 20;
+            _gun.CurrentAmmo = 20;
+            _gun.SetShootingDelay(0.1);
+            _gun.SetKnockbackMultiplier(3);
+            _gun.SetBulletSpeed(15);
+            _gun.SetReloadTime(3);
+        }
+
+        // Permanently Enable Platforms
+        _platforms.SetActive(true);
+
+        // todo: make boss fall to ground
+        // if (TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        // {
+        //     rb.bodyType = RigidbodyType2D.Dynamic;
+        //     rb.gravityScale = 1;
+        //     ScreenShake.Shake(ScreenShake.ShakeType.ShootBigBullet);
+        // }
+
+        // todo continue here
+        // Set Boss to high HP
+        if (TryGetComponent<Health>(out Health health))
+        {
+            health.ResetHealth();
+        }
+
+        // spawn special turret
+        SpawnerController.SpawnerSettings spawnerSpecialLeftSettings = new SpawnerController.SpawnerSettings
+        {
+            delayedStart = 0f,
+            spawnCountMax = 3,
+            spawnCountMin = 1,
+            spawnIntervalMax = 2f,
+            spawnIntervalMin = 0f,
+            waveCount = 99, // endless
+            waveInterval = 10f,
+            currentWave = 0,
+            spawningGameObject = SpawnerController.SpawningGameObject.BOMBER
+        };
+        _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
+        yield break;
+
     }
 
 

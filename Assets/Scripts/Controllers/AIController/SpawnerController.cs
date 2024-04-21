@@ -10,6 +10,7 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] private GameObject _bomberPrefab;
     [SerializeField] private GameObject _swordChargerPrefab;
     [SerializeField] private GameObject _swordWielderPrefab;
+    [SerializeField] private GameObject _BossPuppeteerTurretPrefab;
 
     // spawner settings
     [SerializeField] private float _delayedStart = 0f; // The delay before the first wave
