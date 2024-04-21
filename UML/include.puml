@@ -314,6 +314,10 @@ MonoBehaviour <|-- ScreenShake
 ScreenShake --> "Instance" ScreenShake
 ScreenShake +-- ShakeParams
 ScreenShake +-- ShakeType
+class Parallax {
+}
+MonoBehaviour <|-- Parallax
+Parallax --> "factor" Vector2
 class Hack {
 }
 MonoBehaviour <|-- Hack
