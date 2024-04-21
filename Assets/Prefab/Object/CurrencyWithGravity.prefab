@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3257252735594649000}
   - component: {fileID: 2676365443168904260}
   m_Layer: 10
-  m_Name: GravityCurrency
+  m_Name: CurrencyWithGravity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 3130a4c351527744fa77a831b060d7a9, type: 3}
   m_Color: {r: 1, g: 0.97744936, b: 0.4584905, a: 1}
   m_FlipX: 0

@@ -43,6 +43,7 @@ public class CollectTrial : Interactable, IDataPersist
             CancelTrial();
             _completed = true;
             //Reward
+            if (TryGetComponent(out DropItem dropItem)) { dropItem.DropCurrency(); }
         }
     }
 
