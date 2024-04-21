@@ -1,3 +1,4 @@
+using Assets.Scripts.Effect;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
@@ -91,6 +92,13 @@ namespace Assets.Scripts.Combat
                 return;
             }
             Debug.Log("Shoot");
+
+            // Screen Shake if bullet is big
+            if (_bulletPrefab.transform.localScale.x >= 0.3)
+            {
+                ScreenShake.Shake(ScreenShake.ShakeType.ShootBigBullet);
+            }
+
             _shootTimer = _shootingDelay;
             CurrentAmmo -= _unlimitedAmmo ? 0 : (uint)1;
             Reloading = false;
