@@ -1,0 +1,9 @@
+@startuml
+class SwitchController {
+    + Clicked : bool = false
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+}
+MonoBehaviour <|-- SwitchController
+IDataPersist <|-- SwitchController
+@enduml

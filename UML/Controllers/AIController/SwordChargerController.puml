@@ -1,0 +1,18 @@
+@startuml
+class SwordChargerController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    NOTICED,
+    CHARGING,
+    COOLDOWN,
+}
+AIController <|-- SwordChargerController
+InputController <|-- SwordChargerController
+SwordChargerController +-- State
+@enduml

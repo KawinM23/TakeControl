@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,9 +27,17 @@ public class MapTransition : MonoBehaviour
         spawnPoint = transform.GetChild(0);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator Start()
     {
-        collision.gameObject.TryGetComponent(out Controller controller);
+        _collider.isTrigger = false;
+        yield return new WaitForSeconds(MapManager.Instance.GetMapChangeCooldown());
+        _collider.isTrigger = true;
+        yield return null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.TryGetComponent(out Controller controller);
         if (controller && controller.Input is PlayerController && MapManager.Instance.CanChangeScene)
         {
             float distanceFromSpawn = 0f;
@@ -40,7 +49,7 @@ public class MapTransition : MonoBehaviour
             {
                 distanceFromSpawn = collision.transform.position.x - spawnPoint.position.x;
             }*/
-            Debug.Log("From " + _fromScene.name + " to " + _toScene + " with dis " + distanceFromSpawn);
+            Debug.Log("From " + _fromScene.name + " to " + _toScene + " with distance " + distanceFromSpawn);
             MapManager.Instance.ChangeScene(_fromScene.name, _toScene, _direction, distanceFromSpawn);
         }
     }

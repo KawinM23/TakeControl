@@ -1,0 +1,5 @@
+@startuml
+class SpawnerController {
+}
+MonoBehaviour <|-- SpawnerController
+@enduml

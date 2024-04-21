@@ -1,0 +1,9 @@
+@startuml
+class LightsOut2D {
+    + ToggleLights(index:int) : void
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+}
+MonoBehaviour <|-- LightsOut2D
+IDataPersist <|-- LightsOut2D
+@enduml

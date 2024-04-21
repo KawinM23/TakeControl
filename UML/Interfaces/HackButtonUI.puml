@@ -1,0 +1,7 @@
+@startuml
+class HackButtonUI {
+    + Clicked : bool
+    + SetButton(clicked:bool) : void
+}
+MonoBehaviour <|-- HackButtonUI
+@enduml

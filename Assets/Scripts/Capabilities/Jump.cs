@@ -101,7 +101,7 @@ namespace Assets.Scripts.Capabilities
             // only play sfx at the start of the jump
             if (!_isJumping)
             {
-                SoundManager.Instance.PlayJump();
+               if(SoundManager.Instance) SoundManager.Instance.PlayJump();
             }
 
             if (_coyoteCounter > 0f || (_jumpPhase < _maxAirJumps && _isJumping))

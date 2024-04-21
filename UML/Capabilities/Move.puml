@@ -1,0 +1,7 @@
+@startuml
+class Move {
+    + _hasDash : bool = true
+    + SetFollowMovement(followMovement:bool) : void
+}
+MonoBehaviour <|-- Move
+@enduml

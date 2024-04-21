@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
@@ -25,11 +23,12 @@ namespace Assets.Scripts.Combat
         [SerializeField] private float _bulletSpread;
 
         private double _shootTimer, _reloadTimer = 0;
-        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 5;
+        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 2;
         public uint MaxAmmo = 20;
         public uint CurrentAmmo = 20;
 
         public bool Reloading;
+        private bool _unlimitedAmmo = false;
 
         protected override void Awake()
         {
@@ -46,6 +45,7 @@ namespace Assets.Scripts.Combat
             Vector2? pos = null;
             if (_controller.Input.GetAttackDirection().HasValue)
             {
+               
                 pos = _controller.Input.GetAttackDirection().Value;
             }
             else if (_controller.Input.GetContinuedAttackDirection().HasValue)
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Combat
             }
             if (pos != null)
             {
-                if (_shootTimer <= 0 && CurrentAmmo > 0)
+                if (_shootTimer <= 0 && (_unlimitedAmmo || CurrentAmmo > 0))
                 {
                     Shoot(pos.Value);
                 }
@@ -80,15 +80,15 @@ namespace Assets.Scripts.Combat
 
         public void Shoot(Vector2 target)
         {
-            if (HackEventManager.Instance.IsHacking)
+            if (HackEventManager.Instance!= null && HackEventManager.Instance.IsHacking)
             {
                 return;
             }
             Debug.Log("Shoot");
             _shootTimer = _shootingDelay;
-            CurrentAmmo -= 1;
+            CurrentAmmo -= _unlimitedAmmo ? 0 : (uint)1;
             Reloading = false;
-            SoundManager.Instance.PlayShoot();
+            if (SoundManager.Instance!=null) SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
 
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Combat
             if (bullet)
             {
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
-                bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
+               if(PlayerManager.Instance) bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
             }
         }
 
@@ -122,6 +122,36 @@ namespace Assets.Scripts.Combat
                 reloadPercent = System.Math.Max(reloadPercent, 0);
                 return reloadPercent;
             }
+        }
+
+        public bool GetUnlimitedAmmo()
+        {
+            return _unlimitedAmmo;
+        }
+
+        public void SetUnlimitedAmmo(bool unlimitedAmmo)
+        {
+            _unlimitedAmmo = unlimitedAmmo;
+        }
+
+        public float GetBulletSpeed()
+        {
+            return _bulletSpeed;
+        }
+
+        public void SetBulletSpeed(float bulletSpeed)
+        {
+            _bulletSpeed = bulletSpeed;
+        }
+
+        public double GetShootingDelay()
+        {
+            return _shootingDelay;
+        }
+
+        public void SetShootingDelay(double shootingDelay)
+        {
+            _shootingDelay = shootingDelay;
         }
     }
 }

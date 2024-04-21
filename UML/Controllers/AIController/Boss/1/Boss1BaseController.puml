@@ -1,0 +1,14 @@
+@startuml
+abstract class Boss1BaseController {
+    + IsDestroy() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+}
+AIController <|-- Boss1BaseController
+InputController <|-- Boss1BaseController
+Boss1BaseController +-- State
+@enduml

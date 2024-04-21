@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -12,7 +14,11 @@ public class SoundManager : MonoBehaviour
 
     // BGMs
     public Sound[] bgms;
-    [SerializeField] public string loopingBGM;
+    private float _defaultBGMVolume = 0.5f;
+    [SerializeField] public string playingBGM;
+    [SerializeField] private string playingBGMVolume; // only for debugging
+
+    [SerializeField] private string nextBGM; // only for debugging
 
     // Ding SFX Pitch
     public float DingPitchMin = 0.5f;
@@ -41,14 +47,14 @@ public class SoundManager : MonoBehaviour
         {
             sfx_multiplier = PlayerPrefs.GetFloat("sfx_volume_multiplier");
         }
-        foreach (Sound s in sounds)
+        foreach (Sound s in bgms)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
         }
-        foreach (Sound s in bgms)
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -59,15 +65,34 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        // sleep for 1 second to allow the game to load
-
-        if (loopingBGM != null)
+        // Get Current Scene Name
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        // Play BGM based on scene name
+        if (sceneName.Contains("Menu"))
         {
-            LoopBGM(loopingBGM);
+            PlayBGM("MEN NeoCityDive");
+        }
+        else if (sceneName.Contains("Map"))
+        {
+            PlayBGM("EXP BlueTwilight");
         }
         else
         {
-            LoopBGM("BGM Isolation"); // default
+            PlayBGM("EXP Isolation"); // default
+        }
+
+    }
+
+    private void Update()
+    {
+        if (nextBGM != null && nextBGM != "" && nextBGM != playingBGM)
+        {
+            Sound s = System.Array.Find(bgms, bgm => bgm.name == nextBGM);
+            if (s != null)
+            {
+                PlayBGM(nextBGM);
+                nextBGM = "";
+            }
         }
     }
 
@@ -89,6 +114,11 @@ public class SoundManager : MonoBehaviour
         s.source.pitch = Mathf.Lerp(DingPitchMin, DingPitchMax, (float)(totalCount - currentCount) / totalCount);
         /*Debug.Log("Ding pitch: " + s.source.pitch + " (currentCount: " + currentCount + ", totalCount: " + totalCount + ")");*/
         Play("Ding");
+    }
+
+    public void PlayMagicCoin()
+    {
+        Play("MagicCoin");
     }
 
     public void PlaySlash()
@@ -135,15 +165,83 @@ public class SoundManager : MonoBehaviour
     {
         foreach (Sound s in bgms)
         {
-            s.source.Stop();
-            s.source.loop = false;
+            if (s.source.isPlaying)
+            {
+                // Fade out BGM
+                StartCoroutine(FadeOut(playingBGM, 2.0f));
+            }
         }
     }
 
-    public void LoopBGM(string name)
+    IEnumerator FadeOut(string name, float fadeTime)
+    {
+        Debug.Log("Fading out " + name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            yield break;
+        }
+        float startVolume = s.source.volume;
+
+        while (s.source.volume > 0f)
+        {
+            s.source.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        s.source.Stop(); // Stop the audio after fade out
+        s.source.loop = false;
+        Debug.Log("Stopped " + name);
+        yield return null;
+    }
+    IEnumerator FadeIn(string name, float fadeTime)
+    {
+        Debug.Log("Fading in " + name);
+        Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            yield break;
+        }
+        float startVolume = 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeTime)
+        {
+            s.source.volume = Mathf.Lerp(startVolume, s.volume, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        s.source.volume = s.volume; // Ensure final volume is set
+        s.source.loop = true;
+        Debug.Log("Playing " + name);
+        yield return null;
+    }
+
+    public void PlayBGMCombatRandom()
+    {
+        Sound[] combatBGMs = new Sound[] { };
+        foreach (Sound s in bgms)
+        {
+            // if name has "CMB" as substring
+            if (s.name.Contains("CMB"))
+            {
+                combatBGMs.Append(s);
+            }
+        }
+        if (combatBGMs.Length == 0)
+        {
+            Debug.LogWarning("No combat BGMs found!");
+            return;
+        }
+        PlayBGM(combatBGMs[Random.Range(0, bgms.Length)].name);
+    }
+
+    public void PlayBGM(string name)
     {
         StopBGM(); // Stop current BGM
-        /*Debug.Log("Trying to Loop BGM: " + name);*/
         Sound s = System.Array.Find(bgms, bgm => bgm.name == name);
         if (s == null)
         {
@@ -151,9 +249,9 @@ public class SoundManager : MonoBehaviour
             return;
         }
         s.source.volume = music_multiplier;
-        s.source.loop = true;
+        playingBGM = name;
         s.source.Play();
-        /*Debug.Log("Playing bgm: " + name);*/
+        StartCoroutine(FadeIn(name, 2.0f));
     }
 
     private void Play(string name)

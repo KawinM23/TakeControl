@@ -1,0 +1,5 @@
+@startuml
+class EnemyHealthBar {
+}
+BaseHealthBar <|-- EnemyHealthBar
+@enduml

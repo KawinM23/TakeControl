@@ -1,0 +1,16 @@
+@startuml
+class HackEventManager {
+    + IsHacking : bool = false
+    + HackTimer : float
+    + ButtonAmount : int
+    + TotalButtonAmount : int
+    + StartHack(hackDuration:float, amount:int) : void
+    + EndHack() : bool
+    + HackQuickTimeEvent() : bool
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- HackEventManager
+HackEventManager --> "Instance" HackEventManager
+HackEventManager --> "HackButtons<HackButtonUI>" "List`1"
+@enduml
