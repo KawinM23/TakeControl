@@ -1,0 +1,6 @@
+@startuml
+class Controller {
+}
+MonoBehaviour <|-- Controller
+Controller --> "Input" InputController
+@enduml

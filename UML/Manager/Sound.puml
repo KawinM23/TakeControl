@@ -1,0 +1,9 @@
+@startuml
+class Sound {
+    + name : string
+    + volume : float
+    + pitch : float
+}
+Sound --> "clip" AudioClip
+Sound --> "source" AudioSource
+@enduml

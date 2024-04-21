@@ -1,0 +1,11 @@
+@startuml
+class Boss1Controller {
+}
+enum Phase {
+    NORMAL,
+    Boost1,
+    Boost2,
+}
+Boss1BaseController <|-- Boss1Controller
+Boss1Controller +-- Phase
+@enduml

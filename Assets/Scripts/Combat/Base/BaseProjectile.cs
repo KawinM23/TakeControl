@@ -18,7 +18,7 @@ public abstract class BaseProjectile : MonoBehaviour
         }
         if (ActionLayer == (ActionLayer | (1 << collider.transform.gameObject.layer)))
         {
-            bool isHitPlayer = collider.gameObject == PlayerManager.Instance.Player;
+            bool isHitPlayer =  collider.gameObject == PlayerManager.Instance.Player;
             if (IsEnemy && isHitPlayer)
             {
                 OnEnemyHitPlayerAction(collider.gameObject, collider.transform.position);

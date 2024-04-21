@@ -279,6 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5806469515154592860}
   - component: {fileID: 4435533717407871565}
+  - component: {fileID: 7462708699363804423}
   - component: {fileID: 3059859830707450155}
   - component: {fileID: 1404113483578339006}
   m_Layer: 0
@@ -353,6 +354,22 @@ MonoBehaviour:
   _collectLists: {fileID: 8858631191553733705}
   _collectList:
   - {fileID: 973893004077352106}
+--- !u!114 &7462708699363804423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4953131028116949564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c9e024aab047341964a21746065b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrencyPrefab: {fileID: 8555960800215377150, guid: 0d6440c2effa22a40bbba3c7c44cadb3, type: 3}
+  ValuePerCurrency: 45
+  CurrencyAmount: 1
+  velocity: 0
 --- !u!212 &3059859830707450155
 SpriteRenderer:
   m_ObjectHideFlags: 0

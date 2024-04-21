@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbce82251d74a44458fe33d3e2f2564c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _robot: {fileID: 7740698587368872121}
   _swordSlot: {fileID: 3013944010523487241}
   _gunSlot: {fileID: 2435445370202097393}
   _doubleJumpSlot: {fileID: 7126608280009440972}
@@ -262,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dbe4ace39e950448ef0ce49d941ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 7740698587368872121}
   gradient:
     serializedVersion: 2
     key0: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}
@@ -542,8 +540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbefec477442428e854e3b99370e395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bomberPrefab: {fileID: 7740698587368872121, guid: 5b0568772f5b61f4589f5d4c578f14e2, type: 3}
-  _spawnInterval: 1
+  _delayedStart: 0
+  _prefab: {fileID: 0}
+  _spawnCountMax: 20
+  _spawnCountMin: 1
+  _spawnIntervalMax: 1
+  _spawnIntervalMin: 0
   _waveCount: 3
   _waveInterval: 5
   _currentWave: 0
@@ -1070,6 +1072,10 @@ PrefabInstance:
     - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_Name
       value: SwordCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1298145703290883797, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_MaskAlphaCutoff

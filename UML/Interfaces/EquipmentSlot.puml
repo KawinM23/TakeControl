@@ -1,0 +1,9 @@
+@startuml
+class EquipmentSlot {
+    + Select() : void
+    + Deselect() : void
+}
+MonoBehaviour <|-- EquipmentSlot
+EquipmentSlot --> "selectedColor" Color
+EquipmentSlot --> "notSelectedColor" Color
+@enduml

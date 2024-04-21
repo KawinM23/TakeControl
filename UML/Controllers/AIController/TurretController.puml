@@ -1,0 +1,16 @@
+@startuml
+class TurretController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- TurretController
+InputController <|-- TurretController
+TurretController +-- State
+@enduml

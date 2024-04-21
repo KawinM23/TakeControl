@@ -1,0 +1,10 @@
+@startuml
+class FileSaver {
+    + FileSaver(serializer:ISerializer, path:string, fileExt:string)
+    + PersistSave(data:GameData, name:string, overwrite:bool) : void
+    + LoadSave(name:string) : GameData
+    + DeleteSave(name:string) : void
+    + ListSaves() : System.Collections.Generic.IEnumerable<string>
+}
+ISaver <|-- FileSaver
+@enduml

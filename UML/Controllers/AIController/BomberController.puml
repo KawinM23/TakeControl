@@ -1,0 +1,15 @@
+@startuml
+class BomberController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> GetVerticalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+    RUNNING,
+}
+AIController <|-- BomberController
+InputController <|-- BomberController
+BomberController +-- State
+@enduml

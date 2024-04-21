@@ -1,0 +1,7 @@
+@startuml
+class Ground {
+    + IsOnGround : bool <<get>>
+    + Friction : float <<get>>
+}
+MonoBehaviour <|-- Ground
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class SoundManager {
+    + music_multiplier : float
+    + sfx_multiplier : float
+    + playingBGM : string
+    + DingPitchMin : float = 0.5f
+    + DingPitchMax : float = 3.0f
+    + PlayJump() : void
+    + PlayDing(currentCount:int, totalCount:int) : void
+    + PlayMagicCoin() : void
+    + PlaySlash() : void
+    + PlayHack() : void
+    + PlayDash() : void
+    + PlayShoot() : void
+    + PlayBulletImpact() : void
+    + PlaySwordImpact() : void
+    + PlayPressurePlateUp() : void
+    + PlayExplosion() : void
+    + StopBGM() : void
+    + PlayBGMCombatRandom() : void
+    + PlayBGM(name:string) : void
+}
+MonoBehaviour <|-- SoundManager
+SoundManager --> "Instance" SoundManager
+@enduml

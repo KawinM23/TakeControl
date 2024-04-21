@@ -1,0 +1,5 @@
+@startuml
+class LaserShooter {
+}
+MonoBehaviour <|-- LaserShooter
+@enduml

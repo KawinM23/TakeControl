@@ -1,0 +1,584 @@
+@startuml
+class MapTransition {
+    + {static} FindDestinationPosition(fromScene:string, toScene:string, distanceFromSpawn:float) : Vector2
+}
+enum Direction {
+    None,
+    Left,
+    Right,
+    Up,
+    Down,
+}
+MonoBehaviour <|-- MapTransition
+MapTransition +-- Direction
+class FieldOfView {
+    + radius : float
+    + spanAngle : float
+    + CanSeePlayer : bool <<get>>
+    + FieldOfViewCheck() : bool
+}
+MonoBehaviour <|-- FieldOfView
+FieldOfView --> "facingDir" Vector2
+FieldOfView --> "targetMask" LayerMask
+FieldOfView --> "obstructionMask" LayerMask
+class FightArenaManager {
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+    + StartFight() : void
+    + EndFight() : void
+}
+class EnemiesList {
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- FightArenaManager
+IDataPersist <|-- FightArenaManager
+FightArenaManager o-> "enemiesWave<EnemiesList>" "List`1"
+FightArenaManager +-- EnemiesList
+EnemiesList --> "enemies<GameObject>" "List`1"
+class PlayerManager {
+    + {static}  <<event>> OnPlayerChanged : UnityAction<GameObject> 
+    + {static}  <<event>> OnPlayerDied : UnityAction 
+    + Die() : void
+    + Respawn() : void
+    + {static} FindActivePlayer() : GameObject
+    + {static} DestroyOtherActivePlayers() : void
+    + {static} SetRespawnScene(sceneName:string) : void
+}
+MonoBehaviour <|-- PlayerManager
+PlayerManager --> "Instance" PlayerManager
+PlayerManager --> "Player" GameObject
+class PauseMenu {
+    + {static} GameIsPaused : bool = false
+    + Resume() : void
+    + Restart() : void
+    + Setting() : void
+    + Quit() : void
+}
+MonoBehaviour <|-- PauseMenu
+PauseMenu --> "pauseMenuUI" GameObject
+class HackEventManager {
+    + IsHacking : bool = false
+    + HackTimer : float
+    + ButtonAmount : int
+    + TotalButtonAmount : int
+    + StartHack(hackDuration:float, amount:int) : void
+    + EndHack() : bool
+    + HackQuickTimeEvent() : bool
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- HackEventManager
+HackEventManager --> "Instance" HackEventManager
+HackEventManager --> "HackButtons<HackButtonUI>" "List`1"
+class Sound {
+    + name : string
+    + volume : float
+    + pitch : float
+}
+Sound --> "clip" AudioClip
+Sound --> "source" AudioSource
+class CameraManager {
+}
+MonoBehaviour <|-- CameraManager
+CameraManager --> "Instance" CameraManager
+class SaveManager {
+    +  <<event>> InitialLoaded : Action? 
+    + SaveData() : void
+    + LoadData() : void
+    + NewGame() : void
+    + PersistSave() : void
+    + LoadSave() : void
+    + DeleteSave() : void
+    + ListSave() : IEnumerable<string>
+}
+MonoBehaviour <|-- SaveManager
+SaveManager --> "Instance" SaveManager
+class ResourceManager {
+    + {static}  <<event>> OnCurrenyChange : UnityAction<int> 
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+    + GetCurrency() : int
+    + SetCurrency(value:int) : void
+    + AddCurrency(value:int) : void
+    + GetBombCount() : int
+    + UseBomb() : bool
+    + GetCurrencyPercentage() : float
+}
+MonoBehaviour <|-- ResourceManager
+IDataPersist <|-- ResourceManager
+ResourceManager --> "Instance" ResourceManager
+class SoundManager {
+    + music_multiplier : float
+    + sfx_multiplier : float
+    + playingBGM : string
+    + DingPitchMin : float = 0.5f
+    + DingPitchMax : float = 3.0f
+    + PlayJump() : void
+    + PlayDing(currentCount:int, totalCount:int) : void
+    + PlayMagicCoin() : void
+    + PlaySlash() : void
+    + PlayHack() : void
+    + PlayDash() : void
+    + PlayShoot() : void
+    + PlayBulletImpact() : void
+    + PlaySwordImpact() : void
+    + PlayPressurePlateUp() : void
+    + PlayExplosion() : void
+    + StopBGM() : void
+    + PlayBGMCombatRandom() : void
+    + PlayBGM(name:string) : void
+}
+MonoBehaviour <|-- SoundManager
+SoundManager --> "Instance" SoundManager
+class MapManager {
+    + IsChangingScene : bool
+    + FromScene : string
+    + ToScene : string
+    + DistanceFromSpawn : float
+    + CanChangeScene : bool <<get>>
+    + ChangeScene(fromSceneName:string, toSceneName:string, direction:Direction, distanceFromSpawn:float) : void
+    + GetMapChangeCooldown() : float
+}
+MonoBehaviour <|-- MapManager
+MapManager --> "Instance" MapManager
+MapManager --> "Direction" Direction
+class PlayerController {
+    + GetHorizontalMovement() : float
+    + GetVerticalMovement() : float
+    + IsJumpPressed() : bool
+    + IsJumpHeld() : bool
+    + IsDashPressed() : bool
+    + GetAttackDirection() : Vector2?
+    + GetContinuedAttackDirection() : Vector2?
+    + IsReloadPressed() : bool
+    + IsSwapWeaponPressed() : bool
+    + GetHackInput() : Vector2?
+}
+ScriptableObject <|-- PlayerController
+InputController <|-- PlayerController
+interface InputController {
+}
+class AIController {
+    + <<virtual>> GetHorizontalMovement() : float
+    + <<virtual>> GetVerticalMovement() : float
+    + <<virtual>> IsJumpPressed() : bool
+    + <<virtual>> IsJumpHeld() : bool
+    + <<virtual>> GetAttackDirection() : Vector2?
+    + <<virtual>> GetContinuedAttackDirection() : Vector2?
+    + <<virtual>> IsReloadPressed() : bool
+    + <<virtual>> IsDashPressed() : bool
+    + <<virtual>> IsSwapWeaponPressed() : bool
+    + <<virtual>> GetHackInput() : Vector2?
+}
+MonoBehaviour <|-- AIController
+InputController <|-- AIController
+class Controller {
+}
+MonoBehaviour <|-- Controller
+Controller --> "Input" InputController
+class DoorController {
+}
+MonoBehaviour <|-- DoorController
+class SwitchController {
+    + Clicked : bool = false
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+}
+MonoBehaviour <|-- SwitchController
+IDataPersist <|-- SwitchController
+interface IDataPersist {
+}
+class FileSaver {
+    + FileSaver(serializer:ISerializer, path:string, fileExt:string)
+    + PersistSave(data:GameData, name:string, overwrite:bool) : void
+    + LoadSave(name:string) : GameData
+    + DeleteSave(name:string) : void
+    + ListSaves() : System.Collections.Generic.IEnumerable<string>
+}
+ISaver <|-- FileSaver
+interface ISerializer {
+}
+interface ISaver {
+}
+class JsonSerializer {
+    + JsonSerializer(pretty:bool)
+    + Serialize(writer:Stream, obj:T) : void
+    + Deserialize(reader:Stream) : T
+    + {static} SerializeString(data:string) : string
+}
+ISerializer <|-- JsonSerializer
+class GameData {
+    + name : string
+    + currentScene : string
+    + currency : int
+}
+class "SerializedDictionary`2"<T1,T2> {
+}
+GameData o-> "switches<string,bool>" "SerializedDictionary`2"
+GameData o-> "fightArenas<string,bool>" "SerializedDictionary`2"
+GameData o-> "collectTrials<string,bool>" "SerializedDictionary`2"
+GameData o-> "puzzles<string,bool>" "SerializedDictionary`2"
+class Ground {
+    + IsOnGround : bool <<get>>
+    + Friction : float <<get>>
+}
+MonoBehaviour <|-- Ground
+class TrackFollower {
+}
+MonoBehaviour <|-- TrackFollower
+class Interactable {
+    + _isInteractable : bool = true
+    + <<virtual>> Update() : void
+    + <<virtual>> Interact() : void
+}
+MonoBehaviour <|-- Interactable
+Interactable --> "OnEnter" UnityEvent
+Interactable --> "OnExit" UnityEvent
+class JumpPad {
+}
+MonoBehaviour <|-- JumpPad
+class Currency {
+    + SetValue(value:int) : void
+}
+MonoBehaviour <|-- Currency
+class PlatformTrigger {
+    + DropPlayer() : void
+}
+MonoBehaviour <|-- PlatformTrigger
+class DropItem {
+    + ValuePerCurrency : int
+    + CurrencyAmount : int
+    + velocity : float
+    + DropCurrency() : void
+}
+MonoBehaviour <|-- DropItem
+DropItem --> "CurrencyPrefab" GameObject
+class CollectTrialObject {
+}
+MonoBehaviour <|-- CollectTrialObject
+class Spike {
+}
+MonoBehaviour <|-- Spike
+class SavePoint {
+    + <<override>> Interact() : void
+}
+Interactable <|-- SavePoint
+class LaserShooter {
+}
+MonoBehaviour <|-- LaserShooter
+class CollectTrial {
+    + SaveData(data:GameData) : void
+    + LoadData(data:GameData) : void
+    + <<override>> Update() : void
+    + <<override>> Interact() : void
+    + StartTrial() : void
+    + CancelTrial() : void
+    + Collect() : void
+}
+Interactable <|-- CollectTrial
+IDataPersist <|-- CollectTrial
+class CollsionDamage {
+}
+MonoBehaviour <|-- CollsionDamage
+class Jump {
+    + GetMaxAirJump() : int
+}
+MonoBehaviour <|-- Jump
+class Hack {
+}
+MonoBehaviour <|-- Hack
+class Move {
+    + _hasDash : bool = true
+    + SetFollowMovement(followMovement:bool) : void
+}
+MonoBehaviour <|-- Move
+class Slash {
+}
+MonoBehaviour <|-- Slash
+class ScreenShake {
+    + {static} Shake(shakeParams:ShakeParams) : void
+    + {static} Shake(shakeType:ShakeType) : void
+}
+struct ShakeParams {
+    + intensity : float
+    + seconds : float
+    + {static} QuickShake(shakeLevel:float) : ShakeParams
+}
+enum ShakeType {
+    Attack,
+    HitEnemy,
+    TakeDamage,
+}
+MonoBehaviour <|-- ScreenShake
+ScreenShake --> "Instance" ScreenShake
+ScreenShake +-- ShakeParams
+ScreenShake +-- ShakeType
+class Parallax {
+}
+MonoBehaviour <|-- Parallax
+Parallax --> "factor" Vector2
+class Hack {
+}
+MonoBehaviour <|-- Hack
+class Bullet {
+    + Fire(velocity:Vector2, knockbackMultiplier:float) : void
+}
+BaseProjectile <|-- Bullet
+class Gun {
+    + MaxAmmo : uint = 20
+    + CurrentAmmo : uint = 20
+    + Reloading : bool
+    + Shoot(target:Vector2) : void
+    + IsReloading() : bool
+    + GetCurrentReloadPercent() : double
+    + GetUnlimitedAmmo() : bool
+    + SetUnlimitedAmmo(unlimitedAmmo:bool) : void
+    + GetBulletSpeed() : float
+    + SetBulletSpeed(bulletSpeed:float) : void
+    + GetShootingDelay() : double
+    + SetShootingDelay(shootingDelay:double) : void
+}
+BaseWeapon <|-- Gun
+class Health {
+    + ResetHealth() : void
+    + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
+    + GetMaxHealth() : int
+    + GetCurrentHealth() : int
+    + SetCurrentHealth(health:int) : void
+    + IsHackable() : bool
+    + ApplyKnockback(hitDirection:Vector2, multiplier:float) : void
+    + TriggerIFrame() : void
+    + Heal(health:int) : void
+    + HealPercent(percent:double) : void
+    + GetMortality() : bool
+    + SetMortality(mortal:bool) : void
+}
+MonoBehaviour <|-- Health
+Health --> "OnHackable" UnityEvent
+class Pulse {
+}
+MonoBehaviour <|-- Pulse
+class WeaponManager {
+    + CurrentWeapon() : BaseWeapon?
+}
+MonoBehaviour <|-- WeaponManager
+class Sword {
+}
+BaseWeapon <|-- Sword
+Sword --> "OnAttack" UnityEvent
+class EnemyHealthBar {
+}
+BaseHealthBar <|-- EnemyHealthBar
+class HackButtonUI {
+    + Clicked : bool
+    + SetButton(clicked:bool) : void
+}
+MonoBehaviour <|-- HackButtonUI
+class EnemySkillBar {
+}
+MonoBehaviour <|-- EnemySkillBar
+class EquipmentUIManager {
+    + CheckEquipment() : void
+    + Select(mono:MonoBehaviour) : void
+}
+MonoBehaviour <|-- EquipmentUIManager
+EquipmentUIManager --> "Instance" EquipmentUIManager
+class HealthBar {
+}
+BaseHealthBar <|-- HealthBar
+class CurrencyUI {
+    + UpdateUI(currency:int) : void
+}
+MonoBehaviour <|-- CurrencyUI
+class EquipmentSlot {
+    + Select() : void
+    + Deselect() : void
+}
+MonoBehaviour <|-- EquipmentSlot
+EquipmentSlot --> "selectedColor" Color
+EquipmentSlot --> "notSelectedColor" Color
+class MainMenu {
+    + PlayGame() : void
+    + LoadGame() : void
+    + GoToOption() : void
+    + QuitGame() : void
+}
+MonoBehaviour <|-- MainMenu
+class VolumeSetting {
+    + SetMusicVolume() : void
+    + SetSFXVolume() : void
+    + BackToMainMenu() : void
+}
+MonoBehaviour <|-- VolumeSetting
+class WeaponStatusBar {
+}
+MonoBehaviour <|-- WeaponStatusBar
+WeaponStatusBar --> "statusText" TMP_Text
+WeaponStatusBar --> "statusBar" Slider
+class SkillUIManager {
+    + CheckSkill() : void
+}
+MonoBehaviour <|-- SkillUIManager
+SkillUIManager --> "Instance" SkillUIManager
+class SwordWielderController {
+    + dashingDistance : float
+    + preferredDistance : float
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    NOTICED,
+    ATTACKING,
+}
+AIController <|-- SwordWielderController
+InputController <|-- SwordWielderController
+SwordWielderController +-- State
+class TemplateController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- TemplateController
+InputController <|-- TemplateController
+TemplateController +-- State
+class SpawnerController {
+}
+MonoBehaviour <|-- SpawnerController
+class TurretController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- TurretController
+InputController <|-- TurretController
+TurretController +-- State
+class BomberController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> GetVerticalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+    RUNNING,
+}
+AIController <|-- BomberController
+InputController <|-- BomberController
+BomberController +-- State
+class MenuBomberController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+}
+enum State {
+    INITAL,
+    IDLE,
+}
+AIController <|-- MenuBomberController
+InputController <|-- MenuBomberController
+MenuBomberController +-- State
+class MenuDemoController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+}
+enum State {
+    INITAL,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- MenuDemoController
+InputController <|-- MenuDemoController
+MenuDemoController +-- State
+class SwordChargerController {
+    + <<override>> GetHorizontalMovement() : float
+    + <<override>> IsJumpPressed() : bool
+    + <<override>> IsDashPressed() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    NOTICED,
+    CHARGING,
+    COOLDOWN,
+}
+AIController <|-- SwordChargerController
+InputController <|-- SwordChargerController
+SwordChargerController +-- State
+class LightsOut2D {
+    + ToggleLights(index:int) : void
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+}
+MonoBehaviour <|-- LightsOut2D
+IDataPersist <|-- LightsOut2D
+class LightsOut2DTile {
+    + SetIndex(index:int) : void
+}
+MonoBehaviour <|-- LightsOut2DTile
+abstract class BaseWeapon {
+}
+MonoBehaviour <|-- BaseWeapon
+abstract class BaseProjectile {
+    + IsEnemy : bool
+}
+MonoBehaviour <|-- BaseProjectile
+abstract class BaseHealthBar {
+    + SetHealthBar() : void
+}
+MonoBehaviour <|-- BaseHealthBar
+BaseHealthBar --> "gradient" Gradient
+BaseHealthBar --> "fill" Image
+class EquipmentsManager {
+}
+MonoBehaviour <|-- EquipmentsManager
+class Boss1Controller {
+}
+enum Phase {
+    NORMAL,
+    Boost1,
+    Boost2,
+}
+Boss1BaseController <|-- Boss1Controller
+Boss1Controller +-- Phase
+abstract class Boss1BaseController {
+    + IsDestroy() : bool
+    + <<override>> GetAttackDirection() : Vector2?
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+}
+AIController <|-- Boss1BaseController
+InputController <|-- Boss1BaseController
+Boss1BaseController +-- State
+class Boss1ComponentController {
+    + GetHealDelay() : double
+    + SetHealDelay(healDelay:double) : void
+    + GetHealPercent() : double
+    + SetHealPercent(healPercent:double) : void
+    + GetGun() : Gun
+    + GetHealth() : Health
+}
+Boss1BaseController <|-- Boss1ComponentController
+@enduml

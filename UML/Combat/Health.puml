@@ -1,0 +1,18 @@
+@startuml
+class Health {
+    + ResetHealth() : void
+    + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
+    + GetMaxHealth() : int
+    + GetCurrentHealth() : int
+    + SetCurrentHealth(health:int) : void
+    + IsHackable() : bool
+    + ApplyKnockback(hitDirection:Vector2, multiplier:float) : void
+    + TriggerIFrame() : void
+    + Heal(health:int) : void
+    + HealPercent(percent:double) : void
+    + GetMortality() : bool
+    + SetMortality(mortal:bool) : void
+}
+MonoBehaviour <|-- Health
+Health --> "OnHackable" UnityEvent
+@enduml

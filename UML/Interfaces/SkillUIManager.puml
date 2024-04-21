@@ -1,0 +1,7 @@
+@startuml
+class SkillUIManager {
+    + CheckSkill() : void
+}
+MonoBehaviour <|-- SkillUIManager
+SkillUIManager --> "Instance" SkillUIManager
+@enduml

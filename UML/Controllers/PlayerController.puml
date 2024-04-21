@@ -1,0 +1,16 @@
+@startuml
+class PlayerController {
+    + GetHorizontalMovement() : float
+    + GetVerticalMovement() : float
+    + IsJumpPressed() : bool
+    + IsJumpHeld() : bool
+    + IsDashPressed() : bool
+    + GetAttackDirection() : Vector2?
+    + GetContinuedAttackDirection() : Vector2?
+    + IsReloadPressed() : bool
+    + IsSwapWeaponPressed() : bool
+    + GetHackInput() : Vector2?
+}
+ScriptableObject <|-- PlayerController
+InputController <|-- PlayerController
+@enduml

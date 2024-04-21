@@ -1,0 +1,11 @@
+@startuml
+class Boss1ComponentController {
+    + GetHealDelay() : double
+    + SetHealDelay(healDelay:double) : void
+    + GetHealPercent() : double
+    + SetHealPercent(healPercent:double) : void
+    + GetGun() : Gun
+    + GetHealth() : Health
+}
+Boss1BaseController <|-- Boss1ComponentController
+@enduml

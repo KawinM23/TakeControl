@@ -1,0 +1,6 @@
+@startuml
+class PlatformTrigger {
+    + DropPlayer() : void
+}
+MonoBehaviour <|-- PlatformTrigger
+@enduml

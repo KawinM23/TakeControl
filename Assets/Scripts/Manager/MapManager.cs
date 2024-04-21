@@ -50,17 +50,12 @@ public class MapManager : MonoBehaviour
             _player = PlayerManager.Instance.Player;
             _player.transform.position = FindDestinationPosition(FromScene, ToScene, DistanceFromSpawn);
             _player.SetActive(true);
-            if (_player.TryGetComponent(out Rigidbody2D rb))
-            {
-                rb.velocity = new Vector2(_oldVelocity.x, (Direction == Direction.Up ? 7f : _oldVelocity.y));
-            }
 
             if (_player.TryGetComponent(out TrailRenderer tr))
             {
                 tr.Clear();
             }
             PlayerManager.DestroyOtherActivePlayers();
-            IsChangingScene = false;
         }
     }
 
@@ -110,8 +105,22 @@ public class MapManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         yield return SceneManager.LoadSceneAsync(ToScene, LoadSceneMode.Additive);
+        yield return SceneManager.UnloadSceneAsync(FromScene);
+        yield return StartCoroutine(OnSceneLoadCoroutine());
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(ToScene));
-        SceneManager.UnloadSceneAsync(FromScene);
+        IsChangingScene = false;
     }
+
+    private IEnumerator OnSceneLoadCoroutine()
+    {
+        if (PlayerManager.Instance.Player.TryGetComponent(out Rigidbody2D rb))
+        {
+            /*rb.AddForce(new Vector2(0, Direction == Direction.Up ? 100f : 0f));*/
+            rb.velocity = new Vector2(_oldVelocity.x, (Direction == Direction.Up ? 8f : _oldVelocity.y));
+        }
+        yield return null;
+    }
+
+    public float GetMapChangeCooldown() { return _mapChangeCooldown; }
 
 }
