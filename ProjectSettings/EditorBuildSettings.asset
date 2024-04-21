@@ -22,7 +22,13 @@ EditorBuildSettings:
     guid: 929c6e009f56ecf489bf80e0d8ec09e5
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map1-4.unity
-    guid: c2972283a3d15dd4e99b840b092efa54
+    guid: 4fe8db4f939d74b469d7d4d508d8573d
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map1-5.unity
+    guid: 874ea188700846646b4085f24a7f4e44
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map1-6.unity
+    guid: 5d1c0d06061dc7041a889c876aea983b
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map1-7.unity
     guid: 4f1ca88df998a7247890b0609ab9dc06
@@ -35,9 +41,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map1-10.unity
     guid: a1ba398effce1394ba6d4d77f469cfe1
-  - enabled: 1
-    path: Assets/Scenes/Prototype3/Map1-6.unity
-    guid: 5d1c0d06061dc7041a889c876aea983b
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-1.unity
     guid: eceda19996fc36b41bc81eefaf303841
