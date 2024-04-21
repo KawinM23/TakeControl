@@ -866,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8731135580994205093, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1941,11 +1945,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5565982667870625225, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.18
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 5565982667870625225, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.18
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_Name
@@ -2978,6 +2982,10 @@ PrefabInstance:
     - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_Name
       value: Turret (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8731135580994205093, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_AnchorMax.y
