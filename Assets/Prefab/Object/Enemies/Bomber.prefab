@@ -276,7 +276,6 @@ MonoBehaviour:
   _iFramableLayer:
     serializedVersion: 2
     m_Bits: 576
-  _playerManager: {fileID: 0}
   _dieParticle: {fileID: 5425198399417718633, guid: e9d88595a1de0ec49a6382b5bc14fa24, type: 3}
 --- !u!114 &8592266432460933116
 MonoBehaviour:
@@ -295,6 +294,7 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 3
   _buttonAmount: 3
+  _pulsePrefab: {fileID: 0}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
 --- !u!114 &7801555874802598118
@@ -555,6 +555,10 @@ PrefabInstance:
     - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_Name
       value: SwordCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1298145703290883797, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_MaskAlphaCutoff

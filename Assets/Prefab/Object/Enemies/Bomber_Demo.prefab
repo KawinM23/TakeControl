@@ -601,6 +601,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1298145703290883797, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_MaskAlphaCutoff
       value: 0
