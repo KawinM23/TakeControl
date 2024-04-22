@@ -30,6 +30,7 @@ public class GunnerController : AIController, InputController
     private Vector2 _home;
     private Gun _gun;
     private FieldOfView _fov;
+    private BoxCollider2D _collider;
 
 
 
@@ -37,6 +38,7 @@ public class GunnerController : AIController, InputController
     {
         _gun = GetComponent<Gun>();
         _fov = GetComponent<FieldOfView>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     void Start()
@@ -146,9 +148,7 @@ public class GunnerController : AIController, InputController
                 yield break;
             }
 
-            _atackingMovement = player.transform.position.x - transform.position.x;
-            _atackingMovement -= Mathf.Sign(_atackingMovement) * preferredDistance;
-            _atackingMovement = Mathf.Clamp(_atackingMovement, -_attackingSpeed, _attackingSpeed);
+            _atackingMovement = CalculateAttackMovement(_attackingSpeed);
 
             yield return new WaitForFixedUpdate();
         }
@@ -165,19 +165,49 @@ public class GunnerController : AIController, InputController
                 yield break;
             }
 
-            var player = PlayerManager.Instance.Player;
-            _atackingMovement = player.transform.position.x - transform.position.x;
-            _atackingMovement -= Mathf.Sign(_atackingMovement) * preferredDistance;
-            _atackingMovement = Mathf.Clamp(_atackingMovement, -_reloadingSpeed, _reloadingSpeed);
+            _atackingMovement = CalculateAttackMovement(_reloadingSpeed);
 
             yield return new WaitForFixedUpdate();
         }
     }
 
+    private float CalculateAttackMovement(float maxSpeed)
+    {
+        var player = PlayerManager.Instance.Player;
+        var dist = player.transform.position.x - transform.position.x;
+
+        // if going to fall, don't
+        var wouldFall = (dist > 0 && IsHoleBelowRight()) || (dist < 0 && IsHoleBelowLeft());
+        if (wouldFall)
+        {
+            return 0;
+        }
+        var mov = Mathf.Sign(dist) * preferredDistance;
+        mov = Mathf.Clamp(mov, -maxSpeed, maxSpeed);
+        return mov;
+    }
+
     private bool IsHoleBelow()
     {
         var mask = _fov.obstructionMask; // ???
+        var pos = (Vector2)transform.position + new Vector2(0, -_collider.bounds.extents.y);
         var hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
+    private bool IsHoleBelowRight()
+    {
+        var mask = _fov.obstructionMask; // ???
+        var pos = (Vector2)transform.position + new Vector2(_collider.bounds.extents.x, -_collider.bounds.extents.y);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
+    private bool IsHoleBelowLeft()
+    {
+        var mask = _fov.obstructionMask; // ???
+        var pos = (Vector2)transform.position + new Vector2(-_collider.bounds.extents.x, -_collider.bounds.extents.y);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
         return !hit;
     }
 
