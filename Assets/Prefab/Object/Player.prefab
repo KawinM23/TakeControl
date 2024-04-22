@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5565982667870625225}
   - component: {fileID: 1497467507922240949}
   - component: {fileID: 4133239107826539137}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 9017549952657372097}
   - component: {fileID: 5993266342746026121}
   - component: {fileID: 8086383678846937365}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 668782518924289993, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_IsActive
@@ -500,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9159083728594493542, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9159083728594493542, guid: 28fe041944cf928458b0fd7891839126, type: 3}
       propertyPath: m_IsActive
