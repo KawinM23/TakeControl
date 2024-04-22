@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
@@ -29,13 +28,7 @@ namespace Assets.Scripts.Combat
         {
             _rigidbody.velocity = velocity;
             _knockbackMultiplier = knockbackMultiplier;
-            StartCoroutine(Init());
-        }
-
-        private IEnumerator Init()
-        {
-            yield return new WaitForSeconds(5);
-            Destroy(gameObject);
+            Destroy(gameObject, 5f);
         }
 
         protected override void OnEnemyHitPlayerAction(GameObject player, Vector3 hitPosition)
@@ -52,7 +45,6 @@ namespace Assets.Scripts.Combat
         {
             if (enemy.TryGetComponent(out Health health))
             {
-
                 Vector2 hitDirection = _rigidbody.velocity.normalized;
                 health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
                 SoundManager.Instance.PlayBulletImpact();

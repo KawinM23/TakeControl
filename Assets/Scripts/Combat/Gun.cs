@@ -38,20 +38,21 @@ namespace Assets.Scripts.Combat
         protected override void Update()
         {
 
-            if (_shootTimer >= 0)
+            if (_shootTimer > 0)
             {
                 _shootTimer -= Time.deltaTime;
             }
+
             Vector2? pos = null;
             if (_controller.Input.GetAttackDirection().HasValue)
             {
-               
                 pos = _controller.Input.GetAttackDirection().Value;
             }
             else if (_controller.Input.GetContinuedAttackDirection().HasValue)
             {
                 pos = _controller.Input.GetContinuedAttackDirection().Value;
             }
+
             if (pos != null)
             {
                 if (_shootTimer <= 0 && (_unlimitedAmmo || CurrentAmmo > 0))
@@ -59,13 +60,12 @@ namespace Assets.Scripts.Combat
                     Shoot(pos.Value);
                 }
             }
+
             if (!Reloading && (_controller.Input.IsReloadPressed() || CurrentAmmo == 0))
             {
                 Reloading = true;
                 _reloadTimer = _reloadTime;
             }
-
-
             if (Reloading)
             {
                 _reloadTimer -= Time.deltaTime;
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Combat
 
         public void Shoot(Vector2 target)
         {
-            if (HackEventManager.Instance!= null && HackEventManager.Instance.IsHacking)
+            if (HackEventManager.Instance != null && HackEventManager.Instance.IsHacking)
             {
                 return;
             }
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Combat
             _shootTimer = _shootingDelay;
             CurrentAmmo -= _unlimitedAmmo ? 0 : (uint)1;
             Reloading = false;
-            if (SoundManager.Instance!=null) SoundManager.Instance.PlayShoot();
+            if (SoundManager.Instance != null) SoundManager.Instance.PlayShoot();
             Vector2 firePoint = transform.position;
             Vector2 bulletDirection = target - firePoint;
 
@@ -96,11 +96,10 @@ namespace Assets.Scripts.Combat
             bulletDirection = new Vector2(bulletDirection.x + Random.Range(-_bulletSpread, _bulletSpread), bulletDirection.y + Random.Range(-_bulletSpread, _bulletSpread));
 
             GameObject bulletInstance = Instantiate(_bulletPrefab, firePoint, Quaternion.identity);
-            Bullet bullet = bulletInstance.GetComponent<Bullet>();
-            if (bullet)
+            if (bulletInstance.TryGetComponent(out Bullet bullet))
             {
                 bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
-               if(PlayerManager.Instance) bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
+                if (PlayerManager.Instance) bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
             }
         }
 
