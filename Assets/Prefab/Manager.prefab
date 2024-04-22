@@ -362,8 +362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27f16c92a989b428ee0d30c6cfc249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDead: 0
+  IsDead: 0
   _respawnCanvas: {fileID: 2985608818617242529}
+  PlayerColor: {r: 0.32156864, g: 0.87058824, b: 1, a: 1}
   _playerPrefab: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
 --- !u!114 &572526612175155861
 MonoBehaviour:
@@ -393,6 +394,12 @@ MonoBehaviour:
     name: 
     currentScene: 
     switches:
+      _serializedList: []
+    fightArenas:
+      _serializedList: []
+    collectTrials:
+      _serializedList: []
+    puzzles:
       _serializedList: []
     currency: 0
   defaultSaveName: default

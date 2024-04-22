@@ -45,7 +45,7 @@ namespace Assets.Scripts.Combat
         {
             if (enemy.TryGetComponent(out Health health))
             {
-                Vector2 hitDirection = _rigidbody.velocity.normalized;
+                Vector2 hitDirection = (hitPosition - transform.position).normalized;
                 health.TakeDamage(_damage, hitDirection, _knockbackMultiplier);
                 SoundManager.Instance.PlayBulletImpact();
             }

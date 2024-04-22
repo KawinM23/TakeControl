@@ -55,7 +55,7 @@ namespace Assets.Scripts.Combat
 
             if (pos != null)
             {
-                if (_shootTimer <= 0 && (_unlimitedAmmo || CurrentAmmo > 0))
+                if (_shootTimer <= 0 && (_unlimitedAmmo || CurrentAmmo > 0) && Time.timeScale != 0f)
                 {
                     Shoot(pos.Value);
                 }

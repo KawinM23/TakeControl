@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Capabilities
@@ -41,7 +39,7 @@ namespace Assets.Scripts.Capabilities
         // Update is called once per frame
         void Update()
         {
-            _desiredJump |= _controller.Input.IsJumpPressed() && _controller.Input.GetVerticalMovement() >= 0f;
+            _desiredJump |= _controller.Input.IsJumpPressed() && _controller.Input.GetVerticalMovement() >= 0f && Time.timeScale != 0f;
         }
 
         // FixedUpdate is called every fixed framerate frame
@@ -101,7 +99,7 @@ namespace Assets.Scripts.Capabilities
             // only play sfx at the start of the jump
             if (!_isJumping)
             {
-               if(SoundManager.Instance) SoundManager.Instance.PlayJump();
+                if (SoundManager.Instance) SoundManager.Instance.PlayJump();
             }
 
             if (_coyoteCounter > 0f || (_jumpPhase < _maxAirJumps && _isJumping))

@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Effect;
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Combat
         private readonly Collider2D _collider;
         private Rigidbody2D _rigidbody;
         private Coroutine _flashCoroutine;
-        private Color _originalColor;
+        public Color OriginalColor;
         private bool _mortal = true;
 
 
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Combat
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _originalColor = _spriteRenderer.color;
+            OriginalColor = _spriteRenderer.color;
         }
 
 
@@ -76,6 +76,11 @@ namespace Assets.Scripts.Combat
         public void ResetHealth()
         {
             _currentHealth = _maxHealth;
+            if (gameObject == PlayerManager.Instance.Player)
+            {
+                OriginalColor = PlayerManager.Instance.PlayerColor;
+                _spriteRenderer.color = PlayerManager.Instance.PlayerColor;
+            };
         }
 
 
@@ -119,14 +124,14 @@ namespace Assets.Scripts.Combat
         {
             _spriteRenderer.color = targetColor;
             yield return new WaitForSeconds(0.1f);
-            _spriteRenderer.color = _originalColor;
+            _spriteRenderer.color = OriginalColor;
             yield return new WaitForSeconds(0.1f);
             AfterFlash();
         }
 
         void AfterFlash()
         {
-            _spriteRenderer.color = _originalColor;
+            _spriteRenderer.color = OriginalColor;
             _flashCoroutine = null;
         }
 
@@ -142,7 +147,7 @@ namespace Assets.Scripts.Combat
                 if (_dieParticle)
                 {
                     var main = _dieParticle.main;
-                    main.startColor = _originalColor;
+                    main.startColor = OriginalColor;
                     GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
                     Destroy(go, 2f);
                 }
