@@ -2,6 +2,7 @@
 class PlayerManager {
     + {static}  <<event>> OnPlayerChanged : UnityAction<GameObject> 
     + {static}  <<event>> OnPlayerDied : UnityAction 
+    + IsDead : bool = false
     + Die() : void
     + Respawn() : void
     + {static} FindActivePlayer() : GameObject
@@ -11,4 +12,5 @@ class PlayerManager {
 MonoBehaviour <|-- PlayerManager
 PlayerManager --> "Instance" PlayerManager
 PlayerManager --> "Player" GameObject
+PlayerManager --> "PlayerColor" Color
 @enduml

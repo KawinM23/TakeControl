@@ -39,6 +39,7 @@ EnemiesList --> "enemies<GameObject>" "List`1"
 class PlayerManager {
     + {static}  <<event>> OnPlayerChanged : UnityAction<GameObject> 
     + {static}  <<event>> OnPlayerDied : UnityAction 
+    + IsDead : bool = false
     + Die() : void
     + Respawn() : void
     + {static} FindActivePlayer() : GameObject
@@ -48,6 +49,7 @@ class PlayerManager {
 MonoBehaviour <|-- PlayerManager
 PlayerManager --> "Instance" PlayerManager
 PlayerManager --> "Player" GameObject
+PlayerManager --> "PlayerColor" Color
 class PauseMenu {
     + {static} GameIsPaused : bool = false
     + Resume() : void
@@ -356,6 +358,7 @@ class Health {
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent
+Health --> "OriginalColor" Color
 class Pulse {
 }
 MonoBehaviour <|-- Pulse

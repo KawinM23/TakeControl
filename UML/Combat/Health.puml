@@ -15,4 +15,5 @@ class Health {
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent
+Health --> "OriginalColor" Color
 @enduml
