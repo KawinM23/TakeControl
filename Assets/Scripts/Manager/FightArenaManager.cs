@@ -52,11 +52,12 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
                 {
                     EndFight();
                 }
-                enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
+                else
+                {
+                    enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
+                }
             }
-            
         }
-
     }
 
     public void SaveData(ref GameData data)
