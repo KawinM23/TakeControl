@@ -199,7 +199,7 @@ MonoBehaviour:
   _jumpCount: 3
   _superCharge: 0
   _slashRange: 2
-  _cooldownDuration: 2
+  _cooldownDuration: 1
 --- !u!114 &718361996031033043
 MonoBehaviour:
   m_ObjectHideFlags: 0
