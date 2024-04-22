@@ -7,7 +7,7 @@ using UnityEngine;
 
 #nullable enable annotations
 
-[RequireComponent(typeof(Gun))]
+[RequireComponent(typeof(Gun), typeof(FieldOfView))]
 public class GunnerController : AIController, InputController
 {
     [SerializeField] private float _patrolRadius = 5f;
@@ -88,11 +88,12 @@ public class GunnerController : AIController, InputController
     }
 
     private float _idleMovement;
+    [SerializeField] private float lastMoveTime;
     IEnumerator IdleState()
     {
         var player = PlayerManager.Instance.Player;
         _idleMovement = player.transform.position.x > transform.position.x ? _idleSpeed : -_idleSpeed;
-        float lastMoveTime = Time.time;
+        lastMoveTime = Time.time;
         Vector2 lastPos = transform.position;
 
         while (true)
@@ -110,6 +111,7 @@ public class GunnerController : AIController, InputController
             if (Vector2.SqrMagnitude(lastPos - (Vector2)transform.position) >= 0.01f)
             {
                 lastMoveTime = Time.time;
+                lastPos = transform.position;
             }
 
             if (Mathf.Approximately(_patrolRadius, 0f))
@@ -120,13 +122,13 @@ public class GunnerController : AIController, InputController
             {
                 // Patrol around home
                 var distFromHome = Vector2.Distance(transform.position, _home);
-                if (distFromHome >= _patrolRadius || Time.time - lastMoveTime > 1f)
+                if (distFromHome >= _patrolRadius || (Time.time - lastMoveTime > 0.2f) || IsHoleBelow())
                 {
                     _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
                 }
             }
-
-            yield return new WaitForSeconds(0.5f);
+;
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -172,6 +174,14 @@ public class GunnerController : AIController, InputController
         }
     }
 
+    private bool IsHoleBelow()
+    {
+        var mask = _fov.obstructionMask; // ???
+        var hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
+
     public override float GetHorizontalMovement()
     {
         var a = _state switch
@@ -180,9 +190,6 @@ public class GunnerController : AIController, InputController
             State.ATTACKING or State.RELOADING => _atackingMovement,
             _ => base.GetHorizontalMovement()
         };
-
-        Debug.Log(a);
-
         return a;
     }
 
