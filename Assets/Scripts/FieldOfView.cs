@@ -96,7 +96,8 @@ public class FieldOfView : MonoBehaviour
         return _canSeePlayer;
     }
 
-    void OnDrawGizmos()
+
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.gray;
         Gizmos.DrawWireSphere(transform.position, radius);
