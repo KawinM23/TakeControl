@@ -89,16 +89,8 @@ public class BomberController : AIController, InputController
                 continue;
             }
 
-            // TODO: optimize
-
-            // does it see the player?
-            var casts = Physics2D.LinecastAll(transform.position, player.transform.position, _layerMask);
-            var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            Debug.DrawLine(transform.position, player.transform.position, Color.red, 0.5f);
-            Debug.DrawLine(transform.position, cast.point, Color.green, 0.5f);
-
             // if see player, change state to RUNNING
-            if (cast.transform.CompareTag("Player"))
+            if (RaycastPlayer())
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.RUNNING;
@@ -154,6 +146,17 @@ public class BomberController : AIController, InputController
         }
         SoundManager.Instance.PlayExplosion();
         Destroy(gameObject);
+    }
+
+    private bool RaycastPlayer()
+    {
+        var player = PlayerManager.Instance.Player;
+        var cast = Physics2D.Linecast(transform.position, player.transform.position, _layerMask);
+        if (cast && cast.transform.gameObject == gameObject)
+        {
+            Debug.LogWarning("Linecast hit itself");
+        }
+        return !cast || cast.transform.gameObject == player;
     }
 
     // override aicontroller for movements and jumps

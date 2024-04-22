@@ -73,7 +73,7 @@ public class TurretController : AIController, InputController
                 continue;
             }
 
-            if (IsSeePlayer())
+            if (RaycastPlayer())
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.SHOOTING;
@@ -94,7 +94,7 @@ public class TurretController : AIController, InputController
                 yield break;
             }
 
-            if (IsSeePlayer())
+            if (RaycastPlayer())
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.IDLE;
@@ -116,6 +116,16 @@ public class TurretController : AIController, InputController
         yield break;
     }
 
+    private bool RaycastPlayer()
+    {
+        var player = PlayerManager.Instance.Player;
+        var cast = Physics2D.Linecast(transform.position, player.transform.position, _layerMask);
+        if (cast && cast.transform.gameObject == gameObject)
+        {
+            Debug.LogWarning("Linecast hit itself");
+        }
+        return !cast || cast.transform.gameObject == player;
+    }
 
     public override Vector2? GetAttackDirection()
     {
@@ -130,17 +140,6 @@ public class TurretController : AIController, InputController
     public override bool IsJumpPressed()
     {
         return _state == State.RELOADING;
-    }
-
-    bool IsSeePlayer()
-    {
-        var player = PlayerManager.Instance.Player;
-        var cast = Physics2D.Linecast(transform.position, player.transform.position, _layerMask);
-        if (cast && cast.transform.gameObject == gameObject)
-        {
-            Debug.LogWarning("Linecast hit itself");
-        }
-        return !cast || cast.transform.gameObject == player;
     }
 }
 
