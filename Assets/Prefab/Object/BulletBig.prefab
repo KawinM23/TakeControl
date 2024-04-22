@@ -181,7 +181,7 @@ MonoBehaviour:
   _damage: 150
   _actionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   _destroyLayer:
     serializedVersion: 2
     m_Bits: 128

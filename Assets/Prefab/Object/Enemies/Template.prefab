@@ -759,7 +759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!114 &7078540853097211418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,6 +836,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8400403841476335786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,6 +854,9 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 0
   _buttonAmount: 0
+  _combo: 0
+  _comboHackDurationIncrement: 0
+  _comboButtonAmountIncrement: 0
   _pulsePrefab: {fileID: 1100861198135996722, guid: e96f0c2397cd52849a60717a3a9b56a0, type: 3}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5

@@ -125,6 +125,10 @@ namespace Assets.Scripts.Capabilities
 
                 // Take Control; changing the target's tag to "Player" and set it as the player
                 target.gameObject.tag = "Player";
+                target.gameObject.layer = gameObject.layer;
+                int targetLayer = target.gameObject.layer;
+                gameObject.tag = "Enemy";
+                gameObject.layer = targetLayer;
                 PlayerManager.Instance.Player = target.gameObject;
 
                 //Reset target robot's health
