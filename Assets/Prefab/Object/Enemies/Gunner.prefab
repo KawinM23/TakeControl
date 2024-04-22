@@ -208,6 +208,7 @@ MonoBehaviour:
   _idleSpeed: 0.5
   _attackingSpeed: 0.8
   _reloadingSpeed: 0.6
+  lastMoveTime: 0
 --- !u!114 &2321741468107266234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +226,7 @@ MonoBehaviour:
   spanAngle: 90
   targetMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   obstructionMask:
     serializedVersion: 2
     m_Bits: 128
