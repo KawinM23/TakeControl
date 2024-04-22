@@ -20,6 +20,8 @@ public class LaserShooter : MonoBehaviour
     [SerializeField] Color _normalColor;
     [SerializeField] Color _shootColor;
 
+    private bool _autoDeactive = false;
+
     private void Start()
     {
         _timer = _firstDelay;
@@ -37,6 +39,11 @@ public class LaserShooter : MonoBehaviour
                 {
                     _collider.gameObject.SetActive(false);
                     _timer = _delay;
+                    if (_autoDeactive)
+                    {
+                        SetActive(false);
+                        _spriteRenderer.color = Color.Lerp(_normalColor, _shootColor, 0);
+                    }
                 }
             }
             else
@@ -58,5 +65,35 @@ public class LaserShooter : MonoBehaviour
         {
             health.TakeDamage(_damagePerTick, collision.transform.position - transform.position, 0.6f);
         }
+    }
+
+    public bool IsActive()
+    {
+        return _active;
+    }
+
+    public void SetActive(bool active)
+    {
+        _active = active;
+    }
+
+    public void SetDelay(float delay)
+    {
+        _delay = delay;
+    }
+
+    public void SetDuration(float duration)
+    {
+        _duration = duration;
+    }
+
+    public void SetTimer(float timer)
+    {
+        _timer = timer;
+    }
+
+    public void SetAutoDeactive(bool autoDeactive)
+    {
+        _autoDeactive = autoDeactive;
     }
 }
