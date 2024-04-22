@@ -612,6 +612,9 @@ BaseHealthBar --> "fill" Image
 class EquipmentsManager {
 }
 MonoBehaviour <|-- EquipmentsManager
+class DashTutorial {
+}
+MonoBehaviour <|-- DashTutorial
 class BossPuppeteerController {
     + <<override>> GetAttackDirection() : Vector2?
     + <<override>> IsReloadPressed() : bool
