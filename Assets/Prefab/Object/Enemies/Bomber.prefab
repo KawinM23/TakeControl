@@ -277,6 +277,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _dieParticle: {fileID: 5425198399417718633, guid: e9d88595a1de0ec49a6382b5bc14fa24, type: 3}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8592266432460933116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,9 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 3
   _buttonAmount: 3
+  _combo: 0
+  _comboHackDurationIncrement: 0
+  _comboButtonAmountIncrement: 0
   _pulsePrefab: {fileID: 0}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
@@ -311,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   _explosionTriggerRadius: 1
   _explosionRadius: 2
   _explosionDamage: 30
