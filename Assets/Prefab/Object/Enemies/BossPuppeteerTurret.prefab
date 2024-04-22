@@ -268,9 +268,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _maxHealth: 300
+  _maxHealth: 200
   _currentHealth: 0
-  _hackableHealth: 300
+  _hackableHealth: 100
   _defaultKnockbackForce: 0
   _iFrame: 0
   _iFrameDuration: 0

@@ -11,21 +11,29 @@ public class BossPuppeteerController : AIController, InputController
     [SerializeField] private LayerMask _layerMask;
 
     // platforms to activate and deactivate + kills to enable platform
+    [Header("Platforms")]
     [SerializeField] private GameObject _platforms;
     [SerializeField] private int _killsToEnablePlatform = 5;
     private Coroutine? _disablePlatformCountdown = null; // save coroutine as a field to cancel it anytime
 
     // These are spawners that this boss can control and should change spawning behavior in each phase
+    [Header("Spawners")]
     [SerializeField] private GameObject _spawnerLeft;
     [SerializeField] private GameObject _spawnerRight;
 
     [SerializeField] private GameObject _spawnerSpecialLeft;
     [SerializeField] private GameObject _spawnerSpecialRight;
 
+    // Laser Shooters
+    [Header("Laser Shooters")]
+    [SerializeField] private GameObject _lasersBottom;
+    [SerializeField] private GameObject _lasersTop;
+
     // Health values realtime fetched from Health component
+    [Header("Health")]
     private int _prev_health;
     private int _current_health;
-
+    [Header("Gun")]
     private Gun _gun;
 
 
@@ -147,6 +155,12 @@ public class BossPuppeteerController : AIController, InputController
 
     void UpdateHealth()
     {
+        // no disable platform in phase 4
+        if (_phase == BossPhase.PHASE_4)
+        {
+            return;
+        }
+
         if (TryGetComponent<Health>(out Health health))
         {
             _current_health = health.GetCurrentHealth();
@@ -238,6 +252,12 @@ public class BossPuppeteerController : AIController, InputController
 
     IEnumerator Phase1()
     {
+        Debug.Log("Phase 1");
+
+        // disable special spawner
+        _spawnerSpecialLeft.SetActive(false);
+        _spawnerSpecialRight.SetActive(false);
+
         // set spawner left
         SpawnerController.SpawnerSettings spawnerLeftSettings = new SpawnerController.SpawnerSettings
         {
@@ -249,7 +269,8 @@ public class BossPuppeteerController : AIController, InputController
             waveCount = 99, // endless
             waveInterval = 5f,
             currentWave = 0,
-            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER
+            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER,
+            maxSpawnObjects = 3
         };
         _spawnerLeft.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerLeftSettings);
 
@@ -264,9 +285,17 @@ public class BossPuppeteerController : AIController, InputController
             waveCount = 99, // endless
             waveInterval = 5f,
             currentWave = 0,
-            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER
+            spawningGameObject = SpawnerController.SpawningGameObject.SWORD_CHARGER,
+            maxSpawnObjects = 3
         };
         _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
+
+        // disable all platforms
+        _platforms.SetActive(false);
+
+        // hide all lasers
+        _lasersBottom.SetActive(false);
+        _lasersTop.SetActive(false);
 
         // wait until health is less than 50%
         Health health = GetComponent<Health>();
@@ -302,7 +331,8 @@ public class BossPuppeteerController : AIController, InputController
             waveCount = 99, // endless
             waveInterval = 10f,
             currentWave = 0,
-            spawningGameObject = SpawnerController.SpawningGameObject.BOMBER
+            spawningGameObject = SpawnerController.SpawningGameObject.BOMBER,
+            maxSpawnObjects = 2
         };
         _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
 
@@ -313,10 +343,13 @@ public class BossPuppeteerController : AIController, InputController
         {
             _gun.MaxAmmo = 10;
             _gun.CurrentAmmo = 10;
-            _gun.SetShootingDelay(2);
-            _gun.SetKnockbackMultiplier(30);
+            _gun.SetShootingDelay(3);
+            _gun.SetKnockbackMultiplier(20);
             _gun.SetBulletSpeed(40);
         }
+
+        // enable bottom laser
+        _lasersBottom.SetActive(true);
 
         // recover to full hp
         Health health = GetComponent<Health>();
@@ -345,13 +378,16 @@ public class BossPuppeteerController : AIController, InputController
         // slow reload
         if (TryGetComponent<Gun>(out Gun _gun))
         {
-            _gun.MaxAmmo = 10;
-            _gun.CurrentAmmo = 10;
+            _gun.MaxAmmo = 8;
+            _gun.CurrentAmmo = 8;
             _gun.SetShootingDelay(0.2);
             _gun.SetKnockbackMultiplier(3);
             _gun.SetBulletSpeed(10);
-            _gun.SetReloadTime(3);
+            _gun.SetReloadTime(4);
         }
+
+        // enable top lasers
+        _lasersTop.SetActive(true);
 
         // recover to full hp
         Health health = GetComponent<Health>();
@@ -369,12 +405,30 @@ public class BossPuppeteerController : AIController, InputController
 
         // change to phase 3
         yield return new WaitForFixedUpdate();
-        _phase = BossPhase.PHASE_3;
+        _phase = BossPhase.PHASE_4;
         yield break;
     }
 
     IEnumerator Phase4()
     {
+        // spawn special turret
+        SpawnerController.SpawnerSettings spawnerSpecialLeftSettings = new SpawnerController.SpawnerSettings
+        {
+            delayedStart = 0f,
+            spawnCountMax = 1,
+            spawnCountMin = 1,
+            spawnIntervalMax = 2f,
+            spawnIntervalMin = 1f,
+            waveCount = 10, // spawn once
+            waveInterval = 30f,
+            currentWave = 0,
+            spawningGameObject = SpawnerController.SpawningGameObject.BOSS_PUPPETEER_TURRET,
+            maxSpawnObjects = 1
+        };
+        // enable special spawner
+        _spawnerSpecialLeft.SetActive(true);
+        _spawnerSpecialRight.SetActive(true);
+
         // set gun stats
         // shoot in bursts
         // slow reload
@@ -404,25 +458,11 @@ public class BossPuppeteerController : AIController, InputController
         // Set Boss to high HP
         if (TryGetComponent<Health>(out Health health))
         {
-            health.ResetHealth();
+            health.ResetHealthWithNewMaxHealth(1000);
         }
 
-        // spawn special turret
-        SpawnerController.SpawnerSettings spawnerSpecialLeftSettings = new SpawnerController.SpawnerSettings
-        {
-            delayedStart = 0f,
-            spawnCountMax = 3,
-            spawnCountMin = 1,
-            spawnIntervalMax = 2f,
-            spawnIntervalMin = 0f,
-            waveCount = 99, // endless
-            waveInterval = 10f,
-            currentWave = 0,
-            spawningGameObject = SpawnerController.SpawningGameObject.BOMBER
-        };
-        _spawnerRight.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerRightSettings);
+        _spawnerSpecialLeft.GetComponent<SpawnerController>().SetSpawnerSettings(spawnerSpecialLeftSettings);
         yield break;
-
     }
 
 

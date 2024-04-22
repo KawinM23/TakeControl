@@ -7,6 +7,7 @@ public class SpawnerController : MonoBehaviour
 
     // prefabs
     [SerializeField] private GameObject _spawningGameObject; // The prefab to spawn
+    [SerializeField] private SpawningGameObject _spawningGameObjectEnum;
     [SerializeField] private GameObject _bomberPrefab;
     [SerializeField] private GameObject _swordChargerPrefab;
     [SerializeField] private GameObject _swordWielderPrefab;
@@ -18,6 +19,7 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] private int _spawnCountMin = 1;
     [SerializeField] private float _spawnIntervalMax = 1f;
     [SerializeField] private float _spawnIntervalMin = 0f;
+    [SerializeField] private int _maxSpawnedObjects = 5; // The maximum number of spawned objects
 
     [SerializeField] private int _waveCount = 12; // The number of waves to spawn
     [SerializeField] private float _waveInterval = 5f; // The interval between waves
@@ -28,7 +30,8 @@ public class SpawnerController : MonoBehaviour
     {
         SWORD_CHARGER,
         BOMBER,
-        SWORD_WIELDER
+        SWORD_WIELDER,
+        BOSS_PUPPETEER_TURRET
     }
 
     private void Start()
@@ -71,7 +74,13 @@ public class SpawnerController : MonoBehaviour
         // Example: Spawn 5 enemies in a line
         for (int i = 0; i < spawnCount; i++)
         {
+            if (ReachedSpawnedObjectsLimit())
+            {
+                break;
+            }
+
             Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, 0f);
+
             Quaternion spawnRotation = Quaternion.identity;
             Instantiate(_spawningGameObject, spawnPosition, spawnRotation);
 
@@ -97,7 +106,8 @@ public class SpawnerController : MonoBehaviour
         public float? waveInterval;
         public int? currentWave;
         public float? delayedStart;
-        public SpawningGameObject spawningGameObject;
+        public int? maxSpawnObjects;
+        public SpawningGameObject? spawningGameObject;
     }
     public void SetSpawnerSettings(SpawnerSettings settings)
     {
@@ -109,6 +119,8 @@ public class SpawnerController : MonoBehaviour
         _waveInterval = settings.waveInterval != null ? settings.waveInterval.Value : _waveInterval;
         _currentWave = settings.currentWave != null ? settings.currentWave.Value : _currentWave;
         _delayedStart = settings.delayedStart != null ? settings.delayedStart.Value : _delayedStart;
+        _spawningGameObjectEnum = settings.spawningGameObject != null ? settings.spawningGameObject.Value : _spawningGameObjectEnum;
+        _maxSpawnedObjects = settings.maxSpawnObjects != null ? settings.maxSpawnObjects.Value : _maxSpawnedObjects;
 
         switch (settings.spawningGameObject)
         {
@@ -121,7 +133,31 @@ public class SpawnerController : MonoBehaviour
             case SpawningGameObject.SWORD_WIELDER:
                 _spawningGameObject = _swordWielderPrefab;
                 break;
+            case SpawningGameObject.BOSS_PUPPETEER_TURRET:
+                _spawningGameObject = _BossPuppeteerTurretPrefab;
+                break;
         }
 
+    }
+
+    public bool ReachedSpawnedObjectsLimit()
+    {
+        switch (_spawningGameObjectEnum)
+        {
+            case SpawningGameObject.SWORD_CHARGER:
+                _spawningGameObject = _swordChargerPrefab;
+                return GameObject.FindObjectsOfType<SwordChargerController>().Length >= _maxSpawnedObjects;
+            case SpawningGameObject.BOMBER:
+                _spawningGameObject = _bomberPrefab;
+                return GameObject.FindObjectsOfType<BomberController>().Length >= _maxSpawnedObjects;
+            case SpawningGameObject.SWORD_WIELDER:
+                _spawningGameObject = _swordWielderPrefab;
+                return GameObject.FindObjectsOfType<SwordWielderController>().Length >= _maxSpawnedObjects;
+            case SpawningGameObject.BOSS_PUPPETEER_TURRET:
+                _spawningGameObject = _BossPuppeteerTurretPrefab;
+                return GameObject.FindObjectsOfType<BossPuppeteerTurretController>().Length >= _maxSpawnedObjects;
+            default:
+                return false; // default as keep spawning
+        }
     }
 }

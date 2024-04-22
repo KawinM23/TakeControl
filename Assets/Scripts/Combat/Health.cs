@@ -83,6 +83,12 @@ namespace Assets.Scripts.Combat
             };
         }
 
+        public void ResetHealthWithNewMaxHealth(int health)
+        {
+            _maxHealth = health;
+            _currentHealth = health;
+        }
+
 
         // as the parameter grows larger, make a struct for damage inputs
         public void TakeDamage(int damage, Vector2 hitDirection, float knockbackMultiplier)
