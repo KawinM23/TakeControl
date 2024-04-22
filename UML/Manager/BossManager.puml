@@ -1,0 +1,9 @@
+@startuml
+class BossManager {
+    + ResetKillCount() : void
+    + GetEnemyKillCount() : int
+    + IncrementEnemyKillCount() : void
+}
+MonoBehaviour <|-- BossManager
+BossManager --> "Instance" BossManager
+@enduml

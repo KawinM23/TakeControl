@@ -1,6 +1,7 @@
 @startuml
 class Health {
     + ResetHealth() : void
+    + ResetHealthWithNewMaxHealth(health:int) : void
     + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
     + GetMaxHealth() : int
     + GetCurrentHealth() : int

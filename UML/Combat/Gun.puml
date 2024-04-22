@@ -12,6 +12,9 @@ class Gun {
     + SetBulletSpeed(bulletSpeed:float) : void
     + GetShootingDelay() : double
     + SetShootingDelay(shootingDelay:double) : void
+    + SetKnockbackMultiplier(knockbackMultiplier:float) : void
+    + SetShootingDelay(shootingDelay:float) : void
+    + SetReloadTime(reloadTime:float) : void
 }
 BaseWeapon <|-- Gun
 @enduml

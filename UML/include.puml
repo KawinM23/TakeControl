@@ -96,6 +96,13 @@ class SaveManager {
 }
 MonoBehaviour <|-- SaveManager
 SaveManager --> "Instance" SaveManager
+class BossManager {
+    + ResetKillCount() : void
+    + GetEnemyKillCount() : int
+    + IncrementEnemyKillCount() : void
+}
+MonoBehaviour <|-- BossManager
+BossManager --> "Instance" BossManager
 class ResourceManager {
     + {static}  <<event>> OnCurrenyChange : UnityAction<int> 
     + LoadData(data:GameData) : void
@@ -114,6 +121,7 @@ class SoundManager {
     + music_multiplier : float
     + sfx_multiplier : float
     + playingBGM : string
+    + BGMMenu : string = "MEN NeoCityDive"
     + DingPitchMin : float = 0.5f
     + DingPitchMax : float = 3.0f
     + PlayJump() : void
@@ -283,6 +291,13 @@ IDataPersist <|-- CollectTrial
 class CollsionDamage {
 }
 MonoBehaviour <|-- CollsionDamage
+abstract class HackCompletion {
+    + {abstract} OnHackSuccess() : void
+    + {abstract} OnHackFail() : void
+    + {abstract} OnComboHackSuccess(comboCount:int) : void
+    + {abstract} OnComboHackFail(comboCount:int) : void
+}
+MonoBehaviour <|-- HackCompletion
 class Jump {
     + GetMaxAirJump() : int
 }
@@ -311,6 +326,7 @@ enum ShakeType {
     Attack,
     HitEnemy,
     TakeDamage,
+    ShootBigBullet,
 }
 MonoBehaviour <|-- ScreenShake
 ScreenShake --> "Instance" ScreenShake
@@ -340,10 +356,14 @@ class Gun {
     + SetBulletSpeed(bulletSpeed:float) : void
     + GetShootingDelay() : double
     + SetShootingDelay(shootingDelay:double) : void
+    + SetKnockbackMultiplier(knockbackMultiplier:float) : void
+    + SetShootingDelay(shootingDelay:float) : void
+    + SetReloadTime(reloadTime:float) : void
 }
 BaseWeapon <|-- Gun
 class Health {
     + ResetHealth() : void
+    + ResetHealthWithNewMaxHealth(health:int) : void
     + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
     + GetMaxHealth() : int
     + GetCurrentHealth() : int
@@ -456,8 +476,30 @@ AIController <|-- TemplateController
 InputController <|-- TemplateController
 TemplateController +-- State
 class SpawnerController {
+    + SetSpawnerSettings(settings:SpawnerSettings) : void
+    + ReachedSpawnedObjectsLimit() : bool
+}
+enum SpawningGameObject {
+    SWORD_CHARGER,
+    BOMBER,
+    SWORD_WIELDER,
+    BOSS_PUPPETEER_TURRET,
+}
+class SpawnerSettings {
+    + spawnCountMax : int?
+    + spawnCountMin : int?
+    + spawnIntervalMax : float?
+    + spawnIntervalMin : float?
+    + waveCount : int?
+    + waveInterval : float?
+    + currentWave : int?
+    + delayedStart : float?
+    + maxSpawnObjects : int?
+    + spawningGameObject : SpawningGameObject?
 }
 MonoBehaviour <|-- SpawnerController
+SpawnerController +-- SpawningGameObject
+SpawnerController +-- SpawnerSettings
 class TurretController {
     + <<override>> GetAttackDirection() : Vector2?
     + <<override>> IsReloadPressed() : bool
@@ -570,6 +612,49 @@ BaseHealthBar --> "fill" Image
 class EquipmentsManager {
 }
 MonoBehaviour <|-- EquipmentsManager
+class BossPuppeteerController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum BossPhase {
+    PHASE_1,
+    PHASE_2,
+    PHASE_3,
+    PHASE_4,
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerController
+InputController <|-- BossPuppeteerController
+BossPuppeteerController +-- BossPhase
+BossPuppeteerController +-- State
+class BossPuppeteerTurretController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+    + SetGunAmmo(ammo:int) : void
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerTurretController
+InputController <|-- BossPuppeteerTurretController
+BossPuppeteerTurretController +-- State
+class BossPuppeteerHackCompletion {
+    + <<override>> OnHackSuccess() : void
+    + <<override>> OnHackFail() : void
+    + <<override>> OnComboHackSuccess(comboCount:int) : void
+    + <<override>> OnComboHackFail(comboCount:int) : void
+}
+HackCompletion <|-- BossPuppeteerHackCompletion
 class Boss1Controller {
 }
 enum Phase {

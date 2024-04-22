@@ -12,6 +12,7 @@ enum ShakeType {
     Attack,
     HitEnemy,
     TakeDamage,
+    ShootBigBullet,
 }
 MonoBehaviour <|-- ScreenShake
 ScreenShake --> "Instance" ScreenShake

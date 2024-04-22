@@ -1,0 +1,23 @@
+@startuml
+class BossPuppeteerController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum BossPhase {
+    PHASE_1,
+    PHASE_2,
+    PHASE_3,
+    PHASE_4,
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerController
+InputController <|-- BossPuppeteerController
+BossPuppeteerController +-- BossPhase
+BossPuppeteerController +-- State
+@enduml

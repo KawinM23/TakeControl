@@ -1,0 +1,17 @@
+@startuml
+class BossPuppeteerTurretController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+    + SetGunAmmo(ammo:int) : void
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerTurretController
+InputController <|-- BossPuppeteerTurretController
+BossPuppeteerTurretController +-- State
+@enduml
