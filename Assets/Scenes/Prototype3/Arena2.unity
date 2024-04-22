@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -649,6 +653,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_Name
       value: Sword Charger (1)
@@ -867,6 +879,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6197823302901483079, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: _hackableHealth
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
@@ -1121,6 +1137,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_Name
       value: Sword Charger (3)
@@ -1166,6 +1190,10 @@ PrefabInstance:
     - target: {fileID: 481469613779333736, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1707,7 +1735,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2249751452478179486, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
-      value: 70
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2249751452478179486, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
@@ -1719,7 +1747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2249751452478179486, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
-      value: 70
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2355092134592965265, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1906,6 +1934,14 @@ PrefabInstance:
     - target: {fileID: 8314997697145322266, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_Name
@@ -2101,7 +2137,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8244695600767968968, guid: ef6f314ef3831bb4abcab0a43d001263, type: 3}
   m_PrefabInstance: {fileID: 1166584127}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1388626926
+--- !u!1001 &1217256112
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2109,27 +2145,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-
-    - target: {fileID: 5565982667870625225, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.018
-      objectReference: {fileID: 0}
-    - target: {fileID: 5565982667870625225, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.425
-      objectReference: {fileID: 0}
-
     - target: {fileID: 6068544502161847032, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.225014
+      value: 69.32
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.132423
+      value: -1.67
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2261,6 +2287,10 @@ PrefabInstance:
     - target: {fileID: 481469613779333736, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2883,6 +2913,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_Name
       value: Sword Charger (2)
@@ -3171,6 +3209,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: _hackableHealth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7740698587368872121, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: m_Name
       value: Turret (1)
@@ -3318,6 +3360,10 @@ PrefabInstance:
     - target: {fileID: 481469613779333736, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3468,6 +3514,10 @@ PrefabInstance:
     - target: {fileID: 481469613779333736, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3626,6 +3676,10 @@ PrefabInstance:
     - target: {fileID: 481469613779333736, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788775878349072789, guid: b11996da7481a563b889261ccde1a19f, type: 3}
+      propertyPath: _hackDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1231145798718591814, guid: b11996da7481a563b889261ccde1a19f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3989,7 +4043,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 973888879}
   - {fileID: 2093836311}
-  - {fileID: 1388626926}
   - {fileID: 922819615}
   - {fileID: 1127115815}
   - {fileID: 806578264}
@@ -3998,3 +4051,4 @@ SceneRoots:
   - {fileID: 1877461305}
   - {fileID: 1866377921}
   - {fileID: 9692298}
+  - {fileID: 1217256112}
