@@ -15,10 +15,10 @@ public class Spike : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Damage Spike");
         if (collision.gameObject.TryGetComponent(out Health health))
         {
-            health.TakeDamage(damagePerTick, Vector2.up, _knockbackMultiplier);
+            var hitDir = Vector2.Dot(-collision.GetContact(0).normal, transform.up) >= 0 ? transform.up : -transform.up;
+            health.TakeDamage(damagePerTick, hitDir, _knockbackMultiplier);
         }
     }
 
