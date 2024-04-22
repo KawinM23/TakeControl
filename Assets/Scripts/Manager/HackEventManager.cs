@@ -57,6 +57,7 @@ public class HackEventManager : MonoBehaviour
 
     public void StartHack(float hackDuration, int amount)
     {
+        Debug.Log("Start Hack " + amount + " buttons");
         _hackEventCanvas.SetActive(true);
         IsHacking = true;
         HackTimer = hackDuration;
@@ -64,14 +65,63 @@ public class HackEventManager : MonoBehaviour
         ButtonAmount = amount;
         TotalButtonAmount = amount;
         Time.timeScale = 0.01f;
+
         Vector2 size = _buttonPrefab.GetComponent<RectTransform>().sizeDelta;
+        List<Vector3> validPositions = new List<Vector3>();  // Store valid positions for buttons
+
+        // Try to place buttons within screen bounds without overlap
         for (int i = 0; i < amount; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(0 + size.x / 2, Screen.width - size.x / 2), Random.Range(0 + size.y / 2, Screen.height - size.y / 2), 0);
-            GameObject button = Instantiate(_buttonPrefab, pos, new Quaternion(), _hackEventCanvas.transform);
-            HackButtons.Add(button.GetComponent<HackButtonUI>());
+            int attempts = 1000; // Maximum attempts to find a valid position
+            bool positionFound = false;
+
+            while (attempts > 0 && !positionFound)
+            {
+                Vector3 pos = new Vector3(Random.Range(0 + size.x / 2, Screen.width - size.x / 2),
+                                            Random.Range(0 + size.y / 2, Screen.height - size.y / 2), 0);
+
+                // Check for overlap with existing buttons and screen edges
+                bool isValid = true;
+                foreach (Vector3 validPos in validPositions)
+                {
+                    if (Vector3.Distance(pos, validPos) < size.x + size.y) // Check for minimum distance between buttons
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (isValid && pos.x > size.x / 2 && pos.x < Screen.width - size.x / 2 &&
+                    pos.y > size.y / 2 && pos.y < Screen.height - size.y / 2) // Check screen edges
+                {
+                    validPositions.Add(pos);
+                    positionFound = true;
+                }
+
+                attempts--;
+            }
+
+            // If no valid position found after attempts, reduce amount by 1
+            if (!positionFound)
+            {
+                amount--;
+                Debug.LogWarning($"Failed to find position for button {i + 1}. Reducing total buttons to {amount}");
+            }
         }
 
+        // If any valid positions found, instantiate buttons
+        if (validPositions.Count > 0)
+        {
+            for (int i = 0; i < validPositions.Count; i++)
+            {
+                GameObject button = Instantiate(_buttonPrefab, validPositions[i], new Quaternion(), _hackEventCanvas.transform);
+                HackButtons.Add(button.GetComponent<HackButtonUI>());
+            }
+        }
+        else
+        {
+            Debug.LogError("No valid positions found for buttons. Hack event may not function properly.");
+        }
     }
 
     public bool EndHack()

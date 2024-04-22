@@ -83,6 +83,12 @@ namespace Assets.Scripts.Combat
             };
         }
 
+        public void ResetHealthWithNewMaxHealth(int health)
+        {
+            _maxHealth = health;
+            _currentHealth = health;
+        }
+
 
         // as the parameter grows larger, make a struct for damage inputs
         public void TakeDamage(int damage, Vector2 hitDirection, float knockbackMultiplier)
@@ -115,9 +121,9 @@ namespace Assets.Scripts.Combat
 
             ApplyKnockback(hitDirection, knockbackMultiplier);
 
+
             _currentHealth -= damage;
-            _iFrame = true;
-            _iFrameCounter = _iFrameDuration;
+            TriggerIFrame();
         }
 
         IEnumerator Flash(Color targetColor)
@@ -137,7 +143,7 @@ namespace Assets.Scripts.Combat
 
         private void Die()
         {
-            if (_mortal)
+            if (_mortal) // todo: whoever wrote this line, write some comments please
             {
                 if (gameObject == PlayerManager.Instance.Player)
                 {
@@ -152,6 +158,7 @@ namespace Assets.Scripts.Combat
                     Destroy(go, 2f);
                 }
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
+                BossManager.Instance.IncrementEnemyKillCount();
                 Destroy(gameObject);
             }
         }
@@ -179,7 +186,6 @@ namespace Assets.Scripts.Combat
             float knockbackForce = _defaultKnockbackForce * multiplier;
 
             _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
-            _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
         }
 
         // Let other scripts trigger IFrame, for example, dashing

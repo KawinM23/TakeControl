@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 6985303427310886824}
   - component: {fileID: 94655036973379251}
   - component: {fileID: 6895288219654541975}
+  - component: {fileID: 8935588360818539076}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -557,7 +558,7 @@ MonoBehaviour:
     source: {fileID: 0}
   playingBGM: 
   playingBGMVolume: 
-  nextBGM: 
+  nextBGM: CMB TechNTech
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!114 &6985303427310886824
@@ -609,6 +610,19 @@ MonoBehaviour:
   _currency: 0
   _bombCurrencyCost: 30
   _bombCooldown: 3
+--- !u!114 &8935588360818539076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376023059759919086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a166e6ac2e586441ac5cc61b1155960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyKillCount: 0
 --- !u!1 &3866549758718279787
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Assets.Scripts.Effect;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
@@ -8,6 +9,12 @@ namespace Assets.Scripts.Combat
     {
         private Controller _controller;
 
+        /// <summary>
+        /// bullet speed in units per second
+        /// 10: normal we use in everything
+        /// 20: fast
+        /// 40: brrr
+        /// </summary>
         [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
         [SerializeField] private float _knockbackMultiplier = 0.7f;
         [SerializeField] private GameObject _bulletPrefab;
@@ -85,6 +92,13 @@ namespace Assets.Scripts.Combat
                 return;
             }
             Debug.Log("Shoot");
+
+            // Screen Shake if bullet is big
+            if (_bulletPrefab.transform.localScale.x >= 0.3)
+            {
+                ScreenShake.Shake(ScreenShake.ShakeType.ShootBigBullet);
+            }
+
             _shootTimer = _shootingDelay;
             CurrentAmmo -= _unlimitedAmmo ? 0 : (uint)1;
             Reloading = false;
@@ -151,6 +165,21 @@ namespace Assets.Scripts.Combat
         public void SetShootingDelay(double shootingDelay)
         {
             _shootingDelay = shootingDelay;
+        }
+
+        public void SetKnockbackMultiplier(float knockbackMultiplier)
+        {
+            _knockbackMultiplier = knockbackMultiplier;
+        }
+
+        public void SetShootingDelay(float shootingDelay)
+        {
+            _shootingDelay = shootingDelay;
+        }
+
+        public void SetReloadTime(float reloadTime)
+        {
+            _reloadTime = reloadTime;
         }
     }
 }
