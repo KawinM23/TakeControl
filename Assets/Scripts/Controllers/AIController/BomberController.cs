@@ -119,6 +119,7 @@ public class BomberController : AIController, InputController
 
         while (true)
         {
+            player = PlayerManager.Instance.Player;
             // if collide with player, explode
             if (Vector2.Distance(transform.position, player.transform.position) < _explosionTriggerRadius)
             {

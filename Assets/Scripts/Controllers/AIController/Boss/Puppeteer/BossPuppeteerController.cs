@@ -228,7 +228,7 @@ public class BossPuppeteerController : AIController, InputController
             // TODO: optimize
             var casts = Physics2D.LinecastAll(transform.position, PlayerManager.Instance.Player.transform.position, _layerMask);
             var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            if (!cast.transform.CompareTag("Player"))
+            if (cast && cast.transform && !cast.transform.CompareTag("Player"))
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.IDLE;
