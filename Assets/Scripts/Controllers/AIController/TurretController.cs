@@ -73,15 +73,7 @@ public class TurretController : AIController, InputController
                 continue;
             }
 
-            // TODO: optimize
-
-            // does it see the player?
-            var casts = Physics2D.LinecastAll(transform.position, player.transform.position, _layerMask);
-            var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            Debug.DrawLine(transform.position, player.transform.position, Color.red, 0.5f);
-            Debug.DrawLine(transform.position, cast.point, Color.green, 0.5f);
-
-            if (cast.transform.CompareTag("Player"))
+            if (IsSeePlayer())
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.SHOOTING;
@@ -102,10 +94,7 @@ public class TurretController : AIController, InputController
                 yield break;
             }
 
-            // TODO: optimize
-            var casts = Physics2D.LinecastAll(transform.position, PlayerManager.Instance.Player.transform.position, _layerMask);
-            var cast = casts.FirstOrDefault(c => c.transform.gameObject != gameObject);
-            if (!cast.transform.CompareTag("Player"))
+            if (IsSeePlayer())
             {
                 yield return new WaitForFixedUpdate();
                 _state = State.IDLE;
@@ -141,6 +130,17 @@ public class TurretController : AIController, InputController
     public override bool IsJumpPressed()
     {
         return _state == State.RELOADING;
+    }
+
+    bool IsSeePlayer()
+    {
+        var player = PlayerManager.Instance.Player;
+        var cast = Physics2D.Linecast(transform.position, player.transform.position, _layerMask);
+        if (cast && cast.transform.gameObject == gameObject)
+        {
+            Debug.LogWarning("Linecast hit itself");
+        }
+        return !cast || cast.transform.gameObject == player;
     }
 }
 
