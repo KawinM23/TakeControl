@@ -112,11 +112,18 @@ public class GunnerController : AIController, InputController
                 lastMoveTime = Time.time;
             }
 
-            // Patrol around home
-            var distFromHome = Vector2.Distance(transform.position, _home);
-            if (distFromHome >= _patrolRadius || Time.time - lastMoveTime > 1f)
+            if (Mathf.Approximately(_patrolRadius, 0f))
             {
-                _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
+                _idleMovement = 0;
+            }
+            else
+            {
+                // Patrol around home
+                var distFromHome = Vector2.Distance(transform.position, _home);
+                if (distFromHome >= _patrolRadius || Time.time - lastMoveTime > 1f)
+                {
+                    _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
+                }
             }
 
             yield return new WaitForSeconds(0.5f);
