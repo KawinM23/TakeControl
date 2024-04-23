@@ -16,6 +16,7 @@ namespace Assets.Scripts.Combat
         /// 40: brrr
         /// </summary>
         [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
+        [SerializeField] private int _bulletDamage = 15; // TODO: confirm design with team
         [SerializeField] private float _knockbackMultiplier = 0.7f;
         [SerializeField] private GameObject _bulletPrefab;
 
@@ -112,7 +113,7 @@ namespace Assets.Scripts.Combat
             GameObject bulletInstance = Instantiate(_bulletPrefab, firePoint, Quaternion.identity);
             if (bulletInstance.TryGetComponent(out Bullet bullet))
             {
-                bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier);
+                bullet.Fire(bulletDirection.normalized * _bulletSpeed, _knockbackMultiplier, _bulletDamage);
                 if (PlayerManager.Instance) bullet.IsEnemy = PlayerManager.Instance.Player != gameObject;
             }
         }

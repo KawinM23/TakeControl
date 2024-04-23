@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Combat
 {
-    [RequireComponent(typeof(Controller))]
 
     public class Bullet : BaseProjectile
     {
@@ -24,10 +23,11 @@ namespace Assets.Scripts.Combat
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void Fire(Vector2 velocity, float knockbackMultiplier)
+        public void Fire(Vector2 velocity, float knockbackMultiplier, int bulletDamage)
         {
             _rigidbody.velocity = velocity;
             _knockbackMultiplier = knockbackMultiplier;
+            _damage = bulletDamage;
             Destroy(gameObject, 5f);
         }
 
