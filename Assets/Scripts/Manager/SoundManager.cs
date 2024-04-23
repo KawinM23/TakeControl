@@ -9,6 +9,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
     public float music_multiplier;
     public float sfx_multiplier;
+    private float currentMusicMultiplier;
+    private float currentSFXMultiplier;
 
     // Sounds
     public Sound[] sounds;
@@ -101,6 +103,24 @@ public class SoundManager : MonoBehaviour
             // Play BGM based on scene name
             PlayBGMBySceneName(_current_scene);
             _prev_scene = _current_scene;
+        }
+
+        // Update volume
+        if (currentMusicMultiplier != music_multiplier)
+        {
+            foreach (Sound s in bgms)
+            {
+                s.source.volume = music_multiplier;
+            }
+            currentMusicMultiplier = music_multiplier;
+        }
+        if (currentSFXMultiplier != sfx_multiplier)
+        {
+            foreach (Sound s in sounds)
+            {
+                s.source.volume = sfx_multiplier;
+            }
+            currentSFXMultiplier = sfx_multiplier;
         }
     }
 
