@@ -1026,6 +1026,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: _maxHealth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: _hackableHealth
       value: 0
       objectReference: {fileID: 0}
@@ -2355,11 +2359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.74
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: -2.3
       objectReference: {fileID: 0}
     - target: {fileID: 8312403371105361069, guid: 84baa9fc7e35ecf4db7d4a3f7821d488, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3331,6 +3335,10 @@ PrefabInstance:
       propertyPath: _hackDuration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8438464867192642384, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackableLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_Name
       value: Sword Charger (2)
@@ -3796,6 +3804,10 @@ PrefabInstance:
     - target: {fileID: 7290476940520565841, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: _shootingDelay
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
+      propertyPath: _maxHealth
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7518881047702849073, guid: b7129850ad6e47847a9069cd5c58bbcb, type: 3}
       propertyPath: _hackableHealth
