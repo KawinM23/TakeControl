@@ -525,6 +525,26 @@ MonoBehaviour:
     volume: 0.48
     pitch: 1
     source: {fileID: 0}
+  - name: JumpPad
+    clip: {fileID: 8300000, guid: 3f8574b15d6cdf84bae93a50c50ba9e9, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Laser
+    clip: {fileID: 8300000, guid: 0b20191629a08c149b67f3dd43ea2baa, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Hover
+    clip: {fileID: 8300000, guid: 0909fd42d51a89c439c21053e6a60127, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
+  - name: Confirm
+    clip: {fileID: 8300000, guid: 9865070280ee30c4e85a3a46f2db1049, type: 3}
+    volume: 0.48
+    pitch: 1
+    source: {fileID: 0}
   bgms:
   - name: EXP Isolation
     clip: {fileID: 8300000, guid: 9b01b343f1fdf4ed0ad7ca5449567528, type: 3}
@@ -561,6 +581,12 @@ MonoBehaviour:
   nextBGM: EXP BlueTwilight
   BGMMenu: MEN NeoCityDive
   BGMExploration: EXP BlueTwilight
+  BGMCombat:
+  - CMB VirtualStorm
+  - CMB Crossfire
+  - CMB TechNTech
+  _prev_scene: 
+  _current_scene: 
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!114 &6985303427310886824

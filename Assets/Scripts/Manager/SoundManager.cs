@@ -19,11 +19,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] public string playingBGM;
     [SerializeField] private string playingBGMVolume; // only for debugging
 
-    [SerializeField] private string nextBGM; // only for debugging
+    [SerializeField] public string nextBGM;
 
     // BGM Names
     public string BGMMenu = "MEN NeoCityDive";
     public string BGMExploration = "EXP BlueTwilight";
+    public List<string> BGMCombat = new List<string> { "CMB VirtualStorm", "CMB Crossfire", "CMB TechNTech" };
 
     // Scene Names
     public string _prev_scene;
@@ -97,8 +98,12 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayBGMBySceneName(string sceneName) {
+        // hardcode BGM for each scene here
+        // ...
+        // ...
+
         Debug.Log("Playing BGM for scene: " + sceneName);
-        if (sceneName.Contains("Menu"))
+        if (sceneName.Contains("Menu") || sceneName.Contains("Option"))
         {
             nextBGM=BGMMenu;
         }
@@ -114,6 +119,10 @@ public class SoundManager : MonoBehaviour
         {
             nextBGM=BGMExploration; // default
         }
+    }
+
+    public string GetRandomCombatBGM() {
+        return BGMCombat[Random.Range(0, BGMCombat.Count)];
     }
 
     public void PlayJump()
@@ -139,6 +148,22 @@ public class SoundManager : MonoBehaviour
     public void PlayMagicCoin()
     {
         Play("MagicCoin");
+    }
+
+    public void PlayJumpPad() {
+        Play("JumpPad");
+    }
+
+    public void PlayLaser(){
+        Play("Laser");
+    }
+
+    public void PlayHover() {
+        Play("Hover");
+    }
+
+    public void PlayConfirm() {
+        Play("Confirm");
     }
 
     public void PlaySlash()

@@ -65,6 +65,7 @@ public class CollectTrial : Interactable, IDataPersist
     public void StartTrial()
     {
         Debug.Log("Start Trial");
+        SoundManager.Instance.nextBGM = SoundManager.Instance.GetRandomCombatBGM();
         _challenging = true;
         _collectCount = _collectList.Count;
         _collectList.ForEach(go => { go.SetActive(true); });
@@ -72,6 +73,7 @@ public class CollectTrial : Interactable, IDataPersist
 
     public void CancelTrial()
     {
+        SoundManager.Instance.nextBGM = SoundManager.Instance.BGMExploration;
         _challenging = false;
         _collectCount = _collectList.Count;
         _collectList.ForEach(go => { go.SetActive(false); });

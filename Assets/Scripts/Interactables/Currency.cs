@@ -17,6 +17,7 @@ namespace Assets.Scripts.Interactables
             if (collision != null && collision.gameObject.CompareTag("Player"))
             {
                 ResourceManager.Instance.AddCurrency(_value);
+                SoundManager.Instance.PlayDing(Random.Range(1,4),Random.Range(5,6));
                 Destroy(gameObject);
             }
         }
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Interactables
             if (collision != null && collision.CompareTag("Player"))
             {
                 ResourceManager.Instance.AddCurrency(_value);
+                SoundManager.Instance.PlayDing(Random.Range(1,4),Random.Range(5,6));
                 Destroy(gameObject);
             }
         }

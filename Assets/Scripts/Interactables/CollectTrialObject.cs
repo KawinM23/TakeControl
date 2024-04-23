@@ -9,6 +9,7 @@ public class CollectTrialObject : MonoBehaviour
         if (collision != null && collision.CompareTag("Player"))
         {
             _collectTrial.Collect();
+            SoundManager.Instance.PlayDing(Random.Range(1,4),Random.Range(5,6));
             gameObject.SetActive(false);
         }
     }

@@ -39,22 +39,26 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        SoundManager.Instance.PlayConfirm();
         StopAllCoroutines();
         DisableButtons();
         StartCoroutine(PlayGameAnimation());
     }
     public void LoadGame()
     {
+        SoundManager.Instance.PlayConfirm();
         StopAllCoroutines();
         DisableButtons();
         StartCoroutine(LoadGameAnimation());
     }
     public void GoToOption()
     {
+        SoundManager.Instance.PlayConfirm();
         SceneManager.LoadSceneAsync(1);
     }
     public void QuitGame()
     {
+        SoundManager.Instance.PlayConfirm();
         Application.Quit();
     }
 
