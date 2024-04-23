@@ -48,11 +48,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Prototype3/Map2-2.unity
     guid: 9a8189ef496781e4a8cf5a202cd2b399
   - enabled: 1
-    path: Assets/Scenes/Prototype3/EliteEnemy.unity
-    guid: c2972283a3d15dd4e99b840b092efa54
+    path: Assets/Scenes/Prototype3/Map2-3.unity
+    guid: 21b097bc72a1ea44a8b955d3ca72425c
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-4.unity
     guid: 3ebeb2954b8504f0eb29e686cf238b59
+  - enabled: 1
+    path: Assets/Scenes/BossScene/Map2-5.unity
+    guid: 791989e2d013b4e0ea66e71f2baff7b7
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-6.unity
     guid: 36fbf70f136917c42b0f0388547d409e
@@ -60,8 +63,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Prototype3/Map2-7.unity
     guid: b0f0b47182e649545ab148744273aad5
   - enabled: 1
-    path: Assets/Scenes/Prototype3/Map2-3.unity
-    guid: 21b097bc72a1ea44a8b955d3ca72425c
+    path: Assets/Scenes/Prototype3/Map2-8.unity
+    guid: d5406507b1104b445b08b30c135936ea
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-9.unity
     guid: ae72fe5f2d4669341aff722dbe031c7e
