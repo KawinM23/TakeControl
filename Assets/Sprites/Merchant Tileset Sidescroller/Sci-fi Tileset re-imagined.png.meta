@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sci-fi Tileset re-imagined_9
+      name: Sci-fi Tileset Umbrella
       rect:
         serializedVersion: 2
         x: 149
@@ -1483,7 +1483,7 @@ TextureImporter:
         width: 3
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1504,7 +1504,7 @@ TextureImporter:
         width: 4
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1512,6 +1512,48 @@ TextureImporter:
       bones: []
       spriteID: 5cea5757f764326699473404982e5fde
       internalID: 1094622330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sci-fi Tileset Platform
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 156
+        width: 48
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27bb453e53bb8f349b4ae77fac495284
+      internalID: -1986102136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sci-fi Tileset Rod
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 128
+        width: 3
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5bd9c93414cf4c19a1a28813cfa98ce
+      internalID: 969587832
       vertices: []
       indices: 
       edges: []
@@ -1534,12 +1576,15 @@ TextureImporter:
       Sci-fi Tileset Grass 3: 191704871
       Sci-fi Tileset Home: -1724803970
       Sci-fi Tileset Home 2: 882080313
+      Sci-fi Tileset Platform: -1986102136
       Sci-fi Tileset Rock: 1891933522
       Sci-fi Tileset Rock 2: 1774745626
       Sci-fi Tileset Rock 3: 121378442
       Sci-fi Tileset Rock 4: -731911099
       Sci-fi Tileset Rock 5: -1805561674
+      Sci-fi Tileset Rod: 969587832
       Sci-fi Tileset Tree: 1437623621
+      Sci-fi Tileset Umbrella: 344169914
       Sci-fi Tileset Vine: 923398309
       Sci-fi Tileset Vine 2: -717780335
       Sci-fi Tileset Vine 3: 1188265302
@@ -1600,7 +1645,6 @@ TextureImporter:
       Sci-fi Tileset re-imagined_64: 88560320
       Sci-fi Tileset re-imagined_7: -1840243345
       Sci-fi Tileset re-imagined_8: -366263381
-      Sci-fi Tileset re-imagined_9: 344169914
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
