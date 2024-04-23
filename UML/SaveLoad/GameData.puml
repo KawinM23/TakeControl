@@ -6,6 +6,7 @@ class GameData {
 }
 class "SerializedDictionary`2"<T1,T2> {
 }
+GameData o-> "visited<string,bool>" "SerializedDictionary`2"
 GameData o-> "switches<string,bool>" "SerializedDictionary`2"
 GameData o-> "fightArenas<string,bool>" "SerializedDictionary`2"
 GameData o-> "collectTrials<string,bool>" "SerializedDictionary`2"

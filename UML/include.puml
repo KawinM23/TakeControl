@@ -228,6 +228,7 @@ class GameData {
 }
 class "SerializedDictionary`2"<T1,T2> {
 }
+GameData o-> "visited<string,bool>" "SerializedDictionary`2"
 GameData o-> "switches<string,bool>" "SerializedDictionary`2"
 GameData o-> "fightArenas<string,bool>" "SerializedDictionary`2"
 GameData o-> "collectTrials<string,bool>" "SerializedDictionary`2"
@@ -443,6 +444,12 @@ class MainMenu {
     + QuitGame() : void
 }
 MonoBehaviour <|-- MainMenu
+class MapUI {
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+}
+MonoBehaviour <|-- MapUI
+IDataPersist <|-- MapUI
 class VolumeSetting {
     + SetMusicVolume() : void
     + SetSFXVolume() : void

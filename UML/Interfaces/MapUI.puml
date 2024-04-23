@@ -1,0 +1,8 @@
+@startuml
+class MapUI {
+    + LoadData(data:GameData) : void
+    + SaveData(data:GameData) : void
+}
+MonoBehaviour <|-- MapUI
+IDataPersist <|-- MapUI
+@enduml
