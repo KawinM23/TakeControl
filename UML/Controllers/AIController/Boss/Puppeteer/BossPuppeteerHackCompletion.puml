@@ -1,0 +1,9 @@
+@startuml
+class BossPuppeteerHackCompletion {
+    + <<override>> OnHackSuccess() : void
+    + <<override>> OnHackFail() : void
+    + <<override>> OnComboHackSuccess(comboCount:int) : void
+    + <<override>> OnComboHackFail(comboCount:int) : void
+}
+HackCompletion <|-- BossPuppeteerHackCompletion
+@enduml

@@ -80,7 +80,7 @@ namespace Assets.Scripts.Capabilities
                     _dashCooldownTimer = _dashCooldown;
                 }
             }
-            else if (!_canDash && _dashCooldownTimer >= 0)
+            else if (!_canDash && _dashCooldownTimer >= 0 && Time.timeScale != 0f)
             {
                 _dashCooldownTimer -= Time.deltaTime;
                 if (_dashCooldownTimer <= 0)

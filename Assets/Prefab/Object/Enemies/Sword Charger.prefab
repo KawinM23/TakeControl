@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1009252956147524123, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: _hackableHealth
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009252956147524123, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: OnHackable.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1211996486245310072, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8862969
@@ -64,6 +72,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4063152354006543853, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5287126244209931981, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -127,6 +139,14 @@ PrefabInstance:
     - target: {fileID: 8280861353358276832, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8400403841476335786, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: _buttonAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8400403841476335786, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
+      propertyPath: _hackDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8505732470146276416, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: input._underlyingValue
@@ -134,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 6602659635444529729}
     - target: {fileID: 8823777921655399904, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: m_Name
-      value: Template Variant
+      value: Sword Charger
       objectReference: {fileID: 0}
     - target: {fileID: 9111843524809320398, guid: e2b1d786e453f974aa1b0f38a233ac6e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -174,6 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69893767aa81f423830cc61fe76a1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _patrolRadius: 5
+  _idleSpeed: 0.5
+  _jumpCount: 3
+  _superCharge: 0
+  _slashRange: 2
+  _cooldownDuration: 1
 --- !u!114 &718361996031033043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +217,7 @@ MonoBehaviour:
   spanAngle: 60
   targetMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   obstructionMask:
     serializedVersion: 2
     m_Bits: 128

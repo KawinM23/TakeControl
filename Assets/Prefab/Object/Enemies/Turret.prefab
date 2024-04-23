@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.39944226, g: 1, b: 0.027707636, a: 1}
   m_FlipX: 0
@@ -174,7 +174,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005859852, y: 0.095712185}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -185,7 +185,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.70798445, y: 0.7501478}
+  m_Size: {x: 0.54, y: 0.54}
   m_EdgeRadius: 0.03
 --- !u!50 &3284077280451671581
 Rigidbody2D:
@@ -277,6 +277,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _dieParticle: {fileID: 5425198399417718633, guid: 852cb2129ab9cfd489fd5c0d6cf3ef52, type: 3}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8592266432460933116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,9 @@ MonoBehaviour:
     m_Bits: 64
   _hackDuration: 0
   _buttonAmount: 0
+  _combo: 0
+  _comboHackDurationIncrement: 0
+  _comboButtonAmountIncrement: 0
   _pulsePrefab: {fileID: 0}
   _hackLinePrefab: {fileID: 0}
   _hackLineDuration: 0.5
@@ -328,9 +332,9 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
   _bulletSpread: 0
   _shootingDelay: 1
-  _reloadTime: 0
-  MaxAmmo: 20
-  CurrentAmmo: 20
+  _reloadTime: 5
+  MaxAmmo: 5
+  CurrentAmmo: 5
   Reloading: 0
 --- !u!114 &7947995267647059038
 MonoBehaviour:
@@ -346,7 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 136
 --- !u!1 &7992092877407335048
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4652957832784631927}
   - component: {fileID: 4306951932662675316}
-  - component: {fileID: 2568125282905409849}
+  - component: {fileID: 6931631391083902580}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -374,9 +378,9 @@ Transform:
   m_GameObject: {fileID: 7992092877407335048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.08, z: 0}
-  m_LocalScale: {x: 1.7755793, y: 1.7755793, z: 2.9592988}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -0.007, z: 0}
+  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 806460129919701863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -432,7 +436,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2568125282905409849
+--- !u!95 &6931631391083902580
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0

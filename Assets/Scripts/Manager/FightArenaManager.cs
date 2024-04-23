@@ -36,6 +36,13 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
         {
             door.SetActive(false);
         }
+        foreach (EnemiesList enemiesList in enemiesWave)
+        {
+            foreach (GameObject enemy in enemiesList.enemies)
+            {
+                enemy.SetActive(false);
+            }
+        }
         _challenging = false;
         _waveIndex = 0;
     }
@@ -44,7 +51,7 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
     {
         if (_challenging)
         {
-            enemiesWave[_waveIndex].enemies.RemoveAll(item => item == null);
+            enemiesWave[_waveIndex].enemies.RemoveAll(item => (item == null || item == PlayerManager.Instance.Player));
             if (enemiesWave[_waveIndex].enemies.Count == 0)
             {
                 _waveIndex++;
@@ -52,11 +59,12 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
                 {
                     EndFight();
                 }
-                enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
+                else
+                {
+                    enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
+                }
             }
-            
         }
-
     }
 
     public void SaveData(ref GameData data)

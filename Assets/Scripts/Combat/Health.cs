@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Effect;
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Combat
         private readonly Collider2D _collider;
         private Rigidbody2D _rigidbody;
         private Coroutine _flashCoroutine;
-        private Color _originalColor;
+        public Color OriginalColor;
         private bool _mortal = true;
 
 
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Combat
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _originalColor = _spriteRenderer.color;
+            OriginalColor = _spriteRenderer.color;
         }
 
 
@@ -76,6 +76,17 @@ namespace Assets.Scripts.Combat
         public void ResetHealth()
         {
             _currentHealth = _maxHealth;
+            if (gameObject == PlayerManager.Instance.Player)
+            {
+                OriginalColor = PlayerManager.Instance.PlayerColor;
+                _spriteRenderer.color = PlayerManager.Instance.PlayerColor;
+            };
+        }
+
+        public void ResetHealthWithNewMaxHealth(int health)
+        {
+            _maxHealth = health;
+            _currentHealth = health;
         }
 
 
@@ -110,29 +121,29 @@ namespace Assets.Scripts.Combat
 
             ApplyKnockback(hitDirection, knockbackMultiplier);
 
+
             _currentHealth -= damage;
-            _iFrame = true;
-            _iFrameCounter = _iFrameDuration;
+            TriggerIFrame();
         }
 
         IEnumerator Flash(Color targetColor)
         {
             _spriteRenderer.color = targetColor;
             yield return new WaitForSeconds(0.1f);
-            _spriteRenderer.color = _originalColor;
+            _spriteRenderer.color = OriginalColor;
             yield return new WaitForSeconds(0.1f);
             AfterFlash();
         }
 
         void AfterFlash()
         {
-            _spriteRenderer.color = _originalColor;
+            _spriteRenderer.color = OriginalColor;
             _flashCoroutine = null;
         }
 
         private void Die()
         {
-            if (_mortal)
+            if (_mortal) // todo: whoever wrote this line, write some comments please
             {
                 if (gameObject == PlayerManager.Instance.Player)
                 {
@@ -141,12 +152,13 @@ namespace Assets.Scripts.Combat
                 /*SoundManager.Instance;*/
                 if (_dieParticle)
                 {
-                    var main = _dieParticle.main;
-                    main.startColor = _originalColor;
-                    GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
-                    Destroy(go, 2f);
+                    var p = Instantiate(_dieParticle, gameObject.transform.position, Quaternion.identity);
+                    var main = p.main;
+                    main.startColor = OriginalColor;
+                    Destroy(p, 2f);
                 }
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
+                BossManager.Instance.IncrementEnemyKillCount();
                 Destroy(gameObject);
             }
         }
@@ -174,7 +186,6 @@ namespace Assets.Scripts.Combat
             float knockbackForce = _defaultKnockbackForce * multiplier;
 
             _rigidbody.AddForce(hitDirection * knockbackForce, ForceMode2D.Force);
-            _rigidbody.AddForce(Vector2.up * knockbackForce / 2, ForceMode2D.Force);
         }
 
         // Let other scripts trigger IFrame, for example, dashing
@@ -203,6 +214,11 @@ namespace Assets.Scripts.Combat
         {
             _mortal = mortal;
         }
+        public void SetHackableHealth(int health)
+        {
+            _hackableHealth = health;
+        }
+
     }
 
 

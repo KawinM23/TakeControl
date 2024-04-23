@@ -20,6 +20,9 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private string nextBGM; // only for debugging
 
+    // BGM Names
+    public string BGMMenu = "MEN NeoCityDive";
+
     // Ding SFX Pitch
     public float DingPitchMin = 0.5f;
     public float DingPitchMax = 3.0f;

@@ -11,16 +11,6 @@ enum Direction {
 }
 MonoBehaviour <|-- MapTransition
 MapTransition +-- Direction
-class FieldOfView {
-    + radius : float
-    + spanAngle : float
-    + CanSeePlayer : bool <<get>>
-    + FieldOfViewCheck() : bool
-}
-MonoBehaviour <|-- FieldOfView
-FieldOfView --> "facingDir" Vector2
-FieldOfView --> "targetMask" LayerMask
-FieldOfView --> "obstructionMask" LayerMask
 class FightArenaManager {
     + SaveData(data:GameData) : void
     + LoadData(data:GameData) : void
@@ -39,6 +29,7 @@ EnemiesList --> "enemies<GameObject>" "List`1"
 class PlayerManager {
     + {static}  <<event>> OnPlayerChanged : UnityAction<GameObject> 
     + {static}  <<event>> OnPlayerDied : UnityAction 
+    + IsDead : bool = false
     + Die() : void
     + Respawn() : void
     + {static} FindActivePlayer() : GameObject
@@ -48,6 +39,7 @@ class PlayerManager {
 MonoBehaviour <|-- PlayerManager
 PlayerManager --> "Instance" PlayerManager
 PlayerManager --> "Player" GameObject
+PlayerManager --> "PlayerColor" Color
 class PauseMenu {
     + {static} GameIsPaused : bool = false
     + Resume() : void
@@ -94,6 +86,13 @@ class SaveManager {
 }
 MonoBehaviour <|-- SaveManager
 SaveManager --> "Instance" SaveManager
+class BossManager {
+    + ResetKillCount() : void
+    + GetEnemyKillCount() : int
+    + IncrementEnemyKillCount() : void
+}
+MonoBehaviour <|-- BossManager
+BossManager --> "Instance" BossManager
 class ResourceManager {
     + {static}  <<event>> OnCurrenyChange : UnityAction<int> 
     + LoadData(data:GameData) : void
@@ -112,6 +111,7 @@ class SoundManager {
     + music_multiplier : float
     + sfx_multiplier : float
     + playingBGM : string
+    + BGMMenu : string = "MEN NeoCityDive"
     + DingPitchMin : float = 0.5f
     + DingPitchMax : float = 3.0f
     + PlayJump() : void
@@ -224,6 +224,16 @@ class Ground {
     + Friction : float <<get>>
 }
 MonoBehaviour <|-- Ground
+class FieldOfView {
+    + radius : float
+    + spanAngle : float
+    + CanSeePlayer : bool <<get>>
+    + FieldOfViewCheck() : bool
+}
+MonoBehaviour <|-- FieldOfView
+FieldOfView --> "facingDir" Vector2
+FieldOfView --> "targetMask" LayerMask
+FieldOfView --> "obstructionMask" LayerMask
 class TrackFollower {
 }
 MonoBehaviour <|-- TrackFollower
@@ -281,8 +291,16 @@ IDataPersist <|-- CollectTrial
 class CollsionDamage {
 }
 MonoBehaviour <|-- CollsionDamage
+abstract class HackCompletion {
+    + {abstract} OnHackSuccess() : void
+    + {abstract} OnHackFail() : void
+    + {abstract} OnComboHackSuccess(comboCount:int) : void
+    + {abstract} OnComboHackFail(comboCount:int) : void
+}
+MonoBehaviour <|-- HackCompletion
 class Jump {
     + GetMaxAirJump() : int
+    + SetMaxAirJump(maxAirJump:int) : void
 }
 MonoBehaviour <|-- Jump
 class Hack {
@@ -309,6 +327,7 @@ enum ShakeType {
     Attack,
     HitEnemy,
     TakeDamage,
+    ShootBigBullet,
 }
 MonoBehaviour <|-- ScreenShake
 ScreenShake --> "Instance" ScreenShake
@@ -322,7 +341,7 @@ class Hack {
 }
 MonoBehaviour <|-- Hack
 class Bullet {
-    + Fire(velocity:Vector2, knockbackMultiplier:float) : void
+    + Fire(velocity:Vector2, knockbackMultiplier:float, bulletDamage:int) : void
 }
 BaseProjectile <|-- Bullet
 class Gun {
@@ -338,10 +357,14 @@ class Gun {
     + SetBulletSpeed(bulletSpeed:float) : void
     + GetShootingDelay() : double
     + SetShootingDelay(shootingDelay:double) : void
+    + SetKnockbackMultiplier(knockbackMultiplier:float) : void
+    + SetShootingDelay(shootingDelay:float) : void
+    + SetReloadTime(reloadTime:float) : void
 }
 BaseWeapon <|-- Gun
 class Health {
     + ResetHealth() : void
+    + ResetHealthWithNewMaxHealth(health:int) : void
     + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
     + GetMaxHealth() : int
     + GetCurrentHealth() : int
@@ -353,9 +376,11 @@ class Health {
     + HealPercent(percent:double) : void
     + GetMortality() : bool
     + SetMortality(mortal:bool) : void
+    + SetHackableHealth(health:int) : void
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent
+Health --> "OriginalColor" Color
 class Pulse {
 }
 MonoBehaviour <|-- Pulse
@@ -453,8 +478,35 @@ AIController <|-- TemplateController
 InputController <|-- TemplateController
 TemplateController +-- State
 class SpawnerController {
+    + SetSpawnerSettings(settings:SpawnerSettings) : void
+    + ReachedSpawnedObjectsLimit() : bool
+}
+enum SpawningGameObject {
+    SWORD_CHARGER,
+    BOMBER,
+    SWORD_WIELDER,
+    BOSS_PUPPETEER_TURRET,
+}
+class SpawnerSettings {
+    + spawnCountMax : int?
+    + spawnCountMin : int?
+    + spawnIntervalMax : float?
+    + spawnIntervalMin : float?
+    + waveCount : int?
+    + waveInterval : float?
+    + currentWave : int?
+    + delayedStart : float?
+    + maxSpawnObjects : int?
+    + spawningGameObject : SpawningGameObject?
+}
+class SetSwordChargerModulesParams {
+    + canDash : bool
+    + canDoubleJump : bool
 }
 MonoBehaviour <|-- SpawnerController
+SpawnerController +-- SpawningGameObject
+SpawnerController +-- SpawnerSettings
+SpawnerController +-- SetSwordChargerModulesParams
 class TurretController {
     + <<override>> GetAttackDirection() : Vector2?
     + <<override>> IsReloadPressed() : bool
@@ -567,6 +619,52 @@ BaseHealthBar --> "fill" Image
 class EquipmentsManager {
 }
 MonoBehaviour <|-- EquipmentsManager
+class DashTutorial {
+}
+MonoBehaviour <|-- DashTutorial
+class BossPuppeteerController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+}
+enum BossPhase {
+    PHASE_1,
+    PHASE_2,
+    PHASE_3,
+    PHASE_4,
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerController
+InputController <|-- BossPuppeteerController
+BossPuppeteerController +-- BossPhase
+BossPuppeteerController +-- State
+class BossPuppeteerTurretController {
+    + <<override>> GetAttackDirection() : Vector2?
+    + <<override>> IsReloadPressed() : bool
+    + <<override>> IsJumpPressed() : bool
+    + SetGunAmmo(ammo:int) : void
+}
+enum State {
+    INITAL,
+    IDLE,
+    SHOOTING,
+    RELOADING,
+}
+AIController <|-- BossPuppeteerTurretController
+InputController <|-- BossPuppeteerTurretController
+BossPuppeteerTurretController +-- State
+class BossPuppeteerHackCompletion {
+    + <<override>> OnHackSuccess() : void
+    + <<override>> OnHackFail() : void
+    + <<override>> OnComboHackSuccess(comboCount:int) : void
+    + <<override>> OnComboHackFail(comboCount:int) : void
+}
+HackCompletion <|-- BossPuppeteerHackCompletion
 class Boss1Controller {
 }
 enum Phase {

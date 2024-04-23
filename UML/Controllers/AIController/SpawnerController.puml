@@ -1,5 +1,32 @@
 @startuml
 class SpawnerController {
+    + SetSpawnerSettings(settings:SpawnerSettings) : void
+    + ReachedSpawnedObjectsLimit() : bool
+}
+enum SpawningGameObject {
+    SWORD_CHARGER,
+    BOMBER,
+    SWORD_WIELDER,
+    BOSS_PUPPETEER_TURRET,
+}
+class SpawnerSettings {
+    + spawnCountMax : int?
+    + spawnCountMin : int?
+    + spawnIntervalMax : float?
+    + spawnIntervalMin : float?
+    + waveCount : int?
+    + waveInterval : float?
+    + currentWave : int?
+    + delayedStart : float?
+    + maxSpawnObjects : int?
+    + spawningGameObject : SpawningGameObject?
+}
+class SetSwordChargerModulesParams {
+    + canDash : bool
+    + canDoubleJump : bool
 }
 MonoBehaviour <|-- SpawnerController
+SpawnerController +-- SpawningGameObject
+SpawnerController +-- SpawnerSettings
+SpawnerController +-- SetSwordChargerModulesParams
 @enduml

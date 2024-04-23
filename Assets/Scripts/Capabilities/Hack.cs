@@ -19,6 +19,9 @@ namespace Assets.Scripts.Capabilities
         private bool _hackResult;
         [SerializeField] private float _hackDuration;
         [SerializeField] private int _buttonAmount;
+        [SerializeField] private bool _combo; // If enabled, hack event is continued until player fails
+        [SerializeField] private float _comboHackDurationIncrement;
+        [SerializeField] private int _comboButtonAmountIncrement;
         private Coroutine _coroutine;
 
         [Header("Pulse Bomb")]
@@ -76,11 +79,36 @@ namespace Assets.Scripts.Capabilities
         IEnumerator HackQuickTimeEvent(GameObject target)
         {
             Hack enemyHack = target.GetComponent<Hack>();
-            HackEventManager.Instance.StartHack(enemyHack._hackDuration, enemyHack._buttonAmount);
-            yield return new WaitUntil(HackEventManager.Instance.HackQuickTimeEvent);
-            _hackResult = HackEventManager.Instance.EndHack();
-            if (_hackResult)
+            bool combo = target.GetComponent<Hack>()._combo;
+            float comboHackDurationIncrement = enemyHack._comboHackDurationIncrement;
+            int comboButtonAmountIncrement = enemyHack._comboButtonAmountIncrement;
+            float hackDuration = enemyHack._hackDuration;
+            int buttonAmount = enemyHack._buttonAmount;
+            int successfulComboCount = 0;
+            // if combo is enabled, the hack event is continued until player fails
+            while (true)
             {
+                HackEventManager.Instance.StartHack(hackDuration, buttonAmount);
+                yield return new WaitUntil(HackEventManager.Instance.HackQuickTimeEvent);
+                _hackResult = HackEventManager.Instance.EndHack();
+
+                // stop if player pass normal hack or fails, stop event
+                if ((_hackResult && !combo) || !_hackResult)
+                {
+                    break;
+                }
+
+                // Increase difficulty after each successful combo
+                hackDuration += comboHackDurationIncrement;
+                buttonAmount += comboButtonAmountIncrement;
+                successfulComboCount++;
+            }
+
+
+            // If normal hack is successful or combo hack > 1 successful
+            if ((_hackResult && !combo) || (combo && successfulComboCount > 0))
+            {
+
                 // Override the target's input with the hacker's input
                 var targetController = target.GetComponent<Controller>();
                 targetController.Input = _controller.Input;
@@ -97,14 +125,53 @@ namespace Assets.Scripts.Capabilities
 
                 // Take Control; changing the target's tag to "Player" and set it as the player
                 target.gameObject.tag = "Player";
+                target.gameObject.layer = gameObject.layer;
+                int targetLayer = target.gameObject.layer;
+                gameObject.tag = "Enemy";
+                gameObject.layer = targetLayer;
                 PlayerManager.Instance.Player = target.gameObject;
 
                 //Reset target robot's health
                 target.TryGetComponent(out Health health);
                 health.ResetHealth();
 
+                // Apply successful hack function if has one
+                if (target.TryGetComponent(out HackCompletion hackCompletion))
+                {
+                    Debug.Log("Hack Success");
+                    if (combo)
+                    {
+                        Debug.Log("Combo Hack Success");
+                        hackCompletion.OnComboHackSuccess(successfulComboCount);
+                    }
+                    else
+                    {
+                        Debug.Log("Normal Hack Success");
+                        hackCompletion.OnHackSuccess();
+                    }
+                }
+
+                // Add count to enemy kill for BossManager
+                BossManager.Instance.IncrementEnemyKillCount();
+
                 // Destroy the previous body
                 Destroy(gameObject);
+            }
+            // If hack failed
+            else
+            {
+                // Apply fail hack function if has one
+                if (target.TryGetComponent(out HackCompletion hackCompletion))
+                {
+                    if (combo)
+                    {
+                        hackCompletion.OnComboHackFail(successfulComboCount);
+                    }
+                    else
+                    {
+                        hackCompletion.OnHackFail();
+                    }
+                }
             }
         }
 

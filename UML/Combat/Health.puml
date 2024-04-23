@@ -1,6 +1,7 @@
 @startuml
 class Health {
     + ResetHealth() : void
+    + ResetHealthWithNewMaxHealth(health:int) : void
     + TakeDamage(damage:int, hitDirection:Vector2, knockbackMultiplier:float) : void
     + GetMaxHealth() : int
     + GetCurrentHealth() : int
@@ -12,7 +13,9 @@ class Health {
     + HealPercent(percent:double) : void
     + GetMortality() : bool
     + SetMortality(mortal:bool) : void
+    + SetHackableHealth(health:int) : void
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent
+Health --> "OriginalColor" Color
 @enduml

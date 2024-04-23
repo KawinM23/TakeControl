@@ -33,13 +33,15 @@ namespace Assets.Scripts.Effect
         {
             Attack,
             HitEnemy,
-            TakeDamage
+            TakeDamage,
+            ShootBigBullet
         }
 
         private static SerializedDictionary<ShakeType, ShakeParams> _shakeParams = new SerializedDictionary<ShakeType, ShakeParams> {
         { ShakeType.Attack, ShakeParams.QuickShake(0.2f) },
         { ShakeType.HitEnemy, ShakeParams.QuickShake(0.6f) },
-        { ShakeType.TakeDamage, ShakeParams.QuickShake(2f) }
+        { ShakeType.TakeDamage, ShakeParams.QuickShake(2f) },
+        { ShakeType.ShootBigBullet, ShakeParams.QuickShake(5f) }
     };
 
         #endregion

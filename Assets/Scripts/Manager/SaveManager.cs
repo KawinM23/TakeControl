@@ -1,9 +1,8 @@
+using Assets.Scripts.SaveLoad;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Assets.Scripts.SaveLoad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -222,6 +221,8 @@ public class SaveManager : MonoBehaviour
         {
             player.transform.position = sp.transform.position;
         }
+
+        Time.timeScale = 1f;
     }
 
     private List<IDataPersist> FindAllDataPersist()

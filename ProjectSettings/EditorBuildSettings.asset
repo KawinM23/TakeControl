@@ -46,20 +46,29 @@ EditorBuildSettings:
     guid: eceda19996fc36b41bc81eefaf303841
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-2.unity
-    guid: 36fbf70f136917c42b0f0388547d409e
+    guid: 9a8189ef496781e4a8cf5a202cd2b399
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-3.unity
-    guid: 21b097bc72a1ea44a8b955d3ca72425c
+    guid: c2972283a3d15dd4e99b840b092efa54
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-4.unity
-    guid: ae72fe5f2d4669341aff722dbe031c7e
-  - enabled: 1
-    path: Assets/Scenes/Prototype3/Map2-5.unity
-    guid: 2f78a315abda066458791f31e99b6a04
+    guid: 3ebeb2954b8504f0eb29e686cf238b59
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-6.unity
-    guid: 9a8189ef496781e4a8cf5a202cd2b399
+    guid: 36fbf70f136917c42b0f0388547d409e
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-7.unity
     guid: b0f0b47182e649545ab148744273aad5
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-8.unity
+    guid: 21b097bc72a1ea44a8b955d3ca72425c
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-9.unity
+    guid: ae72fe5f2d4669341aff722dbe031c7e
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-10.unity
+    guid: 9e17c8a348447284687cfafd96b4c8d8
+  - enabled: 1
+    path: Assets/Scenes/Prototype3/Map2-11.unity
+    guid: 6669f586cfd88ae4096c2470eab622c9
   m_configObjects: {}

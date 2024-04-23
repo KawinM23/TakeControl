@@ -1,0 +1,9 @@
+@startuml
+abstract class HackCompletion {
+    + {abstract} OnHackSuccess() : void
+    + {abstract} OnHackFail() : void
+    + {abstract} OnComboHackSuccess(comboCount:int) : void
+    + {abstract} OnComboHackFail(comboCount:int) : void
+}
+MonoBehaviour <|-- HackCompletion
+@enduml

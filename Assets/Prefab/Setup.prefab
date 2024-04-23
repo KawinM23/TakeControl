@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 988227834972446133}
   - component: {fileID: 2249751452478179486}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Camera Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,9 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41aa46e60700af513aa9225ef5534710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultShakeParams:
-    intensity: 0.5
-    seconds: 0.2
 --- !u!1 &6628286035851582224
 GameObject:
   m_ObjectHideFlags: 0

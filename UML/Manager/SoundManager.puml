@@ -3,6 +3,7 @@ class SoundManager {
     + music_multiplier : float
     + sfx_multiplier : float
     + playingBGM : string
+    + BGMMenu : string = "MEN NeoCityDive"
     + DingPitchMin : float = 0.5f
     + DingPitchMax : float = 3.0f
     + PlayJump() : void

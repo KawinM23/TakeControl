@@ -809,6 +809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeTrial-CollectAll
       objectReference: {fileID: 0}
+    - target: {fileID: 4151554648767574596, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5142815388245499394, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -847,6 +851,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5142815388245499394, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686032362039963027, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
+      propertyPath: m_text
+      value: 'Collect Shard Trial
+
+        (Collect All Shard to recieve reward)
+
+        Press
+        F to activate
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686032362039963027, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
+      propertyPath: m_isRightToLeft
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5806469515154592860, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
@@ -985,7 +1004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.845351
+      value: 2.8453603
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y

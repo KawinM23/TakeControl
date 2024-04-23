@@ -7,9 +7,10 @@ using UnityEngine;
 
 #nullable enable annotations
 
-[RequireComponent(typeof(Gun))]
+[RequireComponent(typeof(Gun), typeof(FieldOfView))]
 public class GunnerController : AIController, InputController
 {
+    [SerializeField] private LayerMask _floorLayerMask;
     [SerializeField] private float _patrolRadius = 5f;
     [Tooltip("Preferred distance from player")]
     public float preferredDistance = 5f;
@@ -30,6 +31,7 @@ public class GunnerController : AIController, InputController
     private Vector2 _home;
     private Gun _gun;
     private FieldOfView _fov;
+    private BoxCollider2D _collider;
 
 
 
@@ -37,6 +39,7 @@ public class GunnerController : AIController, InputController
     {
         _gun = GetComponent<Gun>();
         _fov = GetComponent<FieldOfView>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     void Start()
@@ -88,11 +91,12 @@ public class GunnerController : AIController, InputController
     }
 
     private float _idleMovement;
+    [SerializeField] private float lastMoveTime;
     IEnumerator IdleState()
     {
         var player = PlayerManager.Instance.Player;
         _idleMovement = player.transform.position.x > transform.position.x ? _idleSpeed : -_idleSpeed;
-        float lastMoveTime = Time.time;
+        lastMoveTime = Time.time;
         Vector2 lastPos = transform.position;
 
         while (true)
@@ -110,16 +114,24 @@ public class GunnerController : AIController, InputController
             if (Vector2.SqrMagnitude(lastPos - (Vector2)transform.position) >= 0.01f)
             {
                 lastMoveTime = Time.time;
+                lastPos = transform.position;
             }
 
-            // Patrol around home
-            var distFromHome = Vector2.Distance(transform.position, _home);
-            if (distFromHome >= _patrolRadius || Time.time - lastMoveTime > 1f)
+            if (Mathf.Approximately(_patrolRadius, 0f))
             {
-                _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
+                _idleMovement = 0;
             }
-
-            yield return new WaitForSeconds(0.5f);
+            else
+            {
+                // Patrol around home
+                var distFromHome = Vector2.Distance(transform.position, _home);
+                if (distFromHome >= _patrolRadius || (Time.time - lastMoveTime > 0.2f) || IsHoleBelow())
+                {
+                    _idleMovement = _home.x > transform.position.x ? _idleSpeed : -_idleSpeed;
+                }
+            }
+;
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -137,9 +149,7 @@ public class GunnerController : AIController, InputController
                 yield break;
             }
 
-            _atackingMovement = player.transform.position.x - transform.position.x;
-            _atackingMovement -= Mathf.Sign(_atackingMovement) * preferredDistance;
-            _atackingMovement = Mathf.Clamp(_atackingMovement, -_attackingSpeed, _attackingSpeed);
+            _atackingMovement = CalculateAttackMovement(_attackingSpeed);
 
             yield return new WaitForFixedUpdate();
         }
@@ -156,14 +166,52 @@ public class GunnerController : AIController, InputController
                 yield break;
             }
 
-            var player = PlayerManager.Instance.Player;
-            _atackingMovement = player.transform.position.x - transform.position.x;
-            _atackingMovement -= Mathf.Sign(_atackingMovement) * preferredDistance;
-            _atackingMovement = Mathf.Clamp(_atackingMovement, -_reloadingSpeed, _reloadingSpeed);
+            _atackingMovement = CalculateAttackMovement(_reloadingSpeed);
 
             yield return new WaitForFixedUpdate();
         }
     }
+
+    private float CalculateAttackMovement(float maxSpeed)
+    {
+        var player = PlayerManager.Instance.Player;
+        var dist = player.transform.position.x - transform.position.x;
+
+        // if going to fall, don't
+        var wouldFall = (dist > 0 && IsHoleBelowRight()) || (dist < 0 && IsHoleBelowLeft());
+        if (wouldFall)
+        {
+            return 0;
+        }
+        var mov = Mathf.Sign(dist) * preferredDistance;
+        mov = Mathf.Clamp(mov, -maxSpeed, maxSpeed);
+        return mov;
+    }
+
+    private bool IsHoleBelow()
+    {
+        var mask = _floorLayerMask;
+        var pos = (Vector2)transform.position + new Vector2(0, -_collider.bounds.extents.y);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
+    private bool IsHoleBelowRight()
+    {
+        var mask = _floorLayerMask;
+        var pos = (Vector2)transform.position + new Vector2(_collider.bounds.extents.x, -_collider.bounds.extents.y);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
+    private bool IsHoleBelowLeft()
+    {
+        var mask = _floorLayerMask;
+        var pos = (Vector2)transform.position + new Vector2(-_collider.bounds.extents.x, -_collider.bounds.extents.y);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
+        return !hit;
+    }
+
 
     public override float GetHorizontalMovement()
     {
@@ -173,9 +221,6 @@ public class GunnerController : AIController, InputController
             State.ATTACKING or State.RELOADING => _atackingMovement,
             _ => base.GetHorizontalMovement()
         };
-
-        Debug.Log(a);
-
         return a;
     }
 

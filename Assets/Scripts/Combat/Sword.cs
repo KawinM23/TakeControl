@@ -2,6 +2,7 @@ using Assets.Scripts.Effect;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Combat
 {
@@ -39,11 +40,12 @@ namespace Assets.Scripts.Combat
             _parentTransform = _swordCollider.transform.parent;
             _sprite = _swordCollider.GetComponent<SpriteRenderer>();
             _mask = _swordCollider.GetComponentInChildren<SpriteMask>();
+        }
 
-            _sprite.gameObject.SetActive(false);
-            _sprite.enabled = false;
-            _swordCollider.enabled = false;
-            _mask.enabled = false;
+        private void Start()
+        {
+            AfterSwordAnimation();
+            SceneManager.sceneLoaded += (Scene scene, LoadSceneMode loadSceneMode) => { if (_swordCollider) _swordCollider.gameObject.SetActive(false); };
         }
 
         protected override void Update()
@@ -52,10 +54,7 @@ namespace Assets.Scripts.Combat
             {
                 _attackTimer -= Time.deltaTime;
             }
-            if (
-                _controller.Input.GetAttackDirection().HasValue &&
-                _attackTimer <= 0
-            )
+            if (_controller.Input.GetAttackDirection().HasValue && _attackTimer <= 0 && Time.timeScale != 0f)
             {
                 AttackAction(_controller.Input.GetAttackDirection().Value);
                 OnAttack?.Invoke();
@@ -82,6 +81,7 @@ namespace Assets.Scripts.Combat
         }
         private IEnumerator SwordAnimation()
         {
+            if (TryGetComponent(out Health health)) _sprite.color = health.OriginalColor;
             _sprite.gameObject.SetActive(true);
             _mask.enabled = true;
             _swordCollider.enabled = true;
@@ -93,12 +93,7 @@ namespace Assets.Scripts.Combat
                 yield return new WaitForFixedUpdate();
             }
 
-            _swordCollider.enabled = false;
-            _sprite.enabled = false;
-            _mask.alphaCutoff = 0f;
-            _mask.enabled = false;
-            _sprite.gameObject.SetActive(false);
-
+            AfterSwordAnimation();
 
             // _swordCollider.enabled = true;
             // _sprite.enabled = true;
@@ -106,6 +101,15 @@ namespace Assets.Scripts.Combat
             // _swordCollider.enabled = false;
             // _sprite.enabled = false;
             // yield return null;
+        }
+
+        private void AfterSwordAnimation()
+        {
+            _mask.alphaCutoff = 0f;
+            _mask.enabled = false;
+            _sprite.enabled = false;
+            _swordCollider.enabled = false;
+            _sprite.gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
