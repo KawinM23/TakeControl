@@ -1089,8 +1089,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.27, y: -1.3974}
-  m_SizeDelta: {x: 637.3052, y: 100.9846}
+  m_AnchoredPosition: {x: 7.5446, y: -1.3974}
+  m_SizeDelta: {x: 492.2339, y: 100.9846}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1015054487
 MonoBehaviour:
@@ -1114,7 +1114,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[WASD] to Move
 
-    [Spacebar] to Jump'
+    [Spacebar] to Jump (The longer you hold, the higher
+    you jump)
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
   m_sharedMaterial: {fileID: -6718969823162192230, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
@@ -2696,6 +2699,14 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 2039329742}
+    - target: {fileID: 4010808463444704372, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 39.19995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010808463444704372, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -151.09998
+      objectReference: {fileID: 0}
     - target: {fileID: 5692816951723743413, guid: 4209b472d878503479a9bdeddaeb968d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2973,7 +2984,7 @@ PrefabInstance:
       objectReference: {fileID: 2039329742}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1111112
+      value: 1.1044523
       objectReference: {fileID: 0}
     - target: {fileID: 6618872176054137509, guid: 826c29d31c799430a82315726a774264, type: 3}
       propertyPath: m_LocalPosition.y
