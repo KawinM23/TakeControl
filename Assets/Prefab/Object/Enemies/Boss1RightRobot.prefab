@@ -247,14 +247,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletDamage: 9
-  _bulletSpeed: 7
+  _bulletSpeed: 10
   _knockbackMultiplier: 0.5
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
   _bulletSpread: 0.5
-  _shootingDelay: 1
+  _shootingDelay: 0.8
   _reloadTime: 2
-  MaxAmmo: 10
-  CurrentAmmo: 10
+  MaxAmmo: 15
+  CurrentAmmo: 15
   Reloading: 0
   _forceBulletDamage: 1
   _bulletCount: 3

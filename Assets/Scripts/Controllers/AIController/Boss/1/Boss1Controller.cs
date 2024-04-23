@@ -15,7 +15,7 @@ public class Boss1Controller : Boss1BaseController
     [SerializeField] private GameObject _door;
     private List<LaserShooter> _allLaser;
     private int _laserPatternCounter = 0;
-    private float _phaseDelayTimer = 10;
+    private float _phaseDelayTimer = 7.5f;
 
     enum Phase
     {
