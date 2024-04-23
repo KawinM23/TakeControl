@@ -232,6 +232,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _dieParticle: {fileID: 0}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &273204054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 136
   _health: {fileID: 273204053}
   _gun: {fileID: 273204054}
   _healDelay: 0.5
@@ -2988,6 +2989,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _dieParticle: {fileID: 0}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1944420982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3037,7 +3039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 136
   _health: {fileID: 1944420981}
   _gun: {fileID: 1944420982}
   _healDelay: 0.5
@@ -3214,6 +3216,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _dieParticle: {fileID: 0}
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2101334039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3263,7 +3266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 136
   _health: {fileID: 2101334038}
   _gun: {fileID: 2101334039}
   _healDelay: 0.25
