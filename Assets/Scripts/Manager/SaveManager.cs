@@ -14,7 +14,7 @@ public class SaveManager : MonoBehaviour
 
     public event Action? InitialLoaded;
 
-    [SerializeField] private GameData _gameData;
+    private GameData _gameData;
     [SerializeField] private string defaultSaveName = "default";
     [SerializeField] private string defaultSceneName;
 
@@ -46,6 +46,7 @@ public class SaveManager : MonoBehaviour
             Instance = this;
         }
 
+        this._gameData ??= new GameData();
         this._saver = new FileSaver(
             new JsonSerializer(),
             Application.persistentDataPath,
@@ -141,6 +142,8 @@ public class SaveManager : MonoBehaviour
         _gameData.currentScene = SceneManager.GetActiveScene().name;
 
         SaveData();
+        _gameData.BeforePersist();
+        FindAllSavePersist().ForEach(s => s.SaveData(ref _gameData));
         _saver.PersistSave(_gameData, defaultSaveName);
     }
 
@@ -192,7 +195,6 @@ public class SaveManager : MonoBehaviour
         };
 
         SceneManager.LoadScene(_gameData.currentScene, LoadSceneMode.Single);
-        InitialLoaded?.Invoke();
     }
 
     /// <summary>
@@ -209,6 +211,7 @@ public class SaveManager : MonoBehaviour
         // Load using the data from the previous instance
         newThis._gameData = this._gameData;
         newThis.LoadData();
+        newThis.FindAllSavePersist().ForEach(s => s.LoadData(in _gameData));
 
         // Move player to save point in the scene (if exists)
         var sp = FindObjectOfType<SavePoint>();
@@ -223,10 +226,16 @@ public class SaveManager : MonoBehaviour
         }
 
         Time.timeScale = 1f;
+        newThis.InitialLoaded?.Invoke();
     }
 
     private List<IDataPersist> FindAllDataPersist()
     {
         return FindObjectsOfType<MonoBehaviour>().OfType<IDataPersist>().ToList();
+    }
+
+    private List<ISavePersist> FindAllSavePersist()
+    {
+        return FindObjectsOfType<MonoBehaviour>().OfType<ISavePersist>().ToList();
     }
 }

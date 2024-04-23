@@ -1,4 +1,5 @@
 using Assets.Scripts.Effect;
+using Assets.Scripts.SaveLoad;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
-    public class Sword : BaseWeapon
+    public class Sword : BaseWeapon, ISavePersist
     {
         public UnityEvent OnAttack;
 
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Combat
 
         [Header("Animation")]
         [Tooltip("Radial of slash animation over time")]
-        [SerializeField] private AnimationCurve _radialCurve;
+        [SerializeField] public AnimationCurve _radialCurve;
         [Tooltip("Duration of the slash animation")]
         [SerializeField] private float _animationDuration = 0.2f;
 
@@ -123,6 +124,45 @@ namespace Assets.Scripts.Combat
                 SoundManager.Instance.PlaySwordImpact();
             }
 
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            // Store data
+            data.modules.sword = new ModulesData.Sword
+            {
+                swordDamage = _swordDamage,
+                attackCooldown = _attackCooldown,
+                knockbackMultiplier = _knockbackMultiplier
+            };
+        }
+
+        public void LoadData(in GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            var m = data.modules.sword;
+            if (m == null)
+            {
+                // No saved data, remove this component
+                DestroyImmediate(this);
+                return;
+            }
+
+            // Apply saved data
+            _swordDamage = m.swordDamage;
+            _attackCooldown = m.attackCooldown;
+            _knockbackMultiplier = m.knockbackMultiplier;
         }
     }
 }

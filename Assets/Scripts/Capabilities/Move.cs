@@ -3,8 +3,10 @@
 namespace Assets.Scripts.Capabilities
 {
     using Assets.Scripts.Combat;
+    using Assets.Scripts.SaveLoad;
+
     [RequireComponent(typeof(Controller))]
-    public class Move : MonoBehaviour
+    public class Move : MonoBehaviour, ISavePersist
     {
         private Controller _controller;
         private Vector2 _direction, _desiredVelocity, _velocity;
@@ -169,6 +171,40 @@ namespace Assets.Scripts.Capabilities
             {
                 _platform = null;
             }
+        }
+
+
+        public void SaveData(ref GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            // Store data
+            data.modules.move = new ModulesData.Move
+            {
+                hasDash = _hasDash
+            };
+        }
+
+        public void LoadData(in GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            var m = data.modules.move;
+            if (m == null)
+            {
+                return;
+            }
+
+            // Apply saved data
+            _hasDash = m.hasDash;
         }
 
 
