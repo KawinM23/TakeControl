@@ -7,12 +7,13 @@ using UnityEngine;
 #nullable enable annotations
 public class Boss1Controller : Boss1BaseController
 {
-    [SerializeField] private List<Boss1ComponentController> components;
+    [SerializeField] private List<Boss1ComponentController> _components;
     [SerializeField] private double _baseHealPercent;
-    [SerializeField] private LaserShooter beginLaser;
-    [SerializeField] private LaserShooter endLaser;
-    private List<LaserShooter> allLaser;
-    private int laserPatternCounter = 0;
+    [SerializeField] private LaserShooter _beginLaser;
+    [SerializeField] private LaserShooter _endLaser;
+    [SerializeField] private GameObject _barrier;
+    private List<LaserShooter> _allLaser;
+    private int _laserPatternCounter = 0;
 
     enum Phase
     {
@@ -33,24 +34,24 @@ public class Boss1Controller : Boss1BaseController
     protected override void Awake()
     {
         base.Awake();
-        allLaser = new List<LaserShooter>();
-        beginLaser.SetActive(false);
-        beginLaser.SetAutoDeactive(true);
-        beginLaser.SetDuration(0.2f);
-        endLaser.SetActive(false);
-        endLaser.SetAutoDeactive(true);
-        endLaser.SetDuration(0.2f);
-        if (beginLaser.transform.position.x <= endLaser.transform.position.x)
+        _allLaser = new List<LaserShooter>();
+        _beginLaser.SetActive(false);
+        _beginLaser.SetAutoDeactive(true);
+        _beginLaser.SetDuration(0.2f);
+        _endLaser.SetActive(false);
+        _endLaser.SetAutoDeactive(true);
+        _endLaser.SetDuration(0.2f);
+        if (_beginLaser.transform.position.x <= _endLaser.transform.position.x)
         {
-            allLaser.Add(beginLaser);
-            for (float i = beginLaser.transform.position.x + beginLaser.transform.localScale.x; i < endLaser.transform.position.x; i += beginLaser.transform.localScale.x)
+            _allLaser.Add(_beginLaser);
+            for (float i = _beginLaser.transform.position.x + _beginLaser.transform.localScale.x; i < _endLaser.transform.position.x; i += _beginLaser.transform.localScale.x)
             {
-                LaserShooter newLaser = Instantiate(beginLaser, new Vector3(i, beginLaser.transform.position.y, 0f), Quaternion.identity);
+                LaserShooter newLaser = Instantiate(_beginLaser, new Vector3(i, _beginLaser.transform.position.y, 0f), Quaternion.identity);
                 newLaser.SetAutoDeactive(true);
                 newLaser.SetDuration(0.2f);
-                allLaser.Add(newLaser);
+                _allLaser.Add(newLaser);
             }
-            allLaser.Add(endLaser);
+            _allLaser.Add(_endLaser);
         }
     }
 
@@ -58,7 +59,7 @@ public class Boss1Controller : Boss1BaseController
     {
         if (IsDestroy())
         {
-            foreach (Boss1ComponentController comp in components)
+            foreach (Boss1ComponentController comp in _components)
             {
                 comp.GetHealth().SetMortality(true);
             }
@@ -72,14 +73,14 @@ public class Boss1Controller : Boss1BaseController
         }
         if (_healTimer <= 0)
         {
-            _health.HealPercent(_baseHealPercent * (1 + (components.Count - CountDestroyComponents())));
+            _health.HealPercent(_baseHealPercent * (1 + (_components.Count - CountDestroyComponents())));
             _healTimer = _healDelay;
         }
 
         if (_phase == Phase.NORMAL && CountDestroyComponents() > 0)
         {
             _phase = Phase.BOOST1;
-            foreach (Boss1ComponentController comp in components)
+            foreach (Boss1ComponentController comp in _components)
             {
                 if (!comp.IsDestroy())
                 {
@@ -90,15 +91,16 @@ public class Boss1Controller : Boss1BaseController
             }
             _gun.SetShootingDelay(_gun.GetShootingDelay() / 2);
         }
-        else if (_phase == Phase.BOOST1 && components.Count == CountDestroyComponents())
+        else if (_phase == Phase.BOOST1 && _components.Count == CountDestroyComponents())
         {
             _phase = Phase.BOOST2;
             _gun.SetShootingDelay(_gun.GetShootingDelay() / 2);
+            Destroy(_barrier);
         }
-        if (_phase == Phase.NORMAL && IsAllLaserDeactivate())
+        if (_phase == Phase.BOOST2 && IsAllLaserDeactivate())
         {
-            ActivateLaserPattern((LaserPattern)(laserPatternCounter % 4));
-            laserPatternCounter++;
+            ActivateLaserPattern((LaserPattern)(_laserPatternCounter % 4));
+            _laserPatternCounter++;
         }
     }
 
@@ -106,7 +108,7 @@ public class Boss1Controller : Boss1BaseController
     {
         int destroyComponents = 0;
 
-        foreach (Boss1ComponentController comp in components)
+        foreach (Boss1ComponentController comp in _components)
         {
             if (comp.IsDestroy()) destroyComponents += 1;
         }
@@ -115,7 +117,7 @@ public class Boss1Controller : Boss1BaseController
 
     private bool IsAllLaserDeactivate()
     {
-        foreach (LaserShooter laser in allLaser)
+        foreach (LaserShooter laser in _allLaser)
         {
             if (laser.IsActive()) return false;
         }
@@ -129,47 +131,47 @@ public class Boss1Controller : Boss1BaseController
             switch (pattern)
             {
                 case LaserPattern.LEFT_TO_RIGHT:
-                    for (int i = 0; i < allLaser.Count; i++)
+                    for (int i = 0; i < _allLaser.Count; i++)
                     {
                         float value = ((float)i / 10) + 1;
-                        allLaser[i].SetTimer(value);
-                        allLaser[i].SetDelay(3);
-                        allLaser[i].SetActive(true);
+                        _allLaser[i].SetTimer(value);
+                        _allLaser[i].SetDelay(3);
+                        _allLaser[i].SetActive(true);
                     }
                     break;
                 case LaserPattern.RIGHT_TO_LEFT:
-                    for (int i = 0; i < allLaser.Count; i++)
+                    for (int i = 0; i < _allLaser.Count; i++)
                     {
-                        float value = (((float)allLaser.Count - i - 1) / 10) + 1;
-                        allLaser[i].SetTimer(value);
-                        allLaser[i].SetDelay(1);
-                        allLaser[i].SetActive(true);
+                        float value = (((float)_allLaser.Count - i - 1) / 10) + 1;
+                        _allLaser[i].SetTimer(value);
+                        _allLaser[i].SetDelay(1);
+                        _allLaser[i].SetActive(true);
                     }
                     break;
                 case LaserPattern.MIDDLE_TO_REAR:
-                    for (int i = 0; i < (allLaser.Count + 1) / 2; i++)
+                    for (int i = 0; i < (_allLaser.Count + 1) / 2; i++)
                     {
-                        float value = (((float)((allLaser.Count + 1) / 2) - i - 1) / 10) + 1;
-                        allLaser[i].SetTimer(value);
-                        allLaser[i].SetDelay(1);
-                        allLaser[i].SetActive(true);
-                        if (i == allLaser.Count - i - 1) break;
-                        allLaser[allLaser.Count - i - 1].SetTimer(value);
-                        allLaser[allLaser.Count - i - 1].SetDelay(1);
-                        allLaser[allLaser.Count - i - 1].SetActive(true);
+                        float value = (((float)((_allLaser.Count + 1) / 2) - i - 1) / 10) + 1;
+                        _allLaser[i].SetTimer(value);
+                        _allLaser[i].SetDelay(1);
+                        _allLaser[i].SetActive(true);
+                        if (i == _allLaser.Count - i - 1) break;
+                        _allLaser[_allLaser.Count - i - 1].SetTimer(value);
+                        _allLaser[_allLaser.Count - i - 1].SetDelay(1);
+                        _allLaser[_allLaser.Count - i - 1].SetActive(true);
                     }
                     break;
                 case LaserPattern.REAR_TO_MIDDLE:
-                    for (int i = 0; i < (allLaser.Count + 1) / 2; i++)
+                    for (int i = 0; i < (_allLaser.Count + 1) / 2; i++)
                     {
                         float value = (((float)i) / 10) + 1;
-                        allLaser[i].SetTimer(value);
-                        allLaser[i].SetDelay(1);
-                        allLaser[i].SetActive(true);
-                        if (i == allLaser.Count - i - 1) break;
-                        allLaser[allLaser.Count - i - 1].SetTimer(value);
-                        allLaser[allLaser.Count - i - 1].SetDelay(1);
-                        allLaser[allLaser.Count - i - 1].SetActive(true);
+                        _allLaser[i].SetTimer(value);
+                        _allLaser[i].SetDelay(1);
+                        _allLaser[i].SetActive(true);
+                        if (i == _allLaser.Count - i - 1) break;
+                        _allLaser[_allLaser.Count - i - 1].SetTimer(value);
+                        _allLaser[_allLaser.Count - i - 1].SetDelay(1);
+                        _allLaser[_allLaser.Count - i - 1].SetActive(true);
                     }
                     break;
             }
