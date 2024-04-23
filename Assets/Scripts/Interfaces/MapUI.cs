@@ -7,12 +7,10 @@ public class MapUI : MonoBehaviour, IDataPersist
     [SerializeField] bool _visited = false;
     [SerializeField] bool _isInCurrentMap = false;
 
-    [SerializeField] string _mapName;
-
     public void LoadData(in GameData data)
     {
         _visited = false;
-        if (data.visited.TryGetValue(_mapName, out bool val))
+        if (data.visited.TryGetValue(gameObject.name, out bool val))
         {
             _visited = val;
         }
@@ -21,7 +19,7 @@ public class MapUI : MonoBehaviour, IDataPersist
 
     public void SaveData(ref GameData data)
     {
-        data.visited[_mapName] = _visited;
+        data.visited[gameObject.name] = _visited;
     }
 
     private void Awake()
@@ -34,7 +32,7 @@ public class MapUI : MonoBehaviour, IDataPersist
     {
         if (!_isInCurrentMap)
         {
-            if (_mapName == SceneManager.GetActiveScene().name)
+            if (gameObject.name == SceneManager.GetActiveScene().name)
             {
                 _isInCurrentMap = true;
                 _visited = true;
@@ -46,7 +44,7 @@ public class MapUI : MonoBehaviour, IDataPersist
         }
         else
         {
-            if (_mapName != SceneManager.GetActiveScene().name)
+            if (gameObject.name != SceneManager.GetActiveScene().name)
             {
                 _isInCurrentMap = false;
             }

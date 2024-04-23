@@ -394,6 +394,8 @@ MonoBehaviour:
   _gameData:
     name: 
     currentScene: 
+    visited:
+      _serializedList: []
     switches:
       _serializedList: []
     fightArenas:
@@ -559,6 +561,7 @@ MonoBehaviour:
   playingBGM: 
   playingBGMVolume: 
   nextBGM: CMB TechNTech
+  BGMMenu: MEN NeoCityDive
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!114 &6985303427310886824
@@ -1252,11 +1255,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 635583196069505447, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_Size
-      value: 0.3133909
+      value: 0.41099024
       objectReference: {fileID: 0}
     - target: {fileID: 635583196069505447, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_Value
-      value: 0.3085221
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284075190864711842, guid: f684894f33bd3004cbaec4548757b928, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 2144727306420525229, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1272,7 +1279,7 @@ PrefabInstance:
       objectReference: {fileID: 6985303427310886824}
     - target: {fileID: 2790916553753541640, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.525225
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2790916553753541640, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1280,7 +1287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2790916553753541640, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.21183409
+      value: 0.58900976
       objectReference: {fileID: 0}
     - target: {fileID: 3643238018444303132, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1344,11 +1351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5883444947796734127, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.52882147
+      value: 0.76271725
       objectReference: {fileID: 0}
     - target: {fileID: 5883444947796734127, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.060055114
+      value: 0.22022381
       objectReference: {fileID: 0}
     - target: {fileID: 6173405875485022308, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1364,7 +1371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6284699486234630835, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -529.2626
+      value: -1122.1549
       objectReference: {fileID: 0}
     - target: {fileID: 6790633738729702116, guid: f684894f33bd3004cbaec4548757b928, type: 3}
       propertyPath: m_Pivot.x
