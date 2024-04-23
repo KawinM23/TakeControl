@@ -25,6 +25,7 @@ public class BossPuppeteerFightManager : MonoBehaviour
     {
         if (_boss == null)
         {
+            SoundManager.Instance.nextBGM = SoundManager.Instance.BGMExploration;
             foreach (GameObject go in _doors)
             {
                 go.SetActive(false);

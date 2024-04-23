@@ -74,6 +74,13 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void Start() {
+        // Play BGM based on scene name
+        _current_scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        PlayBGMBySceneName(_current_scene);
+        _prev_scene = _current_scene;
+    }
+
     private void Update()
     {
         // If other BGM is queued, play it
@@ -98,6 +105,12 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayBGMBySceneName(string sceneName) {
+        // Hardcode here to override
+        if (sceneName=="Map2-12") {
+            PlayBGMCombatRandom();
+            return; // dont forget to return
+        }
+
         // Substring check here
         if (sceneName.Contains("Menu") || sceneName.Contains("Option"))
         {
