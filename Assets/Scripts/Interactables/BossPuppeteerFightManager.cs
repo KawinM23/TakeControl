@@ -18,7 +18,14 @@ public class BossPuppeteerFightManager : MonoBehaviour
                 go.SetActive(true);
             }
         }
+    }
 
+    private void Start()
+    {
+        foreach (GameObject go in _doors)
+        {
+            go.SetActive(false);
+        }
     }
 
     private void Update()
