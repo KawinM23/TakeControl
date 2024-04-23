@@ -11,16 +11,6 @@ enum Direction {
 }
 MonoBehaviour <|-- MapTransition
 MapTransition +-- Direction
-class FieldOfView {
-    + radius : float
-    + spanAngle : float
-    + CanSeePlayer : bool <<get>>
-    + FieldOfViewCheck() : bool
-}
-MonoBehaviour <|-- FieldOfView
-FieldOfView --> "facingDir" Vector2
-FieldOfView --> "targetMask" LayerMask
-FieldOfView --> "obstructionMask" LayerMask
 class FightArenaManager {
     + SaveData(data:GameData) : void
     + LoadData(data:GameData) : void
@@ -234,6 +224,16 @@ class Ground {
     + Friction : float <<get>>
 }
 MonoBehaviour <|-- Ground
+class FieldOfView {
+    + radius : float
+    + spanAngle : float
+    + CanSeePlayer : bool <<get>>
+    + FieldOfViewCheck() : bool
+}
+MonoBehaviour <|-- FieldOfView
+FieldOfView --> "facingDir" Vector2
+FieldOfView --> "targetMask" LayerMask
+FieldOfView --> "obstructionMask" LayerMask
 class TrackFollower {
 }
 MonoBehaviour <|-- TrackFollower
