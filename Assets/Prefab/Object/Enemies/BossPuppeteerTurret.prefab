@@ -115,8 +115,9 @@ GameObject:
   - component: {fileID: 8592266432460933116}
   - component: {fileID: 4744638313020104236}
   - component: {fileID: 7290476940520565841}
-  - component: {fileID: 7947995267647059038}
   - component: {fileID: 3098802541760970829}
+  - component: {fileID: 5426924697726892599}
+  - component: {fileID: 2528187241188573100}
   m_Layer: 6
   m_Name: BossPuppeteerTurret
   m_TagString: Enemy
@@ -240,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input:
-    _underlyingValue: {fileID: 7947995267647059038}
+    _underlyingValue: {fileID: 5426924697726892599}
 --- !u!114 &7518881047702849073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,9 +269,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _maxHealth: 200
+  _maxHealth: 300
   _currentHealth: 0
-  _hackableHealth: 100
+  _hackableHealth: 150
   _defaultKnockbackForce: 0
   _iFrame: 0
   _iFrameDuration: 0
@@ -337,7 +338,7 @@ MonoBehaviour:
   MaxAmmo: 20
   CurrentAmmo: 0
   Reloading: 0
---- !u!114 &7947995267647059038
+--- !u!114 &3098802541760970829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,13 +347,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7740698587368872121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f11053b45f15e2f30876c7062c269abd, type: 3}
+  m_Script: {fileID: 11500000, guid: ff69dbc30160e3e4fa0578e48467df85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5426924697726892599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7740698587368872121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5878e4493ce9db347b61b96dc5f2ef40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
-    m_Bits: 136
---- !u!114 &3098802541760970829
+    m_Bits: 64
+  _swordChargerPrefab: {fileID: 8933754746281649690, guid: c5ca6670de9f44e1c9aad5da14e8281f, type: 3}
+--- !u!114 &2528187241188573100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

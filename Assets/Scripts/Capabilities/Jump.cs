@@ -132,5 +132,10 @@ namespace Assets.Scripts.Capabilities
         {
             return _maxAirJumps;
         }
+
+        public void SetMaxAirJump(int maxAirJump)
+        {
+            _maxAirJumps = maxAirJump;
+        }
     }
 }

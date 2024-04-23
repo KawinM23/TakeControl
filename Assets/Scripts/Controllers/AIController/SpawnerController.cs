@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.Capabilities;
 using UnityEngine;
 
 // SpawnerController spawns one type of GameObject in waves
@@ -79,9 +80,15 @@ public class SpawnerController : MonoBehaviour
                 break;
             }
 
+            // Build spawn position
             Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, 0f);
 
             Quaternion spawnRotation = Quaternion.identity;
+
+            // Random SwordCharger modules (dash, jump)
+            RandomSwordChargerModules();
+
+            // Spawn the object
             Instantiate(_spawningGameObject, spawnPosition, spawnRotation);
 
             // Randomize spawn interval
@@ -158,6 +165,43 @@ public class SpawnerController : MonoBehaviour
                 return GameObject.FindObjectsOfType<BossPuppeteerTurretController>().Length >= _maxSpawnedObjects;
             default:
                 return false; // default as keep spawning
+        }
+    }
+
+    public class SetSwordChargerModulesParams
+    {
+        public bool canDash;
+        public bool canDoubleJump;
+    }
+    void SetSwordChargerModules(SetSwordChargerModulesParams p)
+    {
+        _spawningGameObject.GetComponent<Move>()._hasDash = p.canDash;
+        _spawningGameObject.GetComponent<Jump>().SetMaxAirJump(p.canDoubleJump ? 1 : 0);
+    }
+
+    void RandomSwordChargerModules()
+    {
+        if (_spawningGameObjectEnum != SpawningGameObject.SWORD_CHARGER)
+        {
+            return;
+        }
+
+        // 2:2:1 onlyDash:onlyDoubleJump:both
+        float random = Random.Range(0.0f, 1.0f);
+        if (random < 0.4) // dash
+        {
+            SetSwordChargerModules(new SetSwordChargerModulesParams { canDash = true, canDoubleJump = false });
+            return;
+        }
+        else if (random < 0.8)
+        {
+            SetSwordChargerModules(new SetSwordChargerModulesParams { canDash = false, canDoubleJump = true });
+            return;
+        }
+        else
+        {
+            SetSwordChargerModules(new SetSwordChargerModulesParams { canDash = true, canDoubleJump = true });
+            return;
         }
     }
 }

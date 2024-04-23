@@ -17,6 +17,7 @@ public class BossPuppeteerHackCompletion : HackCompletion
         if (TryGetComponent(out Health health))
         {
             health.ResetHealthWithNewMaxHealth(999999);
+            health.SetHackableHealth(1); // dont let player hack it again
         }
         else
         {

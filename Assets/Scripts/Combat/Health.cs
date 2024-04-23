@@ -214,6 +214,11 @@ namespace Assets.Scripts.Combat
         {
             _mortal = mortal;
         }
+        public void SetHackableHealth(int health)
+        {
+            _hackableHealth = health;
+        }
+
     }
 
 

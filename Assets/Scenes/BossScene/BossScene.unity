@@ -1557,11 +1557,11 @@ PrefabInstance:
       objectReference: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _waveCount
-      value: 1
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _waveInterval
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _spawnCountMax
@@ -1577,7 +1577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _maxSpawnedObjects
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _spawningGameObjectEnum
@@ -2261,11 +2261,11 @@ PrefabInstance:
       objectReference: {fileID: 8933754746281649690, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _waveCount
-      value: 1
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _waveInterval
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _spawnCountMax
@@ -2281,7 +2281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _maxSpawnedObjects
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6751046263581315487, guid: ed2672a5da91e4431a06b74fe0138975, type: 3}
       propertyPath: _spawningGameObjectEnum

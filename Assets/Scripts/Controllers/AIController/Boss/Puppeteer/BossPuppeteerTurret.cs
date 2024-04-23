@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Combat;
 using UnityEngine;
 
@@ -10,10 +8,15 @@ public class BossPuppeteerTurretController : AIController, InputController
     [SerializeField] private LayerMask _layerMask;
     private Gun _gun;
 
+    // After running out of ammo, spawn one sword charger with instant hackable health
+    [Header("Sword Charger")]
+    [SerializeField] private GameObject _swordChargerPrefab;
+    private bool _spawnedSwordCharger = false;
 
     void Awake()
     {
         _gun = GetComponent<Gun>();
+        _spawnedSwordCharger = false; // repeat here so that no one accidentally set it to true
     }
 
     // TODO: proper abstraction later (sealed class + pattern match?)
@@ -33,6 +36,18 @@ public class BossPuppeteerTurretController : AIController, InputController
 #nullable enable
 
     void FixedUpdate()
+    {
+        UpdateState();
+        // if gun ammo is 0, spawn sword charger (must be when player is in control)
+        if (!_spawnedSwordCharger && _gun.CurrentAmmo == 0 && tag.Equals("Player"))
+        {
+            Debug.Log("ammo spawned" + _gun.CurrentAmmo + " " + _spawnedSwordCharger);
+            SpawnSwordCharger();
+        }
+
+    }
+
+    void UpdateState()
     {
         // if state unchanged, nothing to do
         if (_prev_state == _state)
@@ -60,6 +75,21 @@ public class BossPuppeteerTurretController : AIController, InputController
 
         // Update previous state to check for state changes in the future
         _prev_state = _state;
+    }
+
+    void SpawnSwordCharger()
+    {
+        if (_spawnedSwordCharger)
+        {
+            return;
+        }
+        _spawnedSwordCharger = true;
+        Vector3 position = transform.position;
+        // spawn higher so that it doesn't collide with the turret
+        position.y += 1;
+        var swordCharger = Instantiate(_swordChargerPrefab, position, Quaternion.identity);
+        Health health = swordCharger.GetComponent<Health>();
+        health.SetHackableHealth(health.GetMaxHealth());
     }
 
     IEnumerator IdleState()
