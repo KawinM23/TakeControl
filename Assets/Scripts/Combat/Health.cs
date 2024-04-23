@@ -152,10 +152,10 @@ namespace Assets.Scripts.Combat
                 /*SoundManager.Instance;*/
                 if (_dieParticle)
                 {
-                    var main = _dieParticle.main;
+                    var p = Instantiate(_dieParticle, gameObject.transform.position, Quaternion.identity);
+                    var main = p.main;
                     main.startColor = OriginalColor;
-                    GameObject go = Instantiate(_dieParticle.gameObject, gameObject.transform.position, Quaternion.identity);
-                    Destroy(go, 2f);
+                    Destroy(p, 2f);
                 }
                 if (gameObject.TryGetComponent(out DropItem dropItem)) dropItem.DropCurrency();
                 BossManager.Instance.IncrementEnemyKillCount();
