@@ -14,13 +14,7 @@ public class Parallax : MonoBehaviour
     // float scrollSpeedX = 0;
 
     private Vector3 _centerOfParallax;
-    private Camera _mainCamera;
     private Vector2 _deltaPos;
-
-    void Awake()
-    {
-        _mainCamera = Camera.main;
-    }
 
     void Start()
     {
@@ -30,9 +24,11 @@ public class Parallax : MonoBehaviour
 
     void Update()
     {
-        if (_centerOfParallax == null || _mainCamera == null) return;
+        var mainCamera = Camera.main;
 
-        _deltaPos = _mainCamera.transform.position - _centerOfParallax;
+        if (_centerOfParallax == null || mainCamera == null) return;
+
+        _deltaPos = mainCamera.transform.position - _centerOfParallax;
         _deltaPos *= factor;
         this.transform.position = _startPos + (Vector3)_deltaPos;
     }
