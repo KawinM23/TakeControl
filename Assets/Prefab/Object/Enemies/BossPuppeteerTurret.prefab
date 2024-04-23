@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpeed: 100
+  _bulletDamage: 150
   _knockbackMultiplier: 10
   _bulletPrefab: {fileID: 5184725027320053484, guid: 29d834b80fab72c4891517141a885a9d, type: 3}
   _bulletSpread: 0
