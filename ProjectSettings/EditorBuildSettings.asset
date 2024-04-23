@@ -74,4 +74,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototype3/Map2-11.unity
     guid: 6669f586cfd88ae4096c2470eab622c9
+  - enabled: 1
+    path: Assets/Scenes/BossScene/Map2-12.unity
+    guid: d2952b0aeb4b56d4bb32ec181126a3e9
   m_configObjects: {}
