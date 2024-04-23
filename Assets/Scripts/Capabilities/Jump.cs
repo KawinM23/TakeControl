@@ -49,7 +49,7 @@ namespace Assets.Scripts.Capabilities
             _velocity = _body.velocity;
 
             // If the player is on the ground, reset the jump phase and coyote counter
-            if (_onGround && _body.velocity.y == 0)
+            if (_onGround && -0.01f <= _body.velocity.y && _body.velocity.y <= 0.01f)
             {
                 _jumpPhase = 0;
                 _coyoteCounter = _coyoteTime;
