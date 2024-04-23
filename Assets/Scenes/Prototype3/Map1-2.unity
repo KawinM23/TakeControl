@@ -1201,8 +1201,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.04, y: -1.28}
-  m_SizeDelta: {x: 363.7046, y: 130.5374}
+  m_AnchoredPosition: {x: -4.13, y: 0.58}
+  m_SizeDelta: {x: 506.6912, y: 130.5374}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127914504
 MonoBehaviour:
@@ -1224,10 +1224,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Left Click to Attack
+  m_text: '[Left Click] to Attack'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
+  m_sharedMaterial: {fileID: -6718969823162192230, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1251,8 +1251,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.49
-  m_fontSizeBase: 33.49
+  m_fontSize: 55
+  m_fontSizeBase: 55
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -1089,7 +1089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.87, y: -1.3974}
+  m_AnchoredPosition: {x: 8.27, y: -1.3974}
   m_SizeDelta: {x: 637.3052, y: 100.9846}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1015054487
@@ -1112,7 +1112,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WASD to Move
+  m_text: '[WASD] to Move
+
+    [Spacebar] to Jump'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
   m_sharedMaterial: {fileID: -6718969823162192230, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
@@ -1139,8 +1141,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1434,7 +1436,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Right Click at this robot to Take Control
+  m_text: '[Right Click] at this robot to Take Control'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}
   m_sharedMaterial: {fileID: -6718969823162192230, guid: e5e4d997a7af7b0bdad7916bf95f43f8, type: 2}

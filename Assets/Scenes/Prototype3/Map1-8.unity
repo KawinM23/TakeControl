@@ -809,6 +809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeTrial-CollectAll
       objectReference: {fileID: 0}
+    - target: {fileID: 4151554648767574596, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5142815388245499394, guid: 722073cfb33e03041a2ebbedc445e257, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
