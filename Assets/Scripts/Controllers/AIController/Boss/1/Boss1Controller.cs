@@ -12,6 +12,7 @@ public class Boss1Controller : Boss1BaseController
     [SerializeField] private LaserShooter _beginLaser;
     [SerializeField] private LaserShooter _endLaser;
     [SerializeField] private GameObject _barrier;
+    [SerializeField] private GameObject _door;
     private List<LaserShooter> _allLaser;
     private int _laserPatternCounter = 0;
     private float _phaseDelayTimer = 10;
@@ -54,6 +55,7 @@ public class Boss1Controller : Boss1BaseController
             }
             _allLaser.Add(_endLaser);
         }
+        _door.SetActive(false);
     }
 
     protected override void OnUpdate()
@@ -70,9 +72,14 @@ public class Boss1Controller : Boss1BaseController
                 laser.SetActive(false);
             }
             SoundManager.Instance.StopBGM();
+            _door.SetActive(false);
             return;
         }
 
+        if (PlayerManager.Instance.Player.transform.position.x >= (_door.transform.position.x + PlayerManager.Instance.Player.transform.localScale.x) && PlayerManager.Instance.Player.transform.position.y <= (_door.transform.position.y + _door.transform.localScale.y))
+        {
+            _door.SetActive(true);
+        }
         if (_healTimer >= 0)
         {
             _healTimer -= Time.deltaTime;
