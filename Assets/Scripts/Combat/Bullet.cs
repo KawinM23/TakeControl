@@ -50,6 +50,11 @@ namespace Assets.Scripts.Combat
                 SoundManager.Instance.PlayBulletImpact();
             }
         }
+
+        public void SetDamage(int damage)
+        {
+            _damage = damage;
+        }
     }
 }
 
