@@ -77,6 +77,7 @@ public class LaserShooter : MonoBehaviour
         if (!_active)
         {
             _spriteRenderer.color = Color.Lerp(_normalColor, _shootColor, 0);
+            _collider.gameObject.SetActive(false);
         }
     }
 
