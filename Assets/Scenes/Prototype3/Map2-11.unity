@@ -3417,6 +3417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserShooter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7724385675777897054, guid: 5f80c04ad310a6544a12d49f4469604a, type: 3}
+      propertyPath: _damagePerTick
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8827171915127822952, guid: 5f80c04ad310a6544a12d49f4469604a, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.0810003
@@ -3485,6 +3489,10 @@ PrefabInstance:
     - target: {fileID: 7038944044624106018, guid: 5f80c04ad310a6544a12d49f4469604a, type: 3}
       propertyPath: m_Name
       value: LaserShooter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724385675777897054, guid: 5f80c04ad310a6544a12d49f4469604a, type: 3}
+      propertyPath: _damagePerTick
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8827171915127822952, guid: 5f80c04ad310a6544a12d49f4469604a, type: 3}
       propertyPath: m_LocalScale.x
