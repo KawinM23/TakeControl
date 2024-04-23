@@ -1,6 +1,7 @@
 @startuml
 class Bullet {
     + Fire(velocity:Vector2, knockbackMultiplier:float, bulletDamage:int) : void
+    + SetDamage(damage:int) : void
 }
 BaseProjectile <|-- Bullet
 @enduml

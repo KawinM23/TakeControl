@@ -1,0 +1,6 @@
+@startuml
+class ShotGun {
+    + <<override>> Shoot(target:Vector2) : void
+}
+Gun <|-- ShotGun
+@enduml

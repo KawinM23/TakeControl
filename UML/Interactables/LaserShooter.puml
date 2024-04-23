@@ -1,5 +1,11 @@
 @startuml
 class LaserShooter {
+    + IsActive() : bool
+    + SetActive(active:bool) : void
+    + SetDelay(delay:float) : void
+    + SetDuration(duration:float) : void
+    + SetTimer(timer:float) : void
+    + SetAutoDeactive(autoDeactive:bool) : void
 }
 MonoBehaviour <|-- LaserShooter
 @enduml

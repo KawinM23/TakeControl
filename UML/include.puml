@@ -289,6 +289,12 @@ class SavePoint {
 }
 Interactable <|-- SavePoint
 class LaserShooter {
+    + IsActive() : bool
+    + SetActive(active:bool) : void
+    + SetDelay(delay:float) : void
+    + SetDuration(duration:float) : void
+    + SetTimer(timer:float) : void
+    + SetAutoDeactive(autoDeactive:bool) : void
 }
 MonoBehaviour <|-- LaserShooter
 class CollectTrial {
@@ -356,13 +362,14 @@ class Hack {
 MonoBehaviour <|-- Hack
 class Bullet {
     + Fire(velocity:Vector2, knockbackMultiplier:float, bulletDamage:int) : void
+    + SetDamage(damage:int) : void
 }
 BaseProjectile <|-- Bullet
 class Gun {
     + MaxAmmo : uint = 20
     + CurrentAmmo : uint = 20
     + Reloading : bool
-    + Shoot(target:Vector2) : void
+    + <<virtual>> Shoot(target:Vector2) : void
     + IsReloading() : bool
     + GetCurrentReloadPercent() : double
     + GetUnlimitedAmmo() : bool
@@ -402,6 +409,10 @@ class WeaponManager {
     + CurrentWeapon() : BaseWeapon?
 }
 MonoBehaviour <|-- WeaponManager
+class ShotGun {
+    + <<override>> Shoot(target:Vector2) : void
+}
+Gun <|-- ShotGun
 class Sword {
 }
 BaseWeapon <|-- Sword
@@ -689,11 +700,18 @@ class Boss1Controller {
 }
 enum Phase {
     NORMAL,
-    Boost1,
-    Boost2,
+    BOOST1,
+    BOOST2,
+}
+enum LaserPattern {
+    LEFT_TO_RIGHT,
+    RIGHT_TO_LEFT,
+    MIDDLE_TO_REAR,
+    REAR_TO_MIDDLE,
 }
 Boss1BaseController <|-- Boss1Controller
 Boss1Controller +-- Phase
+Boss1Controller +-- LaserPattern
 abstract class Boss1BaseController {
     + IsDestroy() : bool
     + <<override>> GetAttackDirection() : Vector2?

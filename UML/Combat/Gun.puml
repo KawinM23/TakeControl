@@ -3,7 +3,7 @@ class Gun {
     + MaxAmmo : uint = 20
     + CurrentAmmo : uint = 20
     + Reloading : bool
-    + Shoot(target:Vector2) : void
+    + <<virtual>> Shoot(target:Vector2) : void
     + IsReloading() : bool
     + GetCurrentReloadPercent() : double
     + GetUnlimitedAmmo() : bool

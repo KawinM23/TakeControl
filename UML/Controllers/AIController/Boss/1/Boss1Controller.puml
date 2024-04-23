@@ -3,9 +3,16 @@ class Boss1Controller {
 }
 enum Phase {
     NORMAL,
-    Boost1,
-    Boost2,
+    BOOST1,
+    BOOST2,
+}
+enum LaserPattern {
+    LEFT_TO_RIGHT,
+    RIGHT_TO_LEFT,
+    MIDDLE_TO_REAR,
+    REAR_TO_MIDDLE,
 }
 Boss1BaseController <|-- Boss1Controller
 Boss1Controller +-- Phase
+Boss1Controller +-- LaserPattern
 @enduml
