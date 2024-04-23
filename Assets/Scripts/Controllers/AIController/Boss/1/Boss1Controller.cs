@@ -14,6 +14,7 @@ public class Boss1Controller : Boss1BaseController
     [SerializeField] private GameObject _barrier;
     private List<LaserShooter> _allLaser;
     private int _laserPatternCounter = 0;
+    private float _phaseDelayTimer = 10;
 
     enum Phase
     {
@@ -64,6 +65,11 @@ public class Boss1Controller : Boss1BaseController
                 comp.GetHealth().SetMortality(true);
             }
             _health.SetMortality(true);
+            foreach (LaserShooter laser in _allLaser)
+            {
+                laser.SetActive(false);
+            }
+            SoundManager.Instance.StopBGM();
             return;
         }
 
@@ -85,22 +91,30 @@ public class Boss1Controller : Boss1BaseController
                 if (!comp.IsDestroy())
                 {
                     comp.SetHealPercent(comp.GetHealPercent() * 1.5);
-                    comp.GetGun().SetBulletSpeed(comp.GetGun().GetBulletSpeed() * 2);
-                    comp.GetGun().SetShootingDelay(comp.GetGun().GetShootingDelay() / 2);
+                    comp.GetGun().SetBulletSpeed(comp.GetGun().GetBulletSpeed() * 1.5f);
+                    comp.GetGun().SetShootingDelay(comp.GetGun().GetShootingDelay() / 1.5);
                 }
             }
-            _gun.SetShootingDelay(_gun.GetShootingDelay() / 2);
+            _gun.SetShootingDelay(_gun.GetShootingDelay() / 1.5);
         }
         else if (_phase == Phase.BOOST1 && _components.Count == CountDestroyComponents())
         {
             _phase = Phase.BOOST2;
-            _gun.SetShootingDelay(_gun.GetShootingDelay() / 2);
+            _gun.SetShootingDelay(_gun.GetShootingDelay() / 1.5);
             Destroy(_barrier);
         }
         if (_phase == Phase.BOOST2 && IsAllLaserDeactivate())
         {
-            ActivateLaserPattern((LaserPattern)(_laserPatternCounter % 4));
-            _laserPatternCounter++;
+            if (_phaseDelayTimer > 0)
+            {
+                _phaseDelayTimer -= Time.deltaTime;
+                if (_phaseDelayTimer <= 0) SoundManager.Instance.PlayBGM("CMB Boss1Fight");
+            }
+            else
+            {
+                ActivateLaserPattern((LaserPattern)(_laserPatternCounter));
+                _laserPatternCounter = (_laserPatternCounter + 1) % 4;
+            }
         }
     }
 
