@@ -90,6 +90,7 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
 
     public void StartFight()
     {
+        SoundManager.Instance.nextBGM = SoundManager.Instance.GetRandomCombatBGM();
         _waveIndex = 0;
         enemiesWave[_waveIndex].enemies.ForEach(enemy => { enemy.SetActive(true); });
         foreach (GameObject door in _doors)
@@ -102,6 +103,7 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
 
     public void EndFight()
     {
+        SoundManager.Instance.nextBGM = SoundManager.Instance.BGMExploration;
         _challenging = false;
         _completed = true;
         foreach (GameObject door in _doors)

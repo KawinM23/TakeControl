@@ -98,11 +98,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayBGMBySceneName(string sceneName) {
-        // hardcode BGM for each scene here
-        // ...
-        // ...
-
-        Debug.Log("Playing BGM for scene: " + sceneName);
+        // Substring check here
         if (sceneName.Contains("Menu") || sceneName.Contains("Option"))
         {
             nextBGM=BGMMenu;
