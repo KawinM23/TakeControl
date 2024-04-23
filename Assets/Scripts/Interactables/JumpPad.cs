@@ -11,6 +11,7 @@ public class JumpPad : MonoBehaviour
             if (collision.TryGetComponent(out Rigidbody2D rb))
             {
                 rb.velocity = new Vector2(rb.velocity.x, _upVelocity);
+                SoundManager.Instance.PlayJumpPad();
             }
         }
     }

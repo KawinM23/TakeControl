@@ -111,12 +111,22 @@ class SoundManager {
     + music_multiplier : float
     + sfx_multiplier : float
     + playingBGM : string
+    + nextBGM : string
     + BGMMenu : string = "MEN NeoCityDive"
+    + BGMExploration : string = "EXP BlueTwilight"
+    + _prev_scene : string
+    + _current_scene : string
     + DingPitchMin : float = 0.5f
     + DingPitchMax : float = 3.0f
+    + PlayBGMBySceneName(sceneName:string) : void
+    + GetRandomCombatBGM() : string
     + PlayJump() : void
     + PlayDing(currentCount:int, totalCount:int) : void
     + PlayMagicCoin() : void
+    + PlayJumpPad() : void
+    + PlayLaser() : void
+    + PlayHover() : void
+    + PlayConfirm() : void
     + PlaySlash() : void
     + PlayHack() : void
     + PlayDash() : void
@@ -129,8 +139,11 @@ class SoundManager {
     + PlayBGMCombatRandom() : void
     + PlayBGM(name:string) : void
 }
+class "List`1"<T> {
+}
 MonoBehaviour <|-- SoundManager
 SoundManager --> "Instance" SoundManager
+SoundManager o-> "BGMCombat<string>" "List`1"
 class MapManager {
     + IsChangingScene : bool
     + FromScene : string

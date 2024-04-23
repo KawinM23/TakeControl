@@ -2794,6 +2794,12 @@ MonoBehaviour:
     currentScene: 
     switches:
       _serializedList: []
+    fightArenas:
+      _serializedList: []
+    collectTrials:
+      _serializedList: []
+    puzzles:
+      _serializedList: []
     currency: 0
   defaultSaveName: default
   defaultSceneName: Map1-1
@@ -2925,7 +2931,9 @@ MonoBehaviour:
     source: {fileID: 0}
   playingBGM: 
   playingBGMVolume: 
-  nextBGM: 
+  nextBGM: MEN NeoCityDive
+  BGMMenu: MEN NeoCityDive
+  BGMExploration: EXP BlueTwilight
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!1 &1087684580

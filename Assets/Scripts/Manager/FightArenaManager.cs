@@ -82,7 +82,7 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null && collision.CompareTag("Player") && !_completed)
+        if (collision != null && collision.CompareTag("Player") && !_completed && !_challenging)
         {
             StartFight();
         }
@@ -103,6 +103,7 @@ public class FightArenaManager : MonoBehaviour, IDataPersist
     public void EndFight()
     {
         _challenging = false;
+        _completed = true;
         foreach (GameObject door in _doors)
         {
             door.SetActive(false);

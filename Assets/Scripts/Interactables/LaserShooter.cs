@@ -46,6 +46,7 @@ public class LaserShooter : MonoBehaviour
                 {
                     _collider.gameObject.SetActive(true);
                     _timer = _duration;
+                    SoundManager.Instance.PlayLaser();
                 }
             }
         }

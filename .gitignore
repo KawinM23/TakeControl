@@ -74,6 +74,7 @@ crashlytics-build.properties
 
 .DS_Store
 *AudioClipsLocal*
+*AudioLocal*
 .mono/
 
 TBD
