@@ -287,6 +287,7 @@ MonoBehaviour:
   _gun: {fileID: 273204054}
   _healDelay: 0.5
   _healPercent: 2.5
+  _gameObjectToSpawnWhenDestroy: {fileID: 403304097228609268, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
 --- !u!50 &273204057
 Rigidbody2D:
   serializedVersion: 4
@@ -3050,6 +3051,7 @@ MonoBehaviour:
   _gun: {fileID: 1944420982}
   _healDelay: 0.5
   _healPercent: 2.5
+  _gameObjectToSpawnWhenDestroy: {fileID: 403304097228609268, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
 --- !u!50 &1944420985
 Rigidbody2D:
   serializedVersion: 4
