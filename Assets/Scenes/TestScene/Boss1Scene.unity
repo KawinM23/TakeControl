@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 273204057}
   - component: {fileID: 273204056}
   - component: {fileID: 273204055}
-  - component: {fileID: 273204054}
+  - component: {fileID: 273204058}
   - component: {fileID: 273204053}
   m_Layer: 6
   m_Name: Component2
@@ -233,27 +233,6 @@ MonoBehaviour:
     m_Bits: 0
   _dieParticle: {fileID: 0}
   OriginalColor: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &273204054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 273204049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletSpeed: 5
-  _knockbackMultiplier: 0.7
-  _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
-  _bulletSpread: 0
-  _shootingDelay: 2
-  _reloadTime: 0
-  MaxAmmo: 20
-  CurrentAmmo: 20
-  Reloading: 0
 --- !u!114 &273204055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +263,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 136
   _health: {fileID: 273204053}
-  _gun: {fileID: 273204054}
+  _gun: {fileID: 273204058}
   _healDelay: 0.5
   _healPercent: 2.5
   _gameObjectToSpawnWhenDestroy: {fileID: 403304097228609268, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
@@ -315,6 +294,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &273204058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273204049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3204c9f94c7a64e9bb0fa479cc8a0185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletSpeed: 5
+  _knockbackMultiplier: 0.5
+  _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
+  _bulletSpread: 2
+  _shootingDelay: 3
+  _reloadTime: 0
+  MaxAmmo: 20
+  CurrentAmmo: 20
+  Reloading: 0
+  _forceBulletDamage: 1
+  _bulletDamage: 7
+  _bulletCount: 3
 --- !u!1 &280588621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3143,8 +3146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpeed: 5
-  _knockbackMultiplier: 0.7
+  _bulletSpeed: 7
+  _knockbackMultiplier: 1
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
   _bulletSpread: 0
   _shootingDelay: 2
@@ -3152,6 +3155,8 @@ MonoBehaviour:
   MaxAmmo: 20
   CurrentAmmo: 20
   Reloading: 0
+  _forceBulletDamage: 1
+  _bulletDamage: 15
 --- !u!114 &1944420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3381,6 +3386,8 @@ MonoBehaviour:
   MaxAmmo: 20
   CurrentAmmo: 20
   Reloading: 0
+  _forceBulletDamage: 0
+  _bulletDamage: 0
 --- !u!114 &2101334040
 MonoBehaviour:
   m_ObjectHideFlags: 0

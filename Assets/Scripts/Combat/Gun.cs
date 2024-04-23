@@ -15,10 +15,10 @@ namespace Assets.Scripts.Combat
         /// 20: fast
         /// 40: brrr
         /// </summary>
-        [SerializeField] private float _bulletSpeed = 40f; // TODO: confirm design with team
-        [SerializeField] private int _bulletDamage = 15; // TODO: confirm design with team
-        [SerializeField] private float _knockbackMultiplier = 0.7f;
-        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] protected int _bulletDamage = 15; // TODO: confirm design with team
+        [SerializeField] protected float _bulletSpeed = 40f; // TODO: confirm design with team
+        [SerializeField] protected float _knockbackMultiplier = 0.7f;
+        [SerializeField] protected GameObject _bulletPrefab;
 
         /// <summary>
         /// bullet spread in degrees
@@ -28,15 +28,17 @@ namespace Assets.Scripts.Combat
         /// 0.1: accurate
         /// 0.05 - 0: sniper
         /// </summary>
-        [SerializeField] private float _bulletSpread;
+        [SerializeField] protected float _bulletSpread;
 
-        private double _shootTimer, _reloadTimer = 0;
-        [SerializeField] private double _shootingDelay = 0.25, _reloadTime = 2;
+        protected double _shootTimer, _reloadTimer = 0;
+        [SerializeField] protected double _shootingDelay = 0.25, _reloadTime = 2;
         public uint MaxAmmo = 20;
         public uint CurrentAmmo = 20;
 
         public bool Reloading;
-        private bool _unlimitedAmmo = false;
+        protected bool _unlimitedAmmo = false;
+
+        [SerializeField] protected bool _forceBulletDamage = false;
 
         protected override void Awake()
         {
@@ -86,13 +88,12 @@ namespace Assets.Scripts.Combat
             }
         }
 
-        public void Shoot(Vector2 target)
+        public virtual void Shoot(Vector2 target)
         {
             if (HackEventManager.Instance != null && HackEventManager.Instance.IsHacking)
             {
                 return;
             }
-            Debug.Log("Shoot");
 
             // Screen Shake if bullet is big
             if (_bulletPrefab.transform.localScale.x >= 0.3)
