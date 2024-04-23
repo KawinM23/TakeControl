@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(Gun), typeof(FieldOfView))]
 public class GunnerController : AIController, InputController
 {
+    [SerializeField] private LayerMask _floorLayerMask;
     [SerializeField] private float _patrolRadius = 5f;
     [Tooltip("Preferred distance from player")]
     public float preferredDistance = 5f;
@@ -189,15 +190,15 @@ public class GunnerController : AIController, InputController
 
     private bool IsHoleBelow()
     {
-        var mask = _fov.obstructionMask; // ???
+        var mask = _floorLayerMask;
         var pos = (Vector2)transform.position + new Vector2(0, -_collider.bounds.extents.y);
-        var hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, mask);
+        var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
         return !hit;
     }
 
     private bool IsHoleBelowRight()
     {
-        var mask = _fov.obstructionMask; // ???
+        var mask = _floorLayerMask;
         var pos = (Vector2)transform.position + new Vector2(_collider.bounds.extents.x, -_collider.bounds.extents.y);
         var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
         return !hit;
@@ -205,7 +206,7 @@ public class GunnerController : AIController, InputController
 
     private bool IsHoleBelowLeft()
     {
-        var mask = _fov.obstructionMask; // ???
+        var mask = _floorLayerMask;
         var pos = (Vector2)transform.position + new Vector2(-_collider.bounds.extents.x, -_collider.bounds.extents.y);
         var hit = Physics2D.Raycast(pos, Vector2.down, 1f, mask);
         return !hit;
