@@ -1,11 +1,12 @@
 using Assets.Scripts.Effect;
+using Assets.Scripts.SaveLoad;
 using UnityEngine;
 
 namespace Assets.Scripts.Combat
 {
     [RequireComponent(typeof(Controller))]
 
-    public class Gun : BaseWeapon
+    public class Gun : BaseWeapon, ISavePersist
     {
         private Controller _controller;
 
@@ -182,6 +183,50 @@ namespace Assets.Scripts.Combat
         public void SetReloadTime(float reloadTime)
         {
             _reloadTime = reloadTime;
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            // Store data
+            data.modules.gun = new ModulesData.Gun
+            {
+                bulletSpeed = _bulletSpeed,
+                shootingDelay = _shootingDelay,
+                knockbackMultiplier = _knockbackMultiplier,
+                reloadTime = _reloadTime,
+                unlimitedAmmo = _unlimitedAmmo
+            };
+        }
+
+        public void LoadData(in GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            var m = data.modules.gun;
+            if (m == null)
+            {
+                // No saved data, remove this component
+                DestroyImmediate(this);
+                return;
+            }
+
+            // Apply saved data
+            _bulletSpeed = m.bulletSpeed;
+            _shootingDelay = m.shootingDelay;
+            _knockbackMultiplier = m.knockbackMultiplier;
+            _reloadTime = m.reloadTime;
+            _unlimitedAmmo = m.unlimitedAmmo;
+
         }
     }
 }

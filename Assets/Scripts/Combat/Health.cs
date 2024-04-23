@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Effect;
+using Assets.Scripts.SaveLoad;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.Combat
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ISavePersist
     {
         public UnityEvent OnHackable;
 
@@ -214,11 +215,51 @@ namespace Assets.Scripts.Combat
         {
             _mortal = mortal;
         }
+        
         public void SetHackableHealth(int health)
         {
             _hackableHealth = health;
         }
 
+
+        public void SaveData(ref GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            // Store data
+            data.modules.health = new ModulesData.Health
+            {
+                maxHealth = _maxHealth,
+                defaultKnockbackForce = _defaultKnockbackForce,
+                iFrameDuration = _iFrameDuration
+            };
+        }
+
+        public void LoadData(in GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            var m = data.modules.health;
+            if (m == null)
+            {
+                // No saved data, remove this component
+                Destroy(this);
+                return;
+            }
+
+            // Apply saved data
+            _maxHealth = m.maxHealth;
+            _defaultKnockbackForce = m.defaultKnockbackForce;
+            _iFrameDuration = m.iFrameDuration;
+        }
     }
 
 

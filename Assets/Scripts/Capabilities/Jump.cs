@@ -1,9 +1,10 @@
 using UnityEngine;
+using Assets.Scripts.SaveLoad;
 
 namespace Assets.Scripts.Capabilities
 {
     [RequireComponent(typeof(Controller))]
-    public class Jump : MonoBehaviour
+    public class Jump : MonoBehaviour, ISavePersist
     {
         [SerializeField, Range(0f, 10f)] private float _jumpHeight = 3f;
         [SerializeField, Range(0, 5)] private int _maxAirJumps = 0;
@@ -136,6 +137,49 @@ namespace Assets.Scripts.Capabilities
         public void SetMaxAirJump(int maxAirJump)
         {
             _maxAirJumps = maxAirJump;
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            // Store data
+            data.modules.jump = new ModulesData.Jump
+            {
+                jumpHeight = _jumpHeight,
+                maxAirJumps = _maxAirJumps,
+                downwardMovementMultiplier = _downwardMovementMultiplier,
+                upwardMovementMultiplier = _upwardMovementMultiplier,
+                coyoteTime = _coyoteTime,
+                jumpBufferTime = _jumpBufferTime
+            };
+        }
+
+        public void LoadData(in GameData data)
+        {
+            // Only deal with the player
+            if (gameObject != PlayerManager.Instance.Player)
+            {
+                return;
+            }
+
+            var m = data.modules.jump;
+            if (m == null)
+            {
+                return;
+            }
+
+            // Apply saved data
+            _jumpHeight = m.jumpHeight;
+            _maxAirJumps = m.maxAirJumps;
+            _downwardMovementMultiplier = m.downwardMovementMultiplier;
+            _upwardMovementMultiplier = m.upwardMovementMultiplier;
+            _coyoteTime = m.coyoteTime;
+            _jumpBufferTime = m.jumpBufferTime;
         }
     }
 }
