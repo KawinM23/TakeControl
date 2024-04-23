@@ -21,7 +21,12 @@ class SpawnerSettings {
     + maxSpawnObjects : int?
     + spawningGameObject : SpawningGameObject?
 }
+class SetSwordChargerModulesParams {
+    + canDash : bool
+    + canDoubleJump : bool
+}
 MonoBehaviour <|-- SpawnerController
 SpawnerController +-- SpawningGameObject
 SpawnerController +-- SpawnerSettings
+SpawnerController +-- SetSwordChargerModulesParams
 @enduml

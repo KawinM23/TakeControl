@@ -300,6 +300,7 @@ abstract class HackCompletion {
 MonoBehaviour <|-- HackCompletion
 class Jump {
     + GetMaxAirJump() : int
+    + SetMaxAirJump(maxAirJump:int) : void
 }
 MonoBehaviour <|-- Jump
 class Hack {
@@ -375,6 +376,7 @@ class Health {
     + HealPercent(percent:double) : void
     + GetMortality() : bool
     + SetMortality(mortal:bool) : void
+    + SetHackableHealth(health:int) : void
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent
@@ -497,9 +499,14 @@ class SpawnerSettings {
     + maxSpawnObjects : int?
     + spawningGameObject : SpawningGameObject?
 }
+class SetSwordChargerModulesParams {
+    + canDash : bool
+    + canDoubleJump : bool
+}
 MonoBehaviour <|-- SpawnerController
 SpawnerController +-- SpawningGameObject
 SpawnerController +-- SpawnerSettings
+SpawnerController +-- SetSwordChargerModulesParams
 class TurretController {
     + <<override>> GetAttackDirection() : Vector2?
     + <<override>> IsReloadPressed() : bool

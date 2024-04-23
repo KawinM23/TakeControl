@@ -13,6 +13,7 @@ class Health {
     + HealPercent(percent:double) : void
     + GetMortality() : bool
     + SetMortality(mortal:bool) : void
+    + SetHackableHealth(health:int) : void
 }
 MonoBehaviour <|-- Health
 Health --> "OnHackable" UnityEvent

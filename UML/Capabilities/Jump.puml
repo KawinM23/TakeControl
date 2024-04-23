@@ -1,6 +1,7 @@
 @startuml
 class Jump {
     + GetMaxAirJump() : int
+    + SetMaxAirJump(maxAirJump:int) : void
 }
 MonoBehaviour <|-- Jump
 @enduml
