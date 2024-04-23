@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3204c9f94c7a64e9bb0fa479cc8a0185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletDamage: 7
   _bulletSpeed: 5
   _knockbackMultiplier: 0.5
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
@@ -316,7 +317,6 @@ MonoBehaviour:
   CurrentAmmo: 20
   Reloading: 0
   _forceBulletDamage: 1
-  _bulletDamage: 7
   _bulletCount: 3
 --- !u!1 &280588621
 GameObject:
@@ -1292,8 +1292,8 @@ Transform:
   m_GameObject: {fileID: 739089295}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.03, y: 6.25, z: 0}
-  m_LocalScale: {x: 38.131683, y: 1, z: 1}
+  m_LocalPosition: {x: 6.4721, y: 6.25, z: 0}
+  m_LocalScale: {x: 29.014227, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1959,8 +1959,8 @@ Transform:
   m_GameObject: {fileID: 1215445872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.51, y: 5.5612, z: 0}
-  m_LocalScale: {x: 1, y: 20.722776, z: 1}
+  m_LocalPosition: {x: -8.51, y: 0.9679, z: 0}
+  m_LocalScale: {x: 1, y: 11.53523, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2117,8 +2117,8 @@ Transform:
   m_GameObject: {fileID: 1265108869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.48, y: 5.6015, z: 0}
-  m_LocalScale: {x: 1, y: 20.72217, z: 1}
+  m_LocalPosition: {x: 20.48, y: 0.9845, z: 0}
+  m_LocalScale: {x: 1, y: 11.489153, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3190,6 +3190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletDamage: 15
   _bulletSpeed: 7
   _knockbackMultiplier: 1
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
@@ -3200,7 +3201,6 @@ MonoBehaviour:
   CurrentAmmo: 20
   Reloading: 0
   _forceBulletDamage: 1
-  _bulletDamage: 15
 --- !u!114 &1944420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3421,6 +3421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletDamage: 0
   _bulletSpeed: 20
   _knockbackMultiplier: 0.7
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
@@ -3431,7 +3432,6 @@ MonoBehaviour:
   CurrentAmmo: 20
   Reloading: 0
   _forceBulletDamage: 0
-  _bulletDamage: 0
 --- !u!114 &2101334040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3695,8 +3695,8 @@ Transform:
   m_GameObject: {fileID: 2107020605}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.0108, y: -4.29, z: 0}
-  m_LocalScale: {x: 38.093628, y: 1, z: 1}
+  m_LocalPosition: {x: 6.4663, y: -4.29, z: 0}
+  m_LocalScale: {x: 29.008007, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
