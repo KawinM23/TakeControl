@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3204c9f94c7a64e9bb0fa479cc8a0185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletDamage: 9
   _bulletSpeed: 7
   _knockbackMultiplier: 0.5
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
@@ -256,7 +257,6 @@ MonoBehaviour:
   CurrentAmmo: 10
   Reloading: 0
   _forceBulletDamage: 1
-  _bulletDamage: 7
   _bulletCount: 3
 --- !u!114 &2140320440587481680
 MonoBehaviour:
@@ -270,6 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f77277c8b083464c9f6e7059d67674e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _floorLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _patrolRadius: 5
   preferredDistance: 5
   _jumpChance: 0.2
