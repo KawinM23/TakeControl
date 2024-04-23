@@ -11,6 +11,16 @@ public class WeaponManager : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Controller>();
+    }
+
+    private void Start()
+    {
+        InitilizeWeapon();
+    }
+
+    private void InitilizeWeapon()
+    {
+        _weapons = new List<BaseWeapon>();
         if (TryGetComponent(out Gun gun))
         {
             _weapons.Add(gun);
@@ -19,10 +29,7 @@ public class WeaponManager : MonoBehaviour
         {
             _weapons.Add(sword);
         }
-    }
 
-    private void Start()
-    {
         // Ensure only one weapon is active at start
         foreach (BaseWeapon weapon in _weapons)
         {
