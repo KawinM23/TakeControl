@@ -6,6 +6,8 @@ using UnityEngine;
 public class Boss1ComponentController : Boss1BaseController
 {
     [SerializeField] private double _healPercent;
+    [SerializeField] private GameObject _gameObjectToSpawnWhenDestroy;
+    private bool _enableSpawnGameObjectWhenDestroy = true;
 
     public double GetHealDelay()
     {
@@ -39,7 +41,15 @@ public class Boss1ComponentController : Boss1BaseController
 
     protected override void OnUpdate()
     {
-        if (IsDestroy()) return;
+        if (IsDestroy())
+        {
+            if (_enableSpawnGameObjectWhenDestroy && _gameObjectToSpawnWhenDestroy != null)
+            {
+                Instantiate(_gameObjectToSpawnWhenDestroy, transform.position, Quaternion.identity);
+                _enableSpawnGameObjectWhenDestroy = false;
+            }
+            return;
+        }
 
         if (_healTimer >= 0)
         {
