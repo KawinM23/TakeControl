@@ -1,20 +1,26 @@
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Assets.Scripts.SaveLoad
 {
     public class JsonSerializer : ISerializer
     {
-        private bool pretty;
+        private JsonSerializerSettings settings;
 
         public JsonSerializer(bool pretty = true)
         {
-            this.pretty = pretty;
+            settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.Auto,
+                NullValueHandling = NullValueHandling.Ignore
+            };
         }
 
         public void Serialize<T>(Stream writer, T obj)
         {
-            var json = JsonUtility.ToJson(obj, pretty);
+            var json = JsonConvert.SerializeObject(obj, settings);
             using (var w = new StreamWriter(writer))
             {
                 w.Write(json);
@@ -27,7 +33,7 @@ namespace Assets.Scripts.SaveLoad
             using (var r = new StreamReader(reader))
             {
                 var data = r.ReadToEnd();
-                return JsonUtility.FromJson<T>(data);
+                return JsonConvert.DeserializeObject<T>(data, settings);
             }
         }
 
