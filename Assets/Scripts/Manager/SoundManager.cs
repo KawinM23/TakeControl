@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ public class SoundManager : MonoBehaviour
 
     // BGM Names
     public string BGMMenu = "MEN NeoCityDive";
+    public string BGMExploration = "EXP BlueTwilight";
+
+    // Scene Names
+    public string _prev_scene;
+    public string _current_scene;
 
     // Ding SFX Pitch
     public float DingPitchMin = 0.5f;
@@ -50,6 +56,7 @@ public class SoundManager : MonoBehaviour
         {
             sfx_multiplier = PlayerPrefs.GetFloat("sfx_volume_multiplier");
         }
+        Debug.Log("bgm length" + bgms.Length);
         foreach (Sound s in bgms)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -66,28 +73,9 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        // Get Current Scene Name
-        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        // Play BGM based on scene name
-        if (sceneName.Contains("Menu"))
-        {
-            PlayBGM("MEN NeoCityDive");
-        }
-        else if (sceneName.Contains("Map"))
-        {
-            PlayBGM("EXP BlueTwilight");
-        }
-        else
-        {
-            PlayBGM("EXP Isolation"); // default
-        }
-
-    }
-
     private void Update()
     {
+        // If other BGM is queued, play it
         if (nextBGM != null && nextBGM != "" && nextBGM != playingBGM)
         {
             Sound s = System.Array.Find(bgms, bgm => bgm.name == nextBGM);
@@ -96,6 +84,35 @@ public class SoundManager : MonoBehaviour
                 PlayBGM(nextBGM);
                 nextBGM = "";
             }
+        }
+
+        // Update Scene Name
+        _current_scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (_current_scene != _prev_scene)
+        {
+            // Play BGM based on scene name
+            PlayBGMBySceneName(_current_scene);
+            _prev_scene = _current_scene;
+        }
+    }
+
+    public void PlayBGMBySceneName(string sceneName) {
+        Debug.Log("Playing BGM for scene: " + sceneName);
+        if (sceneName.Contains("Menu"))
+        {
+            nextBGM=BGMMenu;
+        }
+        else if (sceneName.Contains("Map"))
+        {
+            nextBGM=BGMExploration;
+        }
+        else if (sceneName.Contains("Boss") || sceneName.Contains("Combat"))
+        {
+            PlayBGMCombatRandom();
+        }
+        else
+        {
+            nextBGM=BGMExploration; // default
         }
     }
 
@@ -225,21 +242,21 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGMCombatRandom()
     {
-        Sound[] combatBGMs = new Sound[] { };
+        List<Sound> combatBGMs = new List<Sound>();
         foreach (Sound s in bgms)
         {
             // if name has "CMB" as substring
             if (s.name.Contains("CMB"))
             {
-                combatBGMs.Append(s);
+                combatBGMs.Add(s);
             }
         }
-        if (combatBGMs.Length == 0)
+        if (combatBGMs.Count == 0)
         {
             Debug.LogWarning("No combat BGMs found!");
             return;
         }
-        PlayBGM(combatBGMs[Random.Range(0, bgms.Length)].name);
+        nextBGM = combatBGMs[Random.Range(0, combatBGMs.Count)].name;
     }
 
     public void PlayBGM(string name)

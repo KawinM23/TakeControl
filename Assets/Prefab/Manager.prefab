@@ -558,7 +558,9 @@ MonoBehaviour:
     source: {fileID: 0}
   playingBGM: 
   playingBGMVolume: 
-  nextBGM: CMB TechNTech
+  nextBGM: EXP BlueTwilight
+  BGMMenu: MEN NeoCityDive
+  BGMExploration: EXP BlueTwilight
   DingPitchMin: 0.5
   DingPitchMax: 3
 --- !u!114 &6985303427310886824
