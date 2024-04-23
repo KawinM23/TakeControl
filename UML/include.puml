@@ -311,6 +311,9 @@ IDataPersist <|-- CollectTrial
 class CollsionDamage {
 }
 MonoBehaviour <|-- CollsionDamage
+class BossPuppeteerFightManager {
+}
+MonoBehaviour <|-- BossPuppeteerFightManager
 abstract class HackCompletion {
     + {abstract} OnHackSuccess() : void
     + {abstract} OnHackFail() : void
