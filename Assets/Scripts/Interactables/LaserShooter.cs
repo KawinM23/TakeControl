@@ -42,7 +42,6 @@ public class LaserShooter : MonoBehaviour
                     if (_autoDeactive)
                     {
                         SetActive(false);
-                        _spriteRenderer.color = Color.Lerp(_normalColor, _shootColor, 0);
                     }
                 }
             }
@@ -75,6 +74,10 @@ public class LaserShooter : MonoBehaviour
     public void SetActive(bool active)
     {
         _active = active;
+        if (!_active)
+        {
+            _spriteRenderer.color = Color.Lerp(_normalColor, _shootColor, 0);
+        }
     }
 
     public void SetDelay(float delay)
