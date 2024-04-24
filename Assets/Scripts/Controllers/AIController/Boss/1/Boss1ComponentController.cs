@@ -8,6 +8,7 @@ public class Boss1ComponentController : Boss1BaseController
     [SerializeField] private double _healPercent;
     [SerializeField] private GameObject _gameObjectToSpawnWhenDestroy;
     private bool _enableSpawnGameObjectWhenDestroy = true;
+    private GameObject _summonedGameObject = null;
 
     public double GetHealDelay()
     {
@@ -45,7 +46,7 @@ public class Boss1ComponentController : Boss1BaseController
         {
             if (_enableSpawnGameObjectWhenDestroy && _gameObjectToSpawnWhenDestroy != null)
             {
-                Instantiate(_gameObjectToSpawnWhenDestroy, transform.position, Quaternion.identity);
+                _summonedGameObject = Instantiate(_gameObjectToSpawnWhenDestroy, transform.position, Quaternion.identity);
                 _enableSpawnGameObjectWhenDestroy = false;
             }
             return;
@@ -60,6 +61,11 @@ public class Boss1ComponentController : Boss1BaseController
             _health.HealPercent(_healPercent);
             _healTimer = _healDelay;
         }
+    }
+
+    public bool IsSummonObjectAndAlreadyDestroy()
+    {
+        return !_enableSpawnGameObjectWhenDestroy && _summonedGameObject == null;
     }
 }
 
