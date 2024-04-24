@@ -2586,6 +2586,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1121079545928622561, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
+      propertyPath: _hackableHealth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1251624383589113218, guid: 7ae1a913b539caf77a1c1b7a0e6ed95a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.86
