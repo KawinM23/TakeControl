@@ -19,9 +19,9 @@ public class Boss1Controller : Boss1BaseController
 
     enum Phase
     {
-        NORMAL,
-        BOOST1,
-        BOOST2
+        PHASE1,
+        PHASE2,
+        PHASE3
     }
 
     enum LaserPattern
@@ -31,7 +31,7 @@ public class Boss1Controller : Boss1BaseController
         MIDDLE_TO_REAR,
         REAR_TO_MIDDLE
     }
-    private Phase _phase = Phase.NORMAL;
+    private Phase _phase = Phase.PHASE1;
 
     protected override void Awake()
     {
@@ -90,9 +90,9 @@ public class Boss1Controller : Boss1BaseController
             _healTimer = _healDelay;
         }
 
-        if (_phase == Phase.NORMAL && CountDestroyComponents() > 0)
+        if (_phase == Phase.PHASE1 && CountDestroyComponents() > 0)
         {
-            _phase = Phase.BOOST1;
+            _phase = Phase.PHASE2;
             foreach (Boss1ComponentController comp in _components)
             {
                 if (!comp.IsDestroy())
@@ -104,13 +104,29 @@ public class Boss1Controller : Boss1BaseController
             }
             _gun.SetShootingDelay(_gun.GetShootingDelay() / 1.5);
         }
-        else if (_phase == Phase.BOOST1 && _components.Count == CountDestroyComponents())
+        else if (_phase == Phase.PHASE2 && _components.Count == CountDestroyComponents())
         {
-            _phase = Phase.BOOST2;
+            _phase = Phase.PHASE3;
             _gun.SetShootingDelay(_gun.GetShootingDelay() / 1.5);
-            Destroy(_barrier);
         }
-        if (_phase == Phase.BOOST2 && IsAllLaserDeactivate())
+        if (_phase == Phase.PHASE3 && _barrier != null)
+        {
+            bool isAllSummonedDestroy = true;
+
+            foreach (Boss1ComponentController comp in _components)
+            {
+                if (!comp.IsSummonObjectAndAlreadyDestroy())
+                {
+                    isAllSummonedDestroy = false;
+                    break;
+                }
+            }
+            if (isAllSummonedDestroy)
+            {
+                Destroy(_barrier);
+            }
+        }
+        if (_phase == Phase.PHASE3 && IsAllLaserDeactivate())
         {
             if (_phaseDelayTimer > 0)
             {
