@@ -2256,6 +2256,10 @@ PrefabInstance:
       propertyPath: _reloadingSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2321741468107266234, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
+      propertyPath: facingDir.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2517021948225423299, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
