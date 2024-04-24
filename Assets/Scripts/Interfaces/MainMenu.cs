@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        bool hasSave =   !string.IsNullOrEmpty(SaveManager.Instance.ListSave().FirstOrDefault());
+        bool hasSave = !string.IsNullOrEmpty(SaveManager.Instance.ListSave().FirstOrDefault());
         _continueButton.interactable = hasSave;
 
         _circuitTexture = new Texture2D(_baseCircuitTexture.width, _baseCircuitTexture.height);
