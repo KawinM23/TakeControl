@@ -825,12 +825,12 @@ PrefabInstance:
       value: Gunner
       objectReference: {fileID: 0}
     - target: {fileID: 826607881678171070, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
-      propertyPath: _comboButtonAmountIncrement
-      value: 4
+      propertyPath: _buttonAmount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 826607881678171070, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
-      propertyPath: _comboHackDurationIncrement
-      value: 3
+      propertyPath: _hackDuration
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 938734657789168628, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1551,7 +1551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2601264345250207122, guid: 621fd2a387d34da4197a1bfa59b315da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.85
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 2601264345250207122, guid: 621fd2a387d34da4197a1bfa59b315da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1798,11 +1798,11 @@ PrefabInstance:
       value: Gunner (1)
       objectReference: {fileID: 0}
     - target: {fileID: 826607881678171070, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
-      propertyPath: _comboButtonAmountIncrement
-      value: 4
+      propertyPath: _buttonAmount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 826607881678171070, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
-      propertyPath: _comboHackDurationIncrement
+      propertyPath: _hackDuration
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 938734657789168628, guid: b3ad149821dbf775d9f2bbea61417148, type: 3}
