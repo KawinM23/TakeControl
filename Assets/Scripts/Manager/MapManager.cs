@@ -1,9 +1,11 @@
+using Assets.Scripts.SaveLoad;
+using AYellowpaper.SerializedCollections;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static MapTransition;
 
-public class MapManager : MonoBehaviour
+public class MapManager : MonoBehaviour, IDataPersist
 {
     public static MapManager Instance { get; private set; }
     public bool IsChangingScene;
@@ -18,6 +20,10 @@ public class MapManager : MonoBehaviour
     private float _mapChangeCooldownTimer;
     public bool CanChangeScene => _mapChangeCooldownTimer <= 0 && SceneManager.loadedSceneCount <= 1;
 
+    [Header("Map UI")]
+    [SerializeField] private SerializedDictionary<string, bool> _visited;
+    [SerializeField] private GameObject _mapUI;
+
     private void Awake()
     {
 
@@ -31,6 +37,11 @@ public class MapManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        MoveToMap(SceneManager.GetActiveScene().name);
     }
 
     private void Update()
@@ -68,6 +79,7 @@ public class MapManager : MonoBehaviour
         IsChangingScene = true;
         FromScene = fromSceneName;
         ToScene = toSceneName;
+        MoveToMap(toSceneName);
         DistanceFromSpawn = distanceFromSpawn;
         Direction = direction;
         _mapChangeCooldownTimer = _mapChangeCooldown;
@@ -123,4 +135,30 @@ public class MapManager : MonoBehaviour
 
     public float GetMapChangeCooldown() { return _mapChangeCooldown; }
 
+    public void MoveToMap(string toSceneName)
+    {
+        _visited[toSceneName] = true;
+        Transform toSceneMapUI = _mapUI.transform.Find(toSceneName);
+        if (toSceneMapUI == null) { return; }
+        toSceneMapUI.gameObject.SetActive(false);
+        Transform playerPin = _mapUI.transform.Find("PlayerPin");
+        if (playerPin)
+        {
+            playerPin.localPosition = toSceneMapUI.localPosition;
+        }
+    }
+
+    public void LoadData(in GameData data)
+    {
+        _visited = data.visited;
+        foreach (string key in _visited.Keys)
+        {
+            if (_visited[key]) { _mapUI.transform.Find(key)?.gameObject.SetActive(false); }
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.visited = _visited;
+    }
 }
