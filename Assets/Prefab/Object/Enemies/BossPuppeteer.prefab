@@ -327,6 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad08cec036040cca18da36d3cc8e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletDamage: 15
   _bulletSpeed: 10
   _knockbackMultiplier: 0.7
   _bulletPrefab: {fileID: 5184725027320053484, guid: 8075e96ee03af4336a2977f2b40a64e3, type: 3}
@@ -336,6 +337,7 @@ MonoBehaviour:
   MaxAmmo: 20
   CurrentAmmo: 20
   Reloading: 0
+  _forceBulletDamage: 0
 --- !u!114 &5983567293729768618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,8 +387,8 @@ Transform:
   m_GameObject: {fileID: 7992092877407335048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalPosition: {x: -0.018, y: -0.033, z: 0}
+  m_LocalScale: {x: 1.2874589, y: 1.2874589, z: 2.1457648}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 806460129919701863}
@@ -432,7 +434,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 11290696, guid: 6fc0c4552c460d040a9d998a00cd9bfc, type: 3}
   m_Color: {r: 0.008573768, g: 0.3886792, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
