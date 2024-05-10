@@ -1,6 +1,8 @@
 # TakeControl
 2D Platformer Metroidvania for University's Project
 
+[Itch.io Link](https://lightningks.itch.io/takecontrol-v0-4)
+
 ## Game Control
 - [WASD] to move
 - [Spacebar] to Jump (Space again to Double Jump if the robot has the skill)
@@ -14,6 +16,8 @@
 
 # Assets
 - [Robots Sprites](https://mounirtohami.itch.io/26-animated-pixelart-robots)
+- [Environments Sprites](https://penusbmic.itch.io/sci-fi-dystopian-tileset)
+- [Font](https://datagoblin.itch.io/monogram)
 
 # Developing Note
 
