@@ -1,11 +1,27 @@
 # TakeControl
 2D Platformer Metroidvania for University's Project
 
+## Game Control
+- [WASD] to move
+- [Spacebar] to Jump (Space again to Double Jump if the robot has the skill)
+- [Shift] to Dash (if the robot has the skill)
+- [Left Click] to Attack (follow the mouse)
+- [Right Click] on the robot with indicator to TakeControl
+- [Q] to Switch Weapon
+- [R] to Reload the Gun
+- [E] to Release Pulse Bomb (Delete all projectiles and knockback enemies)
+- [ESC] to Pause
+
+# Assets
+- [Robots Sprites](https://mounirtohami.itch.io/26-animated-pixelart-robots)
+
+# Developing Note
+
 ## Code Styles & Convention
 In this project, we follow a set of code styles and conventions to ensure consistency and maintainability. Please adhere to the following guidelines when contributing to the codebase:
 
 ### 1. Naming Conventions
-- Use descriptive and meaningful names for variables, functions, and classes.
+Use descriptive and meaningful names for variables, functions, and classes.
 - Follow `camelCase` naming convention for `local variables`
 ```cs
 void TakeDamage(int damage) {
